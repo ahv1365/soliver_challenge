@@ -9,11 +9,7 @@
       class="absolute min-h-[50vh] top-2 md:top-10 lg:top-20 bottom-2 md:bottom-10 lg:bottom-20 overflow-auto left-2 right-2 mx-auto border w-1/1 md:w-2/3 lg:w-1/2 shadow-lg rounded-md bg-white"
     >
       <!-- Close button -->
-      <div class="flex justify-end items-center">
-        <button @click="closeModal" class="text-black close-modal">
-          &times;
-        </button>
-      </div>
+      <CloseButton @close="closeModal" />
 
       <div class="container mx-auto mb-12 mt-0 pt-0 pb-5 px-5" v-if="article">
         <div class="flex flex-col md:flex-row">
@@ -31,7 +27,7 @@
           >
             <div class="carousel-inner" :style="carouselStyle">
               <!-- Loader displayed when isLoading is true -->
-              <div v-if="!imageLoaded" class="loader"></div>
+              <LoaderComponent :loaded="imageLoaded" />
 
               <input
                 type="image"
@@ -70,68 +66,13 @@
               ></div>
             </div>
           </div>
-          <!-- Right section for product details -->
-          <div class="flex-1 mt-8 md:mt-0 md:ml-8">
-            <p class="text-sm font-extrabold mb-2 w-full text-left">
-              Brand New
-            </p>
-            <p class="text-base mb-3 w-full text-left">
-              {{ article?.name }}
-            </p>
-            <div class="flex mb-2 w-full m-auto">
-              <p class="my-auto text-sm font-extrabold w-full text-left">
-                {{ article?.price }} {{ article?.currency.label }}
-              </p>
-              <img
-                class="w-20 items-center"
-                alt="soliver logo"
-                :src="`./assets/images/SOliver-Logo.svg`"
-              />
-            </div>
-            <div class="my-5 py-2 border-y-2">
-              <p class="font-medium text-sm normal-case w-full text-left">
-                Color:
-                <span class="font-sm w-full text-left font-extrabold">
-                  {{ article?.color }}</span
-                >
-              </p>
-              <div class="flex items-center space-x-2 mt-2 w-full text-left">
-                <!-- Color circles -->
-                <input
-                  type="image"
-                  v-for="variant in article.variants"
-                  :key="variant.colorLabel"
-                  :src="`/assets/images/${variant.image}`"
-                  loading="lazy"
-                  :class="{
-                    border: article?.color === variant.colorLabel,
-                  }"
-                  class="border-black w-11 h-11 rounded-full cursor-pointer"
-                  @click="selectColor(String(variant.id))"
-                />
-              </div>
-            </div>
-            <div class="mb-6">
-              <p class="font-sm w-full text-left">
-                Size:
-                <span class="font-sm w-full text-left font-extrabold">
-                  {{ article?.size }}</span
-                >
-              </p>
-              <div class="flex space-x-2 mt-2 w-full text-left">
-                <!-- Size buttons -->
-                <button
-                  v-for="(size, index) in article?.sizes"
-                  :key="size"
-                  :class="sizeClass(size, article?.size)"
-                  @click="selectSize(index, size)"
-                  class="w-11 my-auto bg-gray-100 rounded-2xl cursor-pointer"
-                >
-                  {{ size }}
-                </button>
-              </div>
-            </div>
-          </div>
+          <!-- Right section for product details  product details template content-->
+          <ProductDetails
+            :article="article"
+            :selectColor="selectColor"
+            :sizeClass="sizeClass"
+            :selectSize="selectSize"
+          />
         </div>
       </div>
 
@@ -180,24 +121,10 @@
           </div>
         </div>
       </div>
-
-      <div
-        class="sticky bottom-0 right-0 mb-30 bg-white flex justify-between w-full p-2 shadow-inner top-shadow"
-      >
-        <p
-          class="font-medium px-5 py-3 overflow-hidden whitespace-nowrap text-ellipsis"
-        >
-          {{ article?.name }}
-        </p>
-        <button
-          class="text-xs w-auto h-full my-auto px-4 py-1 bg-black text-white font-medium hover:bg-gray-800"
-        >
-          <div class="flex font-extrabold space-x-10 whitespace-nowrap">
-            <div>Add to Cart</div>
-            <font-awesome-icon class="m-auto" icon="shopping-cart" />
-          </div>
-        </button>
-      </div>
+      <StickyFooter
+        :articleName="article?.name || ''"
+        @add-to-cart="handleAddToCart"
+      />
     </div>
   </div>
 </template>
@@ -209,6 +136,11 @@ import FitTab from "./ProductDetail/FitTab.vue";
 import MaterialCareTab from "./ProductDetail/MaterialCareTab.vue";
 import ProductDetailsTab from "./ProductDetail/ProductDetailsTab.vue";
 import SustainabilityTab from "./ProductDetail/SustainabilityTab.vue";
+import LoaderComponent from "./Sections/LoaderComponent.vue";
+import CloseButton from "./Sections/CloseButton.vue";
+import StickyFooter from "./Sections/StickyFooter.vue";
+import ProductDetails from "./Sections/ProductDetails.vue";
+
 import {
   MaterialAndCare,
   FitDetails,
@@ -229,6 +161,16 @@ export default defineComponent({
     MaterialCareTab,
     FitTab,
     ProductDetailsTab,
+    LoaderComponent,
+    CloseButton,
+    StickyFooter,
+    ProductDetails,
+  },
+  methods: {
+    handleAddToCart(articleName: string) {
+      console.log("Article to add to cart:", articleName);
+      // Further logic to handle adding the article to the cart
+    },
   },
   setup(props, { emit }) {
     const {
@@ -426,28 +368,6 @@ export default defineComponent({
   box-sizing: border-box;
   overflow: auto;
 }
-.loader {
-  position: absolute; /* Position relative to the modal */
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Adjust centering */
-  border: 4px solid rgba(255, 255, 255, 0.3); /* Light gray border */
-  border-radius: 50%; /* Circular shape */
-  border-top: 4px solid #555; /* Dark gray top border */
-  width: 40px; /* Width of the loader */
-  height: 40px; /* Height of the loader */
-  animation: spin 2s linear infinite; /* Spinning animation */
-  z-index: 10; /* Ensure it's above other content */
-}
-
-@keyframes spin {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg); /* Rotate from 0 degrees */
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg); /* Rotate to 360 degrees */
-  }
-}
 .image-transition {
   opacity: 1; /* Low initial opacity */
   transition: opacity 0.5s ease-in-out; /* Smooth transition for opacity */
@@ -457,15 +377,6 @@ export default defineComponent({
   opacity: 0; /* Full opacity once loaded */
 }
 
-.close-modal {
-  font-size: 1.5rem;
-  font-weight: bold;
-  line-height: 1;
-  color: #000;
-  opacity: 0.3;
-  cursor: pointer;
-  padding: 1rem;
-}
 .tab-list {
   list-style-type: none;
   display: flex;

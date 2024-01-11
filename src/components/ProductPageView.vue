@@ -52,7 +52,7 @@
 
     <!-- Modal -->
     <ProductView
-      :key="selectedProduct"
+      :key="`productView_${selectedProduct}`"
       v-if="isModalOpen"
       :productId="selectedProduct"
       @close="closeModal"
