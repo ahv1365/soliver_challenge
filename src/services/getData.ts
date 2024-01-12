@@ -1,4 +1,3 @@
-// src/services/getData.ts
 import { Article } from "@/types/interfaces";
 import productService from "./productService";
 import { log } from "@/decorators/log";

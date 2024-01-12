@@ -1,9 +1,7 @@
-// src/composables/useProductData.ts
 import { ref, computed, onMounted } from "vue";
 import { Article } from "@/types/interfaces";
 import GetData from "@/services/getData";
 
-// Assuming GetData.getArticle is correctly typed in your service
 const dataService = new GetData();
 
 export function useProductData(productId: string) {
