@@ -48,6 +48,9 @@ export default defineComponent({
   name: "TabsComponent",
   props: {
     tabs: {
+      type: Array as PropType<
+        (MaterialAndCare | FitDetails | ProductDetailInfo | Sustainability)[]
+      >,
       required: true,
     },
   },

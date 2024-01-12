@@ -1,14 +1,30 @@
 import { Article } from "@/types/interfaces";
 
-// Fetch product data from the API
-export async function fetchProductData(productId: string): Promise<Article> {
-  const response = await fetch(`/api/articles/${productId}`);
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
-  }
-  const data = await response.json();
-  const article = data.data.attributes; //
-  return article;
-}
+const API_BASE_URL =
+  process.env.VUE_APP_API_BASE_URL || "http://localhost:3000";
 
+// Fetch product data from the API
+async function fetchProductData(productId: string): Promise<Article> {
+  const endpoint = `/api/articles/${productId}`;
+  try {
+    const response = await fetch(endpoint);
+    if (!response.ok) {
+      throw new Error(
+        `HTTP error! Status: ${response.status} for ${productId}`
+      );
+    }
+    const data = await response.json();
+    if (!data || !data.data || !data.data.attributes) {
+      throw new Error(`Unexpected response structure for ${productId}`);
+    }
+    const article: Article = data.data.attributes;
+    return article;
+  } catch (error) {
+    throw new Error(
+      `Failed to fetch product data for ${productId}: ${
+        error instanceof Error ? error.message : error
+      }`
+    );
+  }
+}
 export default { fetchProductData };

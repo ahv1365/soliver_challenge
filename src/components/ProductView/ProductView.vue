@@ -1,21 +1,16 @@
 <template>
   <div
-    :class="{
-      'div-transition': true,
-      'div-loaded': !article,
-    }"
+    class="transition-opacity duration-300"
+    :class="{ 'opacity-0': !article }"
   >
     <div
-      class="absolute min-h-[50vh] top-2 md:top-10 lg:top-20 bottom-2 md:bottom-10 lg:bottom-20 overflow-auto left-2 right-2 mx-auto border w-1/1 md:w-2/3 lg:w-1/2 shadow-lg rounded-md bg-white"
+      v-if="article"
+      class="absolute inset-2 md:inset-10 lg:inset-20 mx-auto border w-1/1 md:w-3/4 lg:w-2/3 shadow-lg rounded-md bg-white overflow-auto"
     >
-      <!-- Close button -->
       <CloseButton @close="closeModal" />
-
-      <div class="container mx-auto mb-12 mt-0 pt-0 pb-5 px-5" v-if="article">
+      <div class="container mx-auto my-0 px-5 py-5">
         <div class="flex flex-col md:flex-row">
-          <!-- Left section for images -->
           <ImageCarousel :article="article" />
-          <!-- Right section for product details  product details template content-->
           <ProductDetails
             :article="article"
             :selectColor="selectColor"
@@ -24,10 +19,18 @@
           />
         </div>
       </div>
-      <TabsComponent class="tabs" :tabs="article?.tabs?.tabs" />
-      <AccordionComponent class="accordion" :tabs="article?.tabs?.tabs" />
+      <TabsComponent
+        v-if="article.tabs"
+        class="hidden md:block"
+        :tabs="article.tabs.tabs"
+      />
+      <AccordionComponent
+        v-if="article.tabs"
+        class="block md:hidden"
+        :tabs="article.tabs.tabs"
+      />
       <StickyFooter
-        :articleName="article?.name || ''"
+        :articleName="article.name"
         @add-to-cart="handleAddToCart"
       />
     </div>
@@ -35,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, onMounted, ref, computed } from "vue";
+import { defineComponent, PropType, onMounted } from "vue";
 import { useProductData } from "@/composables/useProductData";
 import CloseButton from "./Sections/CloseButton.vue";
 import StickyFooter from "./Sections/StickyFooter.vue";
@@ -67,18 +70,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const {
-      article,
-      selectSize,
-      sizeClass,
-      fetchData,
-      selectedSizeIndex,
-      selectColor,
-    } = useProductData(props.productId);
-
-    onMounted(() => {
-      fetchData(props.productId);
-    });
+    const { article, selectSize, sizeClass, selectedSizeIndex, selectColor } =
+      useProductData(props.productId);
 
     const closeModal = () => {
       emit("close");

@@ -51,7 +51,8 @@
           :key="size"
           :class="sizeClass(size, article?.size)"
           @click="selectSize(index, size)"
-          class="w-11 my-auto bg-gray-100 rounded-2xl cursor-pointer"
+          class="w-11 my-auto bg-gray-100 rounded-2xl"
+          :disabled="!article?.availableSizes.includes(size)"
         >
           {{ size }}
         </button>

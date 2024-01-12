@@ -7,29 +7,29 @@
           v-for="product in article?.variants"
           :key="product.id"
           @click="openModal(String(product?.id))"
-          class="bg-white px-2 py-4 flex flex-col items-center rounded-lg hover:shadow transition-shadow"
+          class="bg-white p-4 flex flex-col items-center rounded-lg hover:shadow-md transition-shadow duration-300"
         >
           <img
             :src="`/assets/images/${product?.image}`"
             loading="lazy"
             alt="Product"
-            class="cursor-pointer w-62 h-62 object-cover mb-4"
+            class="cursor-pointer w-full h-62 object-cover mb-4"
           />
           <div class="text-left w-full">
-            <p class="font-medium text-gray-400">s.Oliver</p>
+            <p class="text-sm font-medium text-gray-400">s.Oliver</p>
             <p class="text-md font-medium">
               {{ article?.name }}
             </p>
-            <p class="text-md font-semibold">
+            <p class="text-lg font-semibold">
               {{ article?.price }} {{ article?.currency?.symbol }}
             </p>
             <div class="flex items-center mt-2">
-              <!-- Color dots -->
+              <!-- Color Images -->
               <span
                 v-for="variant in article?.variants"
                 :key="variant?.colorLabel"
                 :style="{ backgroundColor: variant?.colorHEX }"
-                class="cursor-pointer w-4 h-4 mx-3 rounded-full inline-block mr-1 ring-1 ring-gray-200 ring-offset-4"
+                class="cursor-pointer w-4 h-4 mx-3 rounded-full inline-block ring-1 ring-gray-200 ring-offset-4"
               ></span>
             </div>
           </div>
@@ -40,7 +40,11 @@
 
   <!-- Modal Backdrop -->
   <transition name="modal">
-    <div v-if="isModalOpen" class="modal-backdrop" @click="closeModal">
+    <div
+      v-if="isModalOpen"
+      class="fixed inset-0 bg-black bg-opacity-50 z-10 flex items-center justify-center"
+      @click="closeModal"
+    >
       <div class="modal-content" @click.stop>
         <ProductView
           :key="`productView_${selectedProduct}`"
@@ -58,7 +62,7 @@ import ProductView from "./ProductView/ProductView.vue";
 import { useProductData } from "@/composables/useProductData";
 
 export default defineComponent({
-  name: "ProductPageView",
+  name: "ProductPage",
   components: {
     ProductView,
   },
@@ -102,21 +106,18 @@ export default defineComponent({
 }
 
 /* Transition for the modal */
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.5s, transform 0.5s;
+.modal-enter-active {
+  transition: opacity 0.5s, transform 0.3s;
 }
 
-.modal-enter-from,
-.modal-leave-to {
+.modal-enter-from {
   opacity: 0;
-  transform: scale(0.3);
+  transform: opacity(0 0.3s);
 }
 
-.modal-enter-to,
-.modal-leave-from {
+.modal-enter-to {
   opacity: 1;
-  transform: scale(1);
+  transform: opacity(1 0.3s);
 }
 
 .modal-backdrop {
