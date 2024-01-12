@@ -22,14 +22,14 @@
 </template>
 
 <script lang="ts">
-import { Detail } from "@/types/interfaces";
+import { Sustainability } from "@/types/interfaces";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "SustainabilityTab",
   props: {
     tabContent: {
-      type: Array as PropType<Detail[]>,
+      type: Object as PropType<Sustainability>,
       required: true,
     },
   },

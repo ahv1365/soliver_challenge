@@ -75,52 +75,8 @@
           />
         </div>
       </div>
-
-      <div class="tabs bg-gray-100 min-h-[50%]">
-        <ul class="tab-list px-3 py-5">
-          <li
-            v-for="(tab, index) in article?.tabs.tabs"
-            :key="index"
-            class="text-xs font-bold"
-            :class="{ active: activeTab === tab.tab }"
-            @click="setActiveTab(tab.tab, tab.content)"
-          >
-            {{ tab.label.toUpperCase() }}
-          </li>
-        </ul>
-        <div class="tab-content h-min">
-          <!-- Tab Content -->
-          <component
-            :key="activeTab"
-            :is="activeTab"
-            :tabContent="activeTabContent"
-          />
-        </div>
-      </div>
-
-      <div class="accordion text-left px-2">
-        <div
-          class="accordion-item"
-          v-for="(tab, index) in article?.tabs.tabs"
-          :key="index"
-        >
-          <button
-            type="button"
-            class="accordion-button text-sm font-bold m-auto"
-            @click="setActiveAcc(tab.tab, tab?.content)"
-          >
-            {{ tab.label.toUpperCase() }}
-          </button>
-          <div v-if="activeTab === tab.tab" class="accordion-content">
-            <!-- Include the tab content component here -->
-            <component
-              :key="activeTab"
-              :is="activeTab"
-              :tabContent="activeTabContent"
-            />
-          </div>
-        </div>
-      </div>
+      <TabsComponent class="tabs" :tabs="article?.tabs?.tabs" />
+      <AccordionComponent class="accordion" :tabs="article?.tabs?.tabs" />
       <StickyFooter
         :articleName="article?.name || ''"
         @add-to-cart="handleAddToCart"
@@ -132,21 +88,12 @@
 <script lang="ts">
 import { defineComponent, PropType, onMounted, ref, computed } from "vue";
 import { useProductData } from "@/composables/useProductData";
-import FitTab from "./ProductDetail/FitTab.vue";
-import MaterialCareTab from "./ProductDetail/MaterialCareTab.vue";
-import ProductDetailsTab from "./ProductDetail/ProductDetailsTab.vue";
-import SustainabilityTab from "./ProductDetail/SustainabilityTab.vue";
 import LoaderComponent from "./Sections/LoaderComponent.vue";
 import CloseButton from "./Sections/CloseButton.vue";
 import StickyFooter from "./Sections/StickyFooter.vue";
 import ProductDetails from "./Sections/ProductDetails.vue";
-
-import {
-  MaterialAndCare,
-  FitDetails,
-  ProductDetailInfo,
-  Sustainability,
-} from "@/types/interfaces";
+import AccordionComponent from "./Sections/AccordionComponent.vue";
+import TabsComponent from "./Sections/TabsComponent.vue";
 
 export default defineComponent({
   name: "ProductView",
@@ -157,14 +104,12 @@ export default defineComponent({
     },
   },
   components: {
-    SustainabilityTab,
-    MaterialCareTab,
-    FitTab,
-    ProductDetailsTab,
     LoaderComponent,
     CloseButton,
     StickyFooter,
     ProductDetails,
+    AccordionComponent,
+    TabsComponent,
   },
   methods: {
     handleAddToCart(articleName: string) {
@@ -182,8 +127,6 @@ export default defineComponent({
       selectColor,
       isMobile,
     } = useProductData(props.productId);
-    const activeTab = ref("");
-    const activeTabContent = ref({});
     const currentSlide = ref(0);
     const startX = ref(0);
     const deltaX = ref(0);
@@ -191,26 +134,6 @@ export default defineComponent({
     const isFullScreen = ref(false);
     const imageLoaded = ref(false);
     const swipeThreshold = 5; // Pixels
-
-    const setActiveTab = (
-      tab: string,
-      content: MaterialAndCare | FitDetails | ProductDetailInfo | Sustainability
-    ) => {
-      activeTab.value = tab;
-      activeTabContent.value = content;
-    };
-    const setActiveAcc = (
-      tab: string,
-      content: MaterialAndCare | FitDetails | ProductDetailInfo | Sustainability
-    ) => {
-      if (activeTab.value === tab) {
-        activeTab.value = "";
-        activeTabContent.value = {};
-      } else {
-        activeTab.value = tab;
-        activeTabContent.value = content;
-      }
-    };
 
     const toggleFullScreen = (event: MouseEvent | TouchEvent) => {
       if (event instanceof MouseEvent) {
@@ -222,14 +145,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      fetchData(props.productId).then(() => {
-        if (article?.value)
-          setActiveTab(
-            article?.value?.tabs.tabs[0].tab,
-            article?.value?.tabs.tabs[0].content
-          );
-        if (isMobile.value) activeTab.value = "";
-      });
+      fetchData(props.productId);
     });
 
     const carouselStyle = computed(() => ({
@@ -302,10 +218,7 @@ export default defineComponent({
       isFullScreen,
       toggleFullScreen,
       imageLoaded,
-      setActiveTab,
-      setActiveAcc,
-      activeTab,
-      activeTabContent,
+      isMobile,
     };
   },
 });
@@ -377,60 +290,18 @@ export default defineComponent({
   opacity: 0; /* Full opacity once loaded */
 }
 
-.tab-list {
-  list-style-type: none;
-  display: flex;
-}
-.tab-list li {
-  cursor: pointer;
-  padding: 10px;
-}
-.tab-list li.active {
-  border-bottom: 3px solid #343434;
-}
-.tab-content {
-  padding: 10px;
-}
-
-/* Accordion styles */ /* Accordion button styles */
-.accordion-button {
-  border: none;
-  border-bottom: 1px solid #ccc; /* Light grey border for bottom */
-  cursor: pointer;
-  margin: 18px;
-  width: calc(100% - 36px); /* Adjusted for padding */
-  text-align: left;
-  background-color: #fff; /* White background */
-  outline: none;
-  transition: background-color 0.3s ease;
-}
-
-/* Active accordion button styles */
-.accordion-button.active {
-  background-color: #f1f1f1; /* Light grey background for active tab */
-  border-bottom: 1px solid #000; /* Black border for bottom when active */
-}
-
-/* Accordion content styles */
-.accordion-content {
-  transition: max-height 0.5s ease-out;
-  overflow: hidden;
-  background-color: white;
-}
-
-/* Media query for mobile devices */
+/* Media query for Desktop devices */
 @media (max-width: 768px) {
-  /* Styles for mobile */
+  /* Styles for Desktop */
   .tabs {
     display: none;
   }
 }
-
-/* Media query for desktop. Hide accordion and show tabs instead */
-@media (min-width: 769px) {
+/* Media query for mobile devices */
+@media (min-width: 768px) {
+  /* Styles for mobile */
   .accordion {
     display: none;
   }
-  /* Other styles for desktop view */
 }
 </style>

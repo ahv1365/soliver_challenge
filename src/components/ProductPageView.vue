@@ -1,11 +1,5 @@
 <template>
-  <section
-    class="pt-20 py-8"
-    :class="{
-      'overflow-hidden': isModalOpen,
-      'h-screen': isModalOpen,
-    }"
-  >
+  <div class="pt-20 py-8">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <!-- Product Card -->
@@ -42,22 +36,20 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Modal Backdrop -->
-    <div
-      v-if="isModalOpen"
-      class="fixed inset-0 bg-black bg-opacity-50 z-0"
-      @click="closeModal"
-    ></div>
-
-    <!-- Modal -->
-    <ProductView
-      :key="`productView_${selectedProduct}`"
-      v-if="isModalOpen"
-      :productId="selectedProduct"
-      @close="closeModal"
-    />
-  </section>
+  <!-- Modal Backdrop -->
+  <transition name="modal">
+    <div v-if="isModalOpen" class="modal-backdrop" @click="closeModal">
+      <div class="modal-content" @click.stop>
+        <ProductView
+          :key="`productView_${selectedProduct}`"
+          :productId="selectedProduct"
+          @close="closeModal"
+        />
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script lang="ts">
@@ -75,10 +67,12 @@ export default defineComponent({
     const selectedProduct = ref("1");
     const closeModal = () => {
       isModalOpen.value = false;
+      document.body.classList.remove("no-scroll");
     };
     const openModal = (product: string) => {
       isModalOpen.value = true;
       selectedProduct.value = String(product);
+      document.body.classList.add("no-scroll");
     };
     const {
       article,
@@ -103,13 +97,47 @@ export default defineComponent({
 </script>
 
 <style>
-/* ... Your styles here ... */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
+.no-scroll {
+  overflow: hidden;
 }
-.fade-enter-from,
-.fade-leave-to {
+
+/* Transition for the modal */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.modal-enter-from,
+.modal-leave-to {
   opacity: 0;
+  transform: scale(0.3);
+}
+
+.modal-enter-to,
+.modal-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 8px;
+  max-height: 90vh;
+  max-width: 90vw;
+  overflow-y: auto;
 }
 </style>
