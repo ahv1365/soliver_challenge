@@ -7,7 +7,7 @@
       <div>{{ tabContent?.sleeve.content }}</div>
       <div>{{ tabContent?.pockets.content }}</div>
       <div>
-        {{ tabContent.itemNumber.content }}
+        {{ tabContent?.itemNumber.content }}
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@
       <button
         type="button"
         class="accordion-button text-sm font-bold m-auto"
-        @click="setActiveAcc(tab.tab, tab?.content)"
+        @click="setActiveAcc(tab)"
       >
         {{ tab.label.toUpperCase() }}
       </button>
@@ -26,7 +26,13 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
-import { TabContent } from "@/types/interfaces";
+import {
+  FitDetails,
+  MaterialAndCare,
+  ProductDetailInfo,
+  Sustainability,
+  TabContent,
+} from "@/types/interfaces";
 import FitTab from "../ProductDetail/FitTab.vue";
 import ProductDetailsTab from "../ProductDetail/ProductDetailsTab.vue";
 import SustainabilityTab from "../ProductDetail/SustainabilityTab.vue";
@@ -36,6 +42,7 @@ export default defineComponent({
   name: "AccordionComponent",
   props: {
     tabs: {
+      type: Array as PropType<TabContent[]>,
       required: true,
     },
   },
@@ -48,15 +55,16 @@ export default defineComponent({
 
   setup() {
     const activeTab = ref("");
-    const activeTabContent = ref<TabContent | null>(null);
+    const activeTabContent = ref<
+      MaterialAndCare | FitDetails | ProductDetailInfo | Sustainability
+    >();
 
-    const setActiveAcc = (tab: string, content: TabContent) => {
-      if (activeTab.value === tab) {
+    const setActiveAcc = (tab: TabContent) => {
+      if (activeTab.value === tab.tab) {
         activeTab.value = "";
-        activeTabContent.value = null;
       } else {
-        activeTab.value = tab;
-        activeTabContent.value = content;
+        activeTab.value = tab.tab;
+        activeTabContent.value = tab.content;
       }
     };
 

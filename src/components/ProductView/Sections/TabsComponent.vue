@@ -7,12 +7,12 @@
         class="text-xs font-bold"
         :class="{
           active: activeTabContent
-            ? activeTab === tab.tab
-            : tabs[0].tab === tab.tab,
+            ? activeTab === tab?.tab
+            : tabs[0]?.tab === tab?.tab,
         }"
-        @click="setActiveTab(tab.tab, tab.content)"
+        @click="setActiveTab(tab)"
       >
-        {{ tab.label.toUpperCase() }}
+        {{ tab?.label.toUpperCase() }}
       </li>
     </ul>
     <div class="tab-content h-min">
@@ -22,9 +22,9 @@
         :tabContent="activeTabContent"
       />
       <component
-        :is="tabs[0].tab"
+        :is="tabs[0]?.tab"
         v-if="!activeTabContent"
-        :tabContent="tabs[0].content"
+        :tabContent="tabs[0]?.content"
       />
     </div>
   </div>
@@ -37,8 +37,8 @@ import ProductDetailsTab from "../ProductDetail/ProductDetailsTab.vue";
 import SustainabilityTab from "../ProductDetail/SustainabilityTab.vue";
 import MaterialCareTab from "../ProductDetail/MaterialCareTab.vue";
 import {
-  MaterialAndCare,
   FitDetails,
+  MaterialAndCare,
   ProductDetailInfo,
   Sustainability,
   TabContent,
@@ -48,9 +48,7 @@ export default defineComponent({
   name: "TabsComponent",
   props: {
     tabs: {
-      type: Array as PropType<
-        (MaterialAndCare | FitDetails | ProductDetailInfo | Sustainability)[]
-      >,
+      type: Array as PropType<TabContent[]>,
       required: true,
     },
   },
@@ -60,13 +58,15 @@ export default defineComponent({
     FitTab,
     ProductDetailsTab,
   },
-  setup(props) {
+  setup() {
     const activeTab = ref<string>("");
-    const activeTabContent = ref<TabContent | null>(null);
+    const activeTabContent = ref<
+      MaterialAndCare | FitDetails | ProductDetailInfo | Sustainability
+    >();
 
-    const setActiveTab = (tab: string, content: TabContent) => {
-      activeTab.value = tab;
-      activeTabContent.value = content;
+    const setActiveTab = (tab: TabContent) => {
+      activeTab.value = tab.tab;
+      activeTabContent.value = tab.content;
     };
     return {
       activeTab,

@@ -1,11 +1,11 @@
 <template>
   <div
-    class="transition-opacity duration-300"
-    :class="{ 'opacity-0': !article }"
+    class="transition-opacity duration-500"
+    :class="{ 'opacity-0': !article, hidden: !article }"
   >
     <div
       v-if="article"
-      class="absolute inset-2 md:inset-10 lg:inset-20 mx-auto border w-1/1 md:w-3/4 lg:w-2/3 shadow-lg rounded-md bg-white overflow-auto"
+      class="absolute inset-2 md:inset-5 lg:inset-20 mx-auto border w-1/1 md:w-5/6 lg:w-2/3 shadow-lg rounded-md bg-white overflow-auto"
     >
       <CloseButton @close="closeModal" />
       <div class="container mx-auto my-0 px-5 py-5">
@@ -22,15 +22,15 @@
       <TabsComponent
         v-if="article.tabs"
         class="hidden md:block"
-        :tabs="article.tabs.tabs"
+        :tabs="article?.tabs"
       />
       <AccordionComponent
         v-if="article.tabs"
         class="block md:hidden"
-        :tabs="article.tabs.tabs"
+        :tabs="article?.tabs"
       />
       <StickyFooter
-        :articleName="article.name"
+        :articleName="article?.name"
         @add-to-cart="handleAddToCart"
       />
     </div>
@@ -38,9 +38,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, onMounted } from "vue";
+import { defineComponent, PropType } from "vue";
 import { useProductData } from "@/composables/useProductData";
-import CloseButton from "./Sections/CloseButton.vue";
+import CloseButton from "@/components/Containers/CloseButton.vue";
 import StickyFooter from "./Sections/StickyFooter.vue";
 import ProductDetails from "./Sections/ProductDetails.vue";
 import AccordionComponent from "./Sections/AccordionComponent.vue";

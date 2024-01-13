@@ -10,7 +10,7 @@ export interface Article {
   size: string;
   availableSizes: string[];
   sizes: string[];
-  tabs: ProductTabs;
+  tabs: TabContent[];
   currency: currency;
 }
 
@@ -71,8 +71,4 @@ export interface TabContent {
   label: string;
   tab: string;
   content: MaterialAndCare | FitDetails | ProductDetailInfo | Sustainability;
-}
-
-export interface ProductTabs {
-  tabs: TabContent[];
 }

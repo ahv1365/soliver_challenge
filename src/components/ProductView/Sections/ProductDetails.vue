@@ -6,7 +6,7 @@
     </p>
     <div class="flex mb-2 w-full m-auto">
       <p class="my-auto text-sm font-extrabold w-full text-left">
-        {{ article?.price }} {{ article?.currency.label }}
+        {{ article?.price }} {{ article?.currency?.label }}
       </p>
       <img
         class="w-20 items-center"

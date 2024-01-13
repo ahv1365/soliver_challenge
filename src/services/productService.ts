@@ -1,7 +1,7 @@
 import { Article } from "@/types/interfaces";
 
-const API_BASE_URL =
-  process.env.VUE_APP_API_BASE_URL || "http://localhost:3000";
+// const API_BASE_URL =
+//   process.env.VUE_APP_API_BASE_URL || "http://localhost:3000"; // must be defined in env variable
 
 // Fetch product data from the API
 async function fetchProductData(productId: string): Promise<Article> {

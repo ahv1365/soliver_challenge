@@ -7,11 +7,10 @@
           v-for="product in article?.variants"
           :key="product.id"
           @click="openModal(String(product?.id))"
-          class="bg-white p-4 flex flex-col items-center rounded-lg hover:shadow-md transition-shadow duration-300"
+          class="p-4 flex flex-col items-center rounded-lg hover:shadow-md transition-shadow duration-300"
         >
-          <img
+          <LazyImage
             :src="`/assets/images/${product?.image}`"
-            loading="lazy"
             alt="Product"
             class="cursor-pointer w-full h-62 object-cover mb-4"
           />
@@ -37,7 +36,6 @@
       </div>
     </div>
   </div>
-
   <!-- Modal Backdrop -->
   <transition name="modal">
     <div
@@ -57,7 +55,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import {
+  defineAsyncComponent,
+  defineComponent,
+  onUnmounted,
+  ref,
+  watchEffect,
+} from "vue";
 import ProductView from "./ProductView/ProductView.vue";
 import { useProductData } from "@/composables/useProductData";
 
@@ -65,18 +69,27 @@ export default defineComponent({
   name: "ProductPage",
   components: {
     ProductView,
+    LazyImage: defineAsyncComponent(() => import("./Containers/LazyImage.vue")),
   },
   setup() {
     const isModalOpen = ref(false);
     const selectedProduct = ref("1");
+    watchEffect(() => {
+      if (isModalOpen.value) {
+        document.body.classList.add("no-scroll");
+      } else {
+        document.body.classList.remove("no-scroll");
+      }
+    });
+    onUnmounted(() => {
+      document.body.classList.remove("no-scroll");
+    });
     const closeModal = () => {
       isModalOpen.value = false;
-      document.body.classList.remove("no-scroll");
     };
     const openModal = (product: string) => {
       isModalOpen.value = true;
       selectedProduct.value = String(product);
-      document.body.classList.add("no-scroll");
     };
     const {
       article,
@@ -104,22 +117,17 @@ export default defineComponent({
 .no-scroll {
   overflow: hidden;
 }
-
-/* Transition for the modal */
 .modal-enter-active {
   transition: opacity 0.5s, transform 0.3s;
 }
-
 .modal-enter-from {
   opacity: 0;
   transform: opacity(0 0.3s);
 }
-
 .modal-enter-to {
   opacity: 1;
   transform: opacity(1 0.3s);
 }
-
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -132,7 +140,6 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
 }
-
 .modal-content {
   background-color: transparent;
   padding: 20px;

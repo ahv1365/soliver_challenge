@@ -37,14 +37,14 @@
       />
     </div>
     <div
-      class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2"
+      class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-white py-1 px-2 border rounded-full"
     >
       <div
         v-for="(image, index) in article?.images"
         :key="index"
         :class="{
-          'bg-white': currentSlide === index,
           'bg-gray-400': currentSlide !== index,
+          'bg-gray-900': currentSlide === index,
         }"
         class="w-2 h-2 rounded-full cursor-pointer"
         @click="goToSlide(index)"
@@ -54,9 +54,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, onMounted, ref, computed } from "vue";
+import { defineComponent, PropType, ref, computed } from "vue";
 import { Article } from "@/types/interfaces";
-import LoaderComponent from "./LoaderComponent.vue";
+import LoaderComponent from "@/components/Containers/LoaderComponent.vue";
 
 export default defineComponent({
   name: "ImageCarousel",
@@ -170,7 +170,7 @@ export default defineComponent({
 .carousel-item {
   flex: 0 0 100%;
   max-width: 100%;
-  display: inline-block; /* or inline-flex */
+  display: inline-block;
 }
 
 .carousel-item.active {
@@ -202,21 +202,21 @@ export default defineComponent({
   left: 0;
   width: calc(100vw);
   height: calc(100vh);
-  z-index: 1000; /* Ensure it's above other content */
+  z-index: 1000;
   transform: translate(0%, 0%) scale(1);
   transform-origin: center center;
   transition: transform 1.5s ease-in-out;
-  background-color: rgb(0, 0, 0); /* or any desired background color */
+  background-color: rgb(0, 0, 0);
   padding: 10px;
   box-sizing: border-box;
   overflow: auto;
 }
 .image-transition {
-  opacity: 1; /* Low initial opacity */
-  transition: opacity 0.5s ease-in-out; /* Smooth transition for opacity */
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .image-loaded {
-  opacity: 0; /* Full opacity once loaded */
+  opacity: 0;
 }
 </style>

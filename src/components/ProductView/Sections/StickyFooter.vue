@@ -48,7 +48,5 @@ export default defineComponent({
   position: sticky;
   bottom: 0;
   right: 0;
-  /* Other styles... */
 }
-/* Additional styles if needed */
 </style>
