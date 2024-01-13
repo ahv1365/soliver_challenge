@@ -73,7 +73,7 @@ export function useProductData(productId: string) {
     "border rounded",
     article.value?.availableSizes.includes(size)
       ? `hover:bg-black hover:text-white ${
-          selectedSize === size ? "border-black" : ""
+          selectedSize === size ? "border-black font-bold" : ""
         }`
       : "border-2 border-gray-100 text-gray-300 cursor-default",
   ];
