@@ -5,7 +5,9 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        "lx-h": { raw: "(min-height: 1000px) and (min-width: 768px)" },
+        "lx-h": {
+          raw: "(min-height: 1000px) and (min-width: 768px) and (max-width: 1700px)",
+        },
       },
       colors: {
         bg: "var(--color-bg)",
