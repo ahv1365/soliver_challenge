@@ -28,9 +28,10 @@ export default defineComponent({
   font-size: 1.5rem;
   font-weight: bold;
   line-height: 1;
-  color: #000;
+  color: var(--color-button-primary);
   opacity: 0.3;
   padding: 1rem;
+  padding-bottom: 0;
   transition: opacity 0.3s ease;
 
   &:hover {
@@ -41,7 +42,7 @@ export default defineComponent({
   font-size: 1.5rem;
   font-weight: bold;
   line-height: 1;
-  color: #000;
+  color: var(--color-button-primary);
   opacity: 0.3;
   cursor: pointer;
   padding: 1rem;

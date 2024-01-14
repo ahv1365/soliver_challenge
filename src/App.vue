@@ -16,13 +16,13 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { defineAsyncComponent } from "vue";
+import LogoSplash from "./component/ui/LogoSplash.vue";
 import "./index.css";
-import LogoSplash from "./components/Containers/LogoSplash.vue";
 
 @Options({
   components: {
     ProductPage: defineAsyncComponent(
-      () => import("./components/ProductPage.vue")
+      () => import("./page/product/ProductPage.vue")
     ),
     LogoSplash,
   },

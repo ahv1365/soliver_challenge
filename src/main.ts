@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import store from "./store";
-import { makeServer } from "./mocks/mirage";
+import { makeServer } from "./mock/mirage";
 import VueLazyload from "vue-lazyload";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {

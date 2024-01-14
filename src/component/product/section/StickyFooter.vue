@@ -1,5 +1,5 @@
 <template>
-  <div
+  <footer
     class="sticky-footer bg-white flex justify-between w-full p-2 shadow-inner top-shadow"
   >
     <p
@@ -16,7 +16,7 @@
         <font-awesome-icon class="m-auto pl-10" icon="shopping-cart" />
       </div>
     </button>
-  </div>
+  </footer>
 </template>
 
 <script lang="ts">

@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
-import ProductView from "@/components/ProductView/ProductView.vue";
+import ProductView from "@/component/product/ProductView.vue";
 import { ref } from "vue";
-import { productDetails } from "@/mocks/data";
+import { productDetails } from "@/mock/data";
 
 jest.mock("@/composables/useProductData", () => ({
   useProductData: () => ({

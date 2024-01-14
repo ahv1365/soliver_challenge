@@ -1,11 +1,11 @@
 <template>
   <div
     class="transition-opacity duration-500"
-    :class="{ 'opacity-0': !article, hidden: !article }"
+    :class="{ 'opacity-0': !article }"
   >
     <div
       v-if="article"
-      class="absolute inset-2 md:inset-5 lg:inset-20 mx-auto border w-1/1 md:w-5/6 lg:w-2/3 shadow-lg rounded-md bg-white overflow-auto"
+      class="absolute inset-2 md:inset-5 lg:inset-10 xl:inset-15 mx-auto border w-1/1 md:w-5/6 lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-bg overflow-auto"
     >
       <CloseButton @close="closeModal" />
       <div class="container mx-auto my-0 px-5 py-5">
@@ -39,13 +39,13 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { useProductData } from "@/composables/useProductData";
-import CloseButton from "@/components/Containers/CloseButton.vue";
-import StickyFooter from "./Sections/StickyFooter.vue";
-import ProductDetails from "./Sections/ProductDetails.vue";
-import AccordionComponent from "./Sections/AccordionComponent.vue";
-import TabsComponent from "./Sections/TabsComponent.vue";
-import ImageCarousel from "./Sections/ImageCarousel.vue";
+import { useProductData } from "@/composable/useProductData";
+import CloseButton from "@/component/ui/CloseButton.vue";
+import StickyFooter from "./section/StickyFooter.vue";
+import ProductDetails from "./section/ProductDetails.vue";
+import AccordionComponent from "./section/Accordion.vue";
+import TabsComponent from "./section/Tab.vue";
+import ImageCarousel from "./section/ImageCarousel.vue";
 
 export default defineComponent({
   name: "ProductView",
@@ -70,8 +70,9 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const { article, selectSize, sizeClass, selectedSizeIndex, selectColor } =
-      useProductData(props.productId);
+    const { article, selectSize, sizeClass, selectColor } = useProductData(
+      props.productId
+    );
 
     const closeModal = () => {
       emit("close");
@@ -82,26 +83,8 @@ export default defineComponent({
       selectSize,
       selectColor,
       sizeClass,
-      selectedSizeIndex,
       closeModal,
     };
   },
 });
 </script>
-
-<style scoped>
-/* Media query for Desktop devices */
-@media (max-width: 768px) {
-  /* Styles for Desktop */
-  .tabs {
-    display: none;
-  }
-}
-/* Media query for mobile devices */
-@media (min-width: 768px) {
-  /* Styles for mobile */
-  .accordion {
-    display: none;
-  }
-}
-</style>

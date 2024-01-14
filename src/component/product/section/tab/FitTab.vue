@@ -1,6 +1,6 @@
 <template>
-  <div class="font-sans p-4 text-sm text-left">
-    <h3 class="font-semibold mb-2">Fit</h3>
+  <div class="font-sans p-4 text-text-secondary text-left">
+    <p class="font-bold mb-2">Fit</p>
     <p>{{ tabContent?.fitType?.content }}</p>
     <p>{{ tabContent?.backLength?.content }}</p>
     <!-- <div class="flex flex-col space-y-4 float-right">
@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { FitDetails } from "@/types/interfaces";
+import { FitDetails } from "@/type/tab";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
@@ -33,3 +33,4 @@ export default defineComponent({
   },
 });
 </script>
+@/types/article

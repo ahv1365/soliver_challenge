@@ -1,6 +1,6 @@
 <template>
-  <div class="font-sans text-sm p-4 text-left">
-    <h3 class="font-semibold mb-2">Product Details</h3>
+  <div class="font-sans text-text-secondary p-4 text-left">
+    <p class="font-bold mb-2">Product Details</p>
     <div class="mb-4">
       <div>{{ tabContent?.texture.content }}</div>
       <div>{{ tabContent?.collar.content }}</div>
@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { ProductDetailInfo } from "@/types/interfaces";
+import { ProductDetailInfo } from "@/type/tab";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
@@ -26,3 +26,4 @@ export default defineComponent({
   },
 });
 </script>
+@/types/article

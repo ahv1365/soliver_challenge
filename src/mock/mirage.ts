@@ -1,4 +1,4 @@
-import { Article } from "@/types/interfaces";
+import { Article } from "@/type/article";
 import { createServer, Model, Factory, Server, Response } from "miragejs";
 import { Variants, productDetails } from "./data";
 

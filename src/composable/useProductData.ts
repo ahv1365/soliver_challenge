@@ -1,13 +1,12 @@
 import { ref, computed, onMounted } from "vue";
-import { Article } from "@/types/interfaces";
-import GetData from "@/services/getData";
+import { Article } from "@/type/article";
+import GetData from "@/service/getData";
 
 const dataService = new GetData();
 
 export function useProductData(productId: string) {
   const article = ref<Article | null>(null);
   const selectedVariantIndex = ref<number>(0);
-  const selectedSizeIndex = ref<number>(0);
   const selectedImage = ref<string>("");
 
   /**
@@ -33,7 +32,6 @@ export function useProductData(productId: string) {
    */
   const selectVariant = (index: number): void => {
     selectedVariantIndex.value = index;
-    selectedSizeIndex.value = 0;
     selectedImage.value = article.value?.variants[index]?.image || "";
   };
 
@@ -49,11 +47,10 @@ export function useProductData(productId: string) {
    * Updates the selected size index.
    * @param index - Index of the selected size.
    */
-  const selectSize = (index: number, selectedSize: string): void => {
+  const selectSize = (selectedSize: string): void => {
     if (article.value) {
       article.value.size = selectedSize;
     }
-    selectedSizeIndex.value = index;
   };
 
   /**
@@ -69,21 +66,27 @@ export function useProductData(productId: string) {
    * @param size - Size to determine the class for.
    * @returns Array of CSS class names.
    */
-  const sizeClass = (size: string, selectedSize: string): string[] => [
-    "border rounded",
-    article.value?.availableSizes.includes(size)
-      ? `hover:bg-black hover:text-white ${
-          selectedSize === size ? "border-black font-bold" : ""
-        }`
-      : "border-2 border-gray-100 text-gray-300 cursor-default",
-  ];
+  const sizeClass = (size: string): string[] => {
+    const classes = ["border", "rounded", "text-button-secondary"];
+    if (article.value?.size === size) {
+      classes.push("border-border", "font-bold");
+    } else if (!article.value?.availableSizes?.includes(size)) {
+      classes.push(
+        "border-2",
+        "border-border-secondary",
+        "text-button-secondary-light",
+        "cursor-default"
+      );
+    }
+
+    return classes;
+  };
 
   onMounted(() => fetchData(productId));
 
   return {
     article,
     selectedVariantIndex,
-    selectedSizeIndex,
     selectedImage,
     fetchData,
     selectVariant,
@@ -103,6 +106,6 @@ export function useProductData(productId: string) {
         article.value?.variants[selectedVariantIndex.value]?.image ||
         ""
     ),
-    selectedSize: computed(() => article.value?.sizes[selectedSizeIndex.value]),
+    selectedSize: computed(() => article?.value?.size),
   };
 }

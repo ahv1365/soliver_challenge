@@ -15,11 +15,11 @@
             class="cursor-pointer w-full h-62 object-cover mb-4"
           />
           <div class="text-left w-full">
-            <p class="text-sm font-medium text-gray-400">s.Oliver</p>
-            <p class="text-md font-medium">
+            <p class="text-text-secondary-light font-medium">s.Oliver</p>
+            <p class="text-text-primary">
               {{ article?.name }}
             </p>
-            <p class="text-lg font-semibold">
+            <p class="text-text-primary font-bold">
               {{ article?.price }} {{ article?.currency?.symbol }}
             </p>
             <div class="flex items-center mt-2">
@@ -62,14 +62,16 @@ import {
   ref,
   watchEffect,
 } from "vue";
-import ProductView from "./ProductView/ProductView.vue";
-import { useProductData } from "@/composables/useProductData";
+import ProductView from "@/component/product/ProductView.vue";
+import { useProductData } from "@/composable/useProductData";
 
 export default defineComponent({
   name: "ProductPage",
   components: {
     ProductView,
-    LazyImage: defineAsyncComponent(() => import("./Containers/LazyImage.vue")),
+    LazyImage: defineAsyncComponent(
+      () => import("@/component/ui/LazyImage.vue")
+    ),
   },
   setup() {
     const isModalOpen = ref(false);
@@ -113,7 +115,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .no-scroll {
   overflow: hidden;
 }
@@ -142,7 +144,6 @@ export default defineComponent({
 }
 .modal-content {
   background-color: transparent;
-  padding: 20px;
   border-radius: 8px;
   max-height: 90vh;
   max-width: 90vw;

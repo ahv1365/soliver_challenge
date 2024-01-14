@@ -1,6 +1,6 @@
-import { Article } from "@/types/interfaces";
+import { Article } from "@/type/article";
 import productService from "./productService";
-import { log } from "@/decorators/log";
+import { log } from "@/decorator/log";
 
 export default class GetData {
   /**

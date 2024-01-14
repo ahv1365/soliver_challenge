@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
-import ProductPage from "@/components/ProductPage.vue";
-import { Variants } from "@/mocks/data";
+import ProductPage from "@/page/product/ProductPage.vue";
+import { Variants } from "@/mock/data";
 
 jest.mock("@/composables/useProductData", () => ({
   useProductData: () => ({

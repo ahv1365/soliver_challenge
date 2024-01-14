@@ -1,6 +1,6 @@
 <template>
-  <div
-    class="flex-1 w-full md:w-1/3 lg:w-1/3 relative overflow-hidden"
+  <section
+    class="product-gallary flex-1 w-full md:w-1/3 lg:w-1/3 relative overflow-hidden"
     :class="{ 'full-screen': isFullScreen }"
     @mousedown="startSwipe"
     @mousemove="onSwipe"
@@ -50,13 +50,13 @@
         @click="goToSlide(index)"
       ></div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, ref, computed } from "vue";
-import { Article } from "@/types/interfaces";
-import LoaderComponent from "@/components/Containers/LoaderComponent.vue";
+import { Article } from "@/type/article";
+import LoaderComponent from "@/component/ui/Loader.vue";
 
 export default defineComponent({
   name: "ImageCarousel",
@@ -220,3 +220,4 @@ export default defineComponent({
   opacity: 0;
 }
 </style>
+@/types/article

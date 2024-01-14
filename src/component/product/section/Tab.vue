@@ -1,10 +1,13 @@
 <template>
-  <div class="tabs bg-gray-100 min-h-[50%]" v-if="tabs">
-    <ul class="tab-list px-3 py-5">
+  <section
+    class="product-more-info px-2 bg-bg-secondary min-h-[50%]"
+    v-if="tabs"
+  >
+    <ul class="tab-list py-5">
       <li
         v-for="(tab, index) in tabs"
         :key="index"
-        class="text-xs font-bold"
+        class="text-text-secondary font-bold"
         :class="{
           active: activeTabContent
             ? activeTab === tab?.tab
@@ -27,22 +30,22 @@
         :tabContent="tabs[0]?.content"
       />
     </div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
-import FitTab from "../ProductDetail/FitTab.vue";
-import ProductDetailsTab from "../ProductDetail/ProductDetailsTab.vue";
-import SustainabilityTab from "../ProductDetail/SustainabilityTab.vue";
-import MaterialCareTab from "../ProductDetail/MaterialCareTab.vue";
+import FitTab from "./tab/FitTab.vue";
+import ProductDetailsTab from "./tab/ProductDetailsTab.vue";
+import SustainabilityTab from "./tab/SustainabilityTab.vue";
+import MaterialCareTab from "./tab/MaterialCareTab.vue";
 import {
   FitDetails,
   MaterialAndCare,
   ProductDetailInfo,
   Sustainability,
   TabContent,
-} from "@/types/interfaces";
+} from "@/type/tab";
 
 export default defineComponent({
   name: "TabsComponent",
@@ -93,3 +96,4 @@ export default defineComponent({
   padding: 10px;
 }
 </style>
+@/types/article

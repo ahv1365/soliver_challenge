@@ -1,9 +1,9 @@
 <template>
-  <div class="accordion text-left px-2">
+  <section class="product-more-info accordion text-left px-2">
     <div class="accordion-item" v-for="(tab, index) in tabs" :key="index">
       <button
         type="button"
-        class="accordion-button text-sm font-bold m-auto"
+        class="accordion-button text-text-secondary font-bold m-auto"
         @click="setActiveAcc(tab)"
       >
         {{ tab.label.toUpperCase() }}
@@ -21,7 +21,7 @@
         />
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">
@@ -32,11 +32,11 @@ import {
   ProductDetailInfo,
   Sustainability,
   TabContent,
-} from "@/types/interfaces";
-import FitTab from "../ProductDetail/FitTab.vue";
-import ProductDetailsTab from "../ProductDetail/ProductDetailsTab.vue";
-import SustainabilityTab from "../ProductDetail/SustainabilityTab.vue";
-import MaterialCareTab from "../ProductDetail/MaterialCareTab.vue";
+} from "@/type/tab";
+import FitTab from "./tab/FitTab.vue";
+import ProductDetailsTab from "./tab/ProductDetailsTab.vue";
+import SustainabilityTab from "./tab/SustainabilityTab.vue";
+import MaterialCareTab from "./tab/MaterialCareTab.vue";
 
 export default defineComponent({
   name: "AccordionComponent",
@@ -103,3 +103,4 @@ export default defineComponent({
   background-color: white;
 }
 </style>
+@/types/article
