@@ -105,7 +105,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-/* Add styles specific to product details */
-</style>

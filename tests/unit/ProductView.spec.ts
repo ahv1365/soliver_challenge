@@ -3,7 +3,7 @@ import ProductView from "@/component/product/ProductView.vue";
 import { ref } from "vue";
 import { productDetails } from "@/mock/data";
 
-jest.mock("@/composables/useProductData", () => ({
+jest.mock("@/composable/useProductData", () => ({
   useProductData: () => ({
     article: ref({
       // Mock the expected structure of the article
