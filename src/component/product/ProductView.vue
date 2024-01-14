@@ -5,7 +5,7 @@
   >
     <div
       v-if="article"
-      class="absolute inset-2 md:inset-5 lg:inset-10 xl:inset-15 mx-auto border w-1/1 md:w-5/6 lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-bg overflow-auto"
+      class="absolute inset-2 md:inset-5 lg:inset-10 xl:inset-15 lx-h:h-fit m-auto border w-1/1 md:w-5/6 lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-bg overflow-auto"
     >
       <CloseButton @close="closeModal" />
       <div class="container mx-auto my-0 px-5 py-5">

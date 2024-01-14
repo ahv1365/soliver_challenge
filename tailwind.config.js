@@ -4,6 +4,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        "lx-h": { raw: "(min-height: 1000px) and (min-width: 768px)" },
+      },
       colors: {
         bg: "var(--color-bg)",
         "bg-secondary": "var(--color-bg-secondary)",
