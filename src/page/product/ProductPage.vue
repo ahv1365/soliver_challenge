@@ -115,10 +115,12 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
 .no-scroll {
   overflow: hidden;
 }
+</style>
+<style scoped>
 .modal-enter-active {
   transition: opacity 0.5s, transform 0.3s;
 }
