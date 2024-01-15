@@ -39,13 +39,13 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { useProductData } from "@/composable/useProductData";
-import CloseButton from "@/component/ui/CloseButton.vue";
-import StickyFooter from "./section/StickyFooter.vue";
-import ProductDetails from "./section/ProductDetails.vue";
-import AccordionComponent from "./section/Accordion.vue";
-import TabsComponent from "./section/Tab.vue";
-import ImageCarousel from "./section/ImageCarousel.vue";
+import { useProductData } from "@/composables/useProductData";
+import CloseButton from "@/components/shared/CloseButton.vue";
+import StickyFooter from "@/components/product/product-sections/StickyFooter.vue";
+import ProductDetails from "@/components/product/product-sections/ProductDetails.vue";
+import AccordionComponent from "@/components/product/product-sections/Accordion.vue";
+import TabsComponent from "@/components/product/product-sections/Tab.vue";
+import ImageCarousel from "@/components/product/product-sections/ImageCarousel.vue";
 
 export default defineComponent({
   name: "ProductView",

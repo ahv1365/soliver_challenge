@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { FitDetails } from "@/type/tab";
+import { FitDetails } from "@/types/tab";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
@@ -33,4 +33,3 @@ export default defineComponent({
   },
 });
 </script>
-@/types/article

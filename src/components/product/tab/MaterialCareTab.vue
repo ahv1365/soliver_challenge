@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { MaterialAndCare } from "@/type/tab";
+import { MaterialAndCare } from "@/types/tab";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
@@ -30,4 +30,3 @@ export default defineComponent({
   },
 });
 </script>
-@/types/article

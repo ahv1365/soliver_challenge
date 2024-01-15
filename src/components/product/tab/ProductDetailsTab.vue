@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { ProductDetailInfo } from "@/type/tab";
+import { ProductDetailInfo } from "@/types/tab";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
@@ -26,4 +26,3 @@ export default defineComponent({
   },
 });
 </script>
-@/types/article

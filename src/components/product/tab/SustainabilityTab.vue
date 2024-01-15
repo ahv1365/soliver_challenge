@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { Sustainability } from "@/type/tab";
+import { Sustainability } from "@/types/tab";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
@@ -37,4 +37,3 @@ export default defineComponent({
   },
 });
 </script>
-@/types/article

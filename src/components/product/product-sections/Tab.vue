@@ -35,17 +35,17 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
-import FitTab from "./tab/FitTab.vue";
-import ProductDetailsTab from "./tab/ProductDetailsTab.vue";
-import SustainabilityTab from "./tab/SustainabilityTab.vue";
-import MaterialCareTab from "./tab/MaterialCareTab.vue";
+import FitTab from "@/components/product/tab/FitTab.vue";
+import ProductDetailsTab from "@/components/product/tab/ProductDetailsTab.vue";
+import SustainabilityTab from "@/components/product/tab/SustainabilityTab.vue";
+import MaterialCareTab from "@/components/product/tab/MaterialCareTab.vue";
 import {
   FitDetails,
   MaterialAndCare,
   ProductDetailInfo,
   Sustainability,
   TabContent,
-} from "@/type/tab";
+} from "@/types/tab";
 
 export default defineComponent({
   name: "TabsComponent",
@@ -96,4 +96,3 @@ export default defineComponent({
   padding: 10px;
 }
 </style>
-@/types/article

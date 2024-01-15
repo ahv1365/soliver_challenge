@@ -1,22 +1,29 @@
-import { mount, VueWrapper } from '@vue/test-utils';
-import { nextTick } from 'vue';
-import ProductPage from '@/page/product/ProductPage.vue';
-import ProductView from '@/component/product/ProductView.vue';
-import LazyImage from '@/component/ui/LazyImage.vue';
+import { mount, VueWrapper } from "@vue/test-utils";
+import { nextTick } from "vue";
+import ProductPage from "@/pages/ProductPage.vue";
+import ProductView from "@/pages/product/ProductView.vue";
+import LazyImage from "@/components/shared/LazyImage.vue";
 
-jest.mock('@/composable/useProductData', () => ({
+jest.mock("@/composables/useProductData", () => ({
   useProductData: jest.fn().mockReturnValue({
     article: {
-      variants: [{ id: '1', image: 'image1.jpg', colorHEX: '#FFFFFF', colorLabel: 'White' }, /* other variants */],
-      name: 'Mock Product',
-      price: '10.00',
-      currency: { symbol: '$' },
+      variants: [
+        {
+          id: "1",
+          image: "image1.jpg",
+          colorHEX: "#FFFFFF",
+          colorLabel: "White",
+        } /* other variants */,
+      ],
+      name: "Mock Product",
+      price: "10.00",
+      currency: { symbol: "$" },
     },
     selectColor: jest.fn(),
   }),
 }));
 
-describe('ProductPage.vue', () => {
+describe("ProductPage.vue", () => {
   let wrapper: VueWrapper<any>;
 
   beforeEach(() => {
@@ -28,8 +35,8 @@ describe('ProductPage.vue', () => {
         },
         stubs: {
           ProductDetails: {
-            props: ['selectColor', 'sizeClass', 'article'],
-            template: '<div></div>', // Stub with a simple template
+            props: ["selectColor", "sizeClass", "article"],
+            template: "<div></div>", // Stub with a simple template
           },
         },
       },
@@ -40,9 +47,9 @@ describe('ProductPage.vue', () => {
     wrapper.unmount();
   });
 
-  it('initializes with correct default data', () => {
+  it("initializes with correct default data", () => {
     expect(wrapper.vm.isModalOpen).toBe(false);
-    expect(wrapper.vm.selectedProduct).toBe('1');
+    expect(wrapper.vm.selectedProduct).toBe("1");
     // ... other default data assertions
   });
 

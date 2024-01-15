@@ -77,7 +77,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { Article } from "@/type/article";
+import { Article } from "@/types/article";
 import SizeDropdown from "./SizeDropdown.vue";
 
 export default defineComponent({

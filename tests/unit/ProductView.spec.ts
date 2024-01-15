@@ -1,9 +1,9 @@
 import { mount } from "@vue/test-utils";
-import ProductView from "@/component/product/ProductView.vue";
+import ProductView from "@/pages/product/ProductView.vue";
 import { ref } from "vue";
-import { productDetails } from "@/mock/data";
+import { productDetails } from "@/mocks/data";
 
-jest.mock("@/composable/useProductData", () => ({
+jest.mock("@/composables/useProductData", () => ({
   useProductData: () => ({
     article: ref({
       // Mock the expected structure of the article

@@ -62,16 +62,16 @@ import {
   ref,
   watchEffect,
 } from "vue";
-import ProductView from "@/component/product/ProductView.vue";
-import { useProductData } from "@/composable/useProductData";
+import { useProductData } from "@/composables/useProductData";
+import LazyImage from "@/components/shared/LazyImage.vue";
 
 export default defineComponent({
   name: "ProductPage",
   components: {
-    ProductView,
-    LazyImage: defineAsyncComponent(
-      () => import("@/component/ui/LazyImage.vue")
+    ProductView: defineAsyncComponent(
+      () => import("./product/ProductView.vue")
     ),
+    LazyImage,
   },
   setup() {
     const isModalOpen = ref(false);

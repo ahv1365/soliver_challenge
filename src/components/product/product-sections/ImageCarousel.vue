@@ -55,8 +55,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, computed } from "vue";
-import { Article } from "@/type/article";
-import LoaderComponent from "@/component/ui/Loader.vue";
+import { Article } from "@/types/article";
+import LoaderComponent from "@/components/shared/Loader.vue";
 
 export default defineComponent({
   name: "ImageCarousel",
@@ -220,4 +220,3 @@ export default defineComponent({
   opacity: 0;
 }
 </style>
-@/types/article

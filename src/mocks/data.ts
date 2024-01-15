@@ -1,5 +1,5 @@
-import { Variant } from "@/type/article";
-import { TabContent } from "@/type/tab";
+import { Variant } from "@/types/article";
+import { TabContent } from "@/types/tab";
 
 export const Variants: Variant[] = [
   {

@@ -1,6 +1,6 @@
 import { ref, computed, onMounted } from "vue";
-import { Article } from "@/type/article";
-import GetData from "@/service/getData";
+import { Article } from "@/types/article";
+import GetData from "@/services/getData";
 
 const dataService = new GetData();
 

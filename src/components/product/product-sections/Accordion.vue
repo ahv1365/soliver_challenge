@@ -32,11 +32,11 @@ import {
   ProductDetailInfo,
   Sustainability,
   TabContent,
-} from "@/type/tab";
-import FitTab from "./tab/FitTab.vue";
-import ProductDetailsTab from "./tab/ProductDetailsTab.vue";
-import SustainabilityTab from "./tab/SustainabilityTab.vue";
-import MaterialCareTab from "./tab/MaterialCareTab.vue";
+} from "@/types/tab";
+import FitTab from "@/components/product/tab/FitTab.vue";
+import ProductDetailsTab from "@/components/product/tab/ProductDetailsTab.vue";
+import SustainabilityTab from "@/components/product/tab/SustainabilityTab.vue";
+import MaterialCareTab from "@/components/product/tab/MaterialCareTab.vue";
 
 export default defineComponent({
   name: "AccordionComponent",
@@ -103,4 +103,3 @@ export default defineComponent({
   background-color: white;
 }
 </style>
-@/types/article
