@@ -2,7 +2,7 @@
   <div class="product-size-dropdown">
     <!-- Clickable input/button to show sizes -->
     <button class="product-size-dropdown__button" @click="toggleSizeList">
-      {{ selected || "Select Size" }}
+      {{ selectedSize || "Select Size" }}
     </button>
     <!-- List of sizes -->
     <ul v-show="showSizes">
@@ -10,10 +10,10 @@
         v-for="size in sizes"
         :key="size"
         :class="{
-          'font-bold': size === selected,
+          'font-bold': size === selectedSize,
           'text-text-secondary-light': !availableSizes.includes(size),
         }"
-        @click="selectSize(size, availableSizes)"
+        @click="selectSize(size)"
       >
         {{ size }}
       </li>
@@ -22,12 +22,23 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent, PropType } from "vue";
+
+export default defineComponent({
   name: "SizeDropdown",
   props: {
-    sizes: Array,
-    selected: String,
-    availableSizes: Array,
+    sizes: {
+      type: Array as PropType<string[]>,
+      default: () => [],
+    },
+    selected: {
+      type: String,
+      default: "",
+    },
+    availableSizes: {
+      type: Array as PropType<string[]>,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -39,18 +50,15 @@ export default {
     toggleSizeList() {
       this.showSizes = !this.showSizes;
     },
-    selectSize(size: string, availableSizes: string) {
-      if (availableSizes.includes(size)) {
+    selectSize(size: string) {
+      if (this.availableSizes.includes(size)) {
         this.selectedSize = size;
         this.showSizes = false;
         this.$emit("size-selected", this.selectedSize);
       }
     },
-    onSizeChange() {
-      this.$emit("size-selected", this.selectedSize);
-    },
   },
-};
+});
 </script>
 
 <style scoped>
