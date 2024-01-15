@@ -1,21 +1,14 @@
 <template>
-  <div class="size-dropdown relative text-left">
+  <div class="product-size-dropdown">
     <!-- Clickable input/button to show sizes -->
-    <button
-      class="w-full text-text-secondary font-bold text-left pl-3 bg-gray-100 rounded-md p-2 mt-3"
-      @click="toggleSizeList"
-    >
+    <button class="product-size-dropdown__button" @click="toggleSizeList">
       {{ selected || "Select Size" }}
     </button>
     <!-- List of sizes -->
-    <ul
-      v-show="showSizes"
-      class="absolute z-10 bg-white w-full rounded-md mt-1 shadow-lg"
-    >
+    <ul v-show="showSizes">
       <li
         v-for="size in sizes"
         :key="size"
-        class="px-3 py-2 text-text-secondary cursor-pointer"
         :class="{
           'font-bold': size === selected,
           'text-text-secondary-light': !availableSizes.includes(size),
@@ -28,7 +21,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: "SizeDropdown",
   props: {
@@ -46,7 +39,7 @@ export default {
     toggleSizeList() {
       this.showSizes = !this.showSizes;
     },
-    selectSize(size, availableSizes) {
+    selectSize(size: string, availableSizes: string) {
       if (availableSizes.includes(size)) {
         this.selectedSize = size;
         this.showSizes = false;
@@ -61,7 +54,14 @@ export default {
 </script>
 
 <style scoped>
-.size-dropdown ul {
+.product-size-dropdown {
+  @apply relative text-left;
+}
+.product-size-dropdown__button {
+  @apply w-full text-text-secondary font-bold text-left pl-3 bg-gray-100 rounded-md p-2 mt-3;
+}
+.product-size-dropdown ul {
+  @apply absolute z-10 bg-white w-full rounded-md mt-1 shadow-lg;
   position: absolute;
   width: 100%;
   box-sizing: border-box;
@@ -70,11 +70,12 @@ export default {
   list-style-type: none;
 }
 
-.size-dropdown li {
+.product-size-dropdown li {
+  @apply px-3 py-2 text-text-secondary cursor-pointer;
   box-sizing: border-box;
 }
 
-.size-dropdown li:hover {
+.product-size-dropdown li:hover {
   background-color: #f3f3f3;
 }
 </style>

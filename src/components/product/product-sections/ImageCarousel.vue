@@ -1,6 +1,6 @@
 <template>
   <section
-    class="product-gallary flex-1 w-full md:w-1/3 lg:w-1/3 relative overflow-hidden"
+    class="product-gallery"
     :class="{ 'full-screen': isFullScreen }"
     @mousedown="startSwipe"
     @mousemove="onSwipe"
@@ -155,6 +155,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.product-gallery {
+  @apply flex-1 w-full md:w-1/3 lg:w-1/3 relative overflow-hidden;
+}
 .carousel {
   position: relative;
   max-width: 100%;

@@ -1,5 +1,7 @@
 <template>
+  <!-- Demo Purposes -->
   <LogoSplash />
+  <!-- Demo Purposes -->
   <div
     class="flex justify-center items-center py-5 w-full absolute overflow-hidden"
   >
@@ -10,6 +12,7 @@
       loading="lazy"
     />
   </div>
+  <!-- Demo Purposes Design -->
   <ProductPage />
 </template>
 

@@ -1,16 +1,20 @@
 <template>
-  <section class="product-more-info accordion text-left px-2">
-    <div class="accordion-item" v-for="(tab, index) in tabs" :key="index">
+  <section class="product-info--more accordion text-left px-2">
+    <div
+      class="product-info--more__accordion-item"
+      v-for="(tab, index) in tabs"
+      :key="index"
+    >
       <button
         type="button"
-        class="accordion-button text-text-secondary font-bold m-auto"
+        class="product-info--more__accordion-button text-text-secondary font-bold m-auto"
         @click="setActiveAcc(tab)"
       >
         {{ tab.label.toUpperCase() }}
       </button>
       <div
         v-if="activeTab === tab?.tab && activeTabContent"
-        class="accordion-content"
+        class="product-info--more__accordion-content"
       >
         <!-- Include the tab content component here -->
         <component
@@ -78,7 +82,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.accordion-button {
+.product-info--more__accordion-button {
   border: none;
   border-bottom: 1px solid #ccc; /* Light grey border for bottom */
   cursor: pointer;
@@ -91,13 +95,13 @@ export default defineComponent({
 }
 
 /* Active accordion button styles */
-.accordion-button.active {
+.product-info--more_-accordion-button.active {
   background-color: #f1f1f1; /* Light grey background for active tab */
   border-bottom: 1px solid #000; /* Black border for bottom when active */
 }
 
 /* Accordion content styles */
-.accordion-content {
+.product-info--more__accordion-content {
   transition: max-height 0.5s ease-out;
   overflow: hidden;
   background-color: white;

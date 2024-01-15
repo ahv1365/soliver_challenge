@@ -1,13 +1,9 @@
 <template>
-  <section
-    class="product-more-info px-2 bg-bg-secondary min-h-[50%]"
-    v-if="tabs"
-  >
-    <ul class="tab-list py-5">
+  <section class="product-info--more" v-if="tabs">
+    <ul>
       <li
         v-for="(tab, index) in tabs"
         :key="index"
-        class="text-text-secondary font-bold"
         :class="{
           active: activeTabContent
             ? activeTab === tab?.tab
@@ -18,7 +14,7 @@
         {{ tab?.label.toUpperCase() }}
       </li>
     </ul>
-    <div class="tab-content h-min">
+    <div class="product-info--more__tab-content">
       <component
         :is="activeTab"
         v-if="activeTabContent"
@@ -81,18 +77,22 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.tab-list {
-  list-style-type: none;
-  display: flex;
+.product-info--more {
+  @apply px-2 bg-bg-secondary min-h-[50%];
 }
-.tab-list li {
-  cursor: pointer;
+.product-info--more ul {
+  @apply flex py-5;
+  list-style-type: none;
+}
+.product-info--more li {
+  @apply cursor-pointer text-text-secondary font-bold;
   padding: 10px;
 }
-.tab-list li.active {
+.product-info--more li.active {
   border-bottom: 3px solid #343434;
 }
-.tab-content {
+.product-info--more__tab-content {
+  @apply min-h-min;
   padding: 10px;
 }
 </style>

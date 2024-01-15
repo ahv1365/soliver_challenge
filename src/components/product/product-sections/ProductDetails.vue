@@ -1,5 +1,5 @@
 <template>
-  <section class="product-detail flex-1 mt-8 md:mt-0 md:ml-8">
+  <section class="product-detail">
     <p
       class="text-text-secondary font-extrabold mb-2 w-fit px-1 text-left bg-bg-secondary"
     >
@@ -70,7 +70,7 @@
       :sizes="article?.sizes"
       :selected="article?.size"
       :availableSizes="article?.availableSizes"
-      @size-selected="(size) => selectSize(size)"
+      @size-selected="(size: string) => selectSize(size)"
     />
   </section>
 </template>
@@ -105,3 +105,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.product-detail {
+  @apply flex-1 mt-8 md:mt-0 md:ml-8;
+}
+</style>

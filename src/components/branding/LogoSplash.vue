@@ -1,7 +1,6 @@
 <template>
   <div v-if="showLogo" class="logo-container">
     <img
-      class="logo"
       alt="soliver logo"
       :src="`./assets/images/SOliver-Logo.svg`"
       loading="lazy"
@@ -46,7 +45,7 @@ export default class LogoSplash extends Vue {
   }
 }
 
-.logo {
+.logo-container img {
   height: 80px;
 }
 </style>

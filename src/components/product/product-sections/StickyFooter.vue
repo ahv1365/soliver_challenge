@@ -1,17 +1,13 @@
 <template>
-  <footer
-    class="sticky-footer bg-white flex justify-between w-full p-2 shadow-inner top-shadow"
-  >
-    <p
-      class="font-medium px-5 py-3 overflow-hidden whitespace-nowrap text-ellipsis"
-    >
+  <footer class="product-sticky-footer">
+    <p class="product-sticky-footer__name">
       {{ articleName }}
     </p>
     <button
-      class="text-xs w-auto h-full my-auto px-4 py-1 bg-black text-white font-medium hover:bg-gray-800"
+      class="product-sticky-footer--add-card__button"
       @click="addToCart(articleName)"
     >
-      <div class="flex font-extrabold space-x-10 whitespace-nowrap">
+      <div class="product-sticky-footer--add-card__text">
         Add to Cart
         <font-awesome-icon class="m-auto pl-10" icon="shopping-cart" />
       </div>
@@ -44,9 +40,16 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.sticky-footer {
-  position: sticky;
-  bottom: 0;
-  right: 0;
+.product-sticky-footer {
+  @apply sticky bottom-0 right-0 bg-white flex justify-between w-full p-2 shadow-inner;
+}
+.product-sticky-footer__name {
+  @apply font-medium px-5 py-3 overflow-hidden whitespace-nowrap text-ellipsis;
+}
+.product-sticky-footer--add-card__button {
+  @apply text-xs w-auto h-full my-auto px-4 py-1 bg-black text-white font-medium hover:bg-gray-800;
+}
+.product-sticky-footer--add-card__text {
+  @apply flex font-extrabold space-x-10 whitespace-nowrap;
 }
 </style>

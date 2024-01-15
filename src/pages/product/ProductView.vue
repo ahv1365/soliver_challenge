@@ -1,39 +1,26 @@
 <template>
-  <div
-    class="transition-opacity duration-500"
-    :class="{ 'opacity-0': !article }"
-  >
-    <div
-      v-if="article"
-      class="absolute inset-2 md:inset-2 lg:inset-10 xl:inset-15 lx-h:h-fit m-auto border lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-bg overflow-auto"
-    >
-      <CloseButton @close="closeModal" />
-      <div class="container mx-auto my-0 px-5 py-5">
-        <div class="flex flex-col md:flex-row">
-          <ImageCarousel :article="article" />
-          <ProductDetails
-            :article="article"
-            :selectColor="selectColor"
-            :sizeClass="sizeClass"
-            :selectSize="selectSize"
-          />
-        </div>
-      </div>
-      <TabsComponent
-        v-if="article.tabs"
-        class="hidden md:block"
-        :tabs="article?.tabs"
-      />
-      <AccordionComponent
-        v-if="article.tabs"
-        class="block md:hidden"
-        :tabs="article?.tabs"
-      />
-      <StickyFooter
-        :articleName="article?.name"
-        @add-to-cart="handleAddToCart"
+  <div v-if="article" :class="{ 'opacity-0': !article }" class="product-view">
+    <CloseButton @close="closeModal" />
+    <div class="product-view--container">
+      <ImageCarousel :article="article" />
+      <ProductDetails
+        :article="article"
+        :selectColor="selectColor"
+        :sizeClass="sizeClass"
+        :selectSize="selectSize"
       />
     </div>
+    <TabsComponent
+      v-if="article.tabs"
+      class="product-view--tab"
+      :tabs="article?.tabs"
+    />
+    <AccordionComponent
+      v-if="article.tabs"
+      class="product-view--accordion"
+      :tabs="article?.tabs"
+    />
+    <StickyFooter :articleName="article?.name" @add-to-cart="handleAddToCart" />
   </div>
 </template>
 
@@ -88,3 +75,17 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.product-view {
+  @apply transition-opacity duration-500 absolute inset-2 md:inset-2 lg:inset-10 xl:inset-16 max-h-[1000px] m-auto border lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-bg overflow-auto;
+}
+.product-view--tab {
+  @apply hidden md:block;
+}
+.product-view--accordion {
+  @apply block md:hidden;
+}
+.product-view--container {
+  @apply container mx-auto my-0 px-5 py-5 flex flex-col md:flex-row;
+}
+</style>
