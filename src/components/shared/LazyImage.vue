@@ -1,18 +1,42 @@
 <template>
-  <div class="image-container">
+  <div
+    class="image-container"
+    :style="{
+      minHeight: `${minHeight}`,
+      minWidth: `${minWidth}`,
+    }"
+    :class="containerClass"
+  >
     <img
       v-if="loaded"
       :src="imageUrl"
       :alt="altText"
-      class="object-cover w-full h-full"
-      :class="{ 'image-transition': loaded, 'image-loaded': !loaded }"
+      :style="{
+        height: `${height}`,
+        width: `${width}`,
+        'object-fit': 'contain',
+      }"
+      :class="{
+        'image-transition': loaded,
+        'image-loaded': !loaded,
+      }"
     />
-    <div v-else class="loader-placeholder"></div>
+    <div
+      v-else
+      class="loader-placeholder"
+      :style="{
+        minHeight: `${minHeight}`,
+        minWidth: `${minWidth}`,
+      }"
+    >
+      <LoaderComponent />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
+import LoaderComponent from "@/components/shared/Loader.vue";
 
 export default defineComponent({
   name: "LazyImage",
@@ -25,6 +49,29 @@ export default defineComponent({
       type: String,
       default: "",
     },
+    width: {
+      type: String,
+      default: "auto",
+    },
+    height: {
+      type: String,
+      default: "auto",
+    },
+    minWidth: {
+      type: String,
+      default: "10px",
+    },
+    minHeight: {
+      type: String,
+      default: "10px",
+    },
+    containerClass: {
+      type: [Object, String, Array],
+      default: () => ({}),
+    },
+  },
+  components: {
+    LoaderComponent,
   },
   setup(props) {
     const loaded = ref(false);
@@ -58,16 +105,8 @@ export default defineComponent({
 }
 .image-container {
   position: relative;
-  width: var(--image-width);
-  height: var(--image-height);
-  background-color: white;
 }
 .loader-placeholder {
-  width: 50vh;
-  height: 50vh;
   background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 </style>

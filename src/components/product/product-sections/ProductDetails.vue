@@ -1,11 +1,16 @@
 <template>
   <section class="product-detail">
-    <p
-      class="text-text-secondary font-extrabold mb-2 w-fit px-1 text-left bg-bg-secondary"
-    >
-      New
-    </p>
-    <p class="text-text font-extrabold mb-3 w-full text-left">
+    <div class="flex">
+      <div
+        class="product-detail--sustainable"
+        data-e2e="SUSTAINABLE-badge-test"
+      >
+        Sustainable
+      </div>
+      <div class="product-detail--new" data-e2e="NEW-badge-test">NEW</div>
+    </div>
+
+    <p class="text-text mb-3 w-full text-left">
       {{ article?.name }}
     </p>
     <div class="flex mb-2 w-full m-auto">
@@ -32,7 +37,6 @@
           v-for="variant in article.variants"
           :key="variant.colorLabel"
           :src="`/assets/images/${variant.image}`"
-          loading="lazy"
           :class="{
             border: article?.color === variant.colorLabel,
           }"
@@ -109,5 +113,14 @@ export default defineComponent({
 <style scoped>
 .product-detail {
   @apply flex-1 mt-8 md:mt-0 md:ml-8;
+}
+.product-detail--sustainable {
+  @apply text-text-secondary font-extrabold mb-2 w-fit px-1;
+  background-color: rgb(2 136 82);
+  color: rgb(255 255 255);
+}
+
+.product-detail--new {
+  @apply text-text-secondary font-extrabold mb-2 w-fit px-1 text-left bg-bg-secondary mx-2;
 }
 </style>

@@ -12,28 +12,27 @@
   >
     <div class="carousel-inner" :style="carouselStyle">
       <!-- Loader displayed when isLoading is true -->
-      <LoaderComponent :loaded="imageLoaded" />
-
-      <input
-        type="image"
+      <LazyImage
         v-for="(image, index) in article?.images"
-        :key="index"
+        :key="`image-${index}`"
         :src="`/assets/images/${image}`"
-        :class="{
-          'object-contain': isFullScreen,
+        alt="Product"
+        class="product-page--card__lazy-image"
+        :minHeight="`450px`"
+        :minWidth="`300px`"
+        :height="isFullScreen ? `100vh` : `auto`"
+        :width="`100vw`"
+        :containerClass="{
           'h-screen': isFullScreen,
           'cursor-zoom-in': !isFullScreen,
           'cursor-zoom-out': isFullScreen,
           'carousel-item': true,
           active: currentSlide === index,
-          'image-transition': true,
-          'image-loaded': !imageLoaded,
+          'bg-black': isFullScreen,
         }"
-        placeholder="`/assets/images/placeholder.jpg`"
+        data-e2e="product-page-card-lazy-image-test"
         @click="toggleFullScreen"
-        loading="lazy"
         @load="imageLoaded = true"
-        alt="Product image"
       />
     </div>
     <div
@@ -56,7 +55,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, computed } from "vue";
 import { Article } from "@/types/article";
-import LoaderComponent from "@/components/shared/Loader.vue";
+import LazyImage from "@/components/shared/LazyImage.vue";
 
 export default defineComponent({
   name: "ImageCarousel",
@@ -67,7 +66,7 @@ export default defineComponent({
     },
   },
   components: {
-    LoaderComponent,
+    LazyImage,
   },
   setup(props, { emit }) {
     const currentSlide = ref(0);
@@ -201,25 +200,16 @@ export default defineComponent({
 
 .full-screen {
   position: fixed;
-  top: 0;
+  top: 0px;
   left: 0;
-  width: calc(100vw);
-  height: calc(100vh);
+  width: 100vw;
+  height: 100vh;
   z-index: 1000;
   transform: translate(0%, 0%) scale(1);
   transform-origin: center center;
   transition: transform 1.5s ease-in-out;
-  background-color: rgb(0, 0, 0);
-  padding: 10px;
+  /* padding: 10px; */
   box-sizing: border-box;
-  overflow: auto;
-}
-.image-transition {
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.image-loaded {
-  opacity: 0;
+  /* overflow: auto; */
 }
 </style>

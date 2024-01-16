@@ -6,7 +6,15 @@
       <div>{{ tabContent?.collar.content }}</div>
       <div>{{ tabContent?.sleeve.content }}</div>
       <div>{{ tabContent?.pockets.content }}</div>
-      <div>
+      <div class="whitespace-break-spaces flex mt-3">
+        <div class="bg-white mr-3 p-2 rounded-full">
+          <img
+            alt="shopping-cart"
+            :src="`./assets/icons/${tabContent?.itemNumber.icon}.svg`"
+            class="my-auto w-5 h-5"
+          />
+        </div>
+
         {{ tabContent?.itemNumber.content }}
       </div>
     </div>

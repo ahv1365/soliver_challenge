@@ -1,5 +1,5 @@
 <template>
-  <section class="product-info--more accordion text-left px-2">
+  <section class="product-info--more">
     <div
       class="product-info--more__accordion-item"
       v-for="(tab, index) in tabs"
@@ -82,6 +82,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.product-info--more {
+  @apply text-left px-2;
+}
 .product-info--more__accordion-button {
   border: none;
   border-bottom: 1px solid #ccc; /* Light grey border for bottom */
@@ -95,7 +98,7 @@ export default defineComponent({
 }
 
 /* Active accordion button styles */
-.product-info--more_-accordion-button.active {
+.product-info--more__accordion-button.active {
   background-color: #f1f1f1; /* Light grey background for active tab */
   border-bottom: 1px solid #000; /* Black border for bottom when active */
 }

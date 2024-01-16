@@ -13,21 +13,49 @@ Before you begin, ensure you have met the following requirements:
 To build the Docker image for the Soliver app, follow these steps:
 
 1. Clone the repository:
+
    ```sh
    git clone https://github.com/ahv1365/soliver_challenge.git
    cd soliver_challenge
 
    ```
+
 2. docker build -t soliver-app .
+
+# ------------------------------------------------
 
 ## Running the Docker Container
 
-- docker run -d -p 8080:80 --name soliver-container soliver-app
+- docker run -d -p 8081:80 --name soliver soliver-app
 
 ## Stopping the Container
 
-- docker stop soliver-container
+- docker stop soliver
 
 ## Removing the Container
 
-- docker rm soliver-container
+- docker rm soliver
+
+# ------------------------------------------------
+
+# Update the container
+
+## Pull the Latest Image
+
+- docker pull soliver:soliver-app:latest
+
+## Stop the Running Container
+
+- docker stop soliver-app
+
+## Remove the Old Container
+
+- docker rm soliver-app
+
+## Start a New Container with the Updated Image
+
+- docker run -d --name soliver-app -p 8081:8081 soliver:soliver-app:latest
+
+## Optional - Clean Up Old Images
+
+-docker rmi soliver:soliver-app:<old_tag>

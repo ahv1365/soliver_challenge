@@ -9,7 +9,6 @@
       class="h-10 items-center"
       alt="soliver logo"
       :src="`./assets/images/SOliver-Logo.svg`"
-      loading="lazy"
     />
   </div>
   <!-- Demo Purposes Design -->

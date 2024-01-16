@@ -1,10 +1,6 @@
 <template>
   <div v-if="showLogo" class="logo-container">
-    <img
-      alt="soliver logo"
-      :src="`./assets/images/SOliver-Logo.svg`"
-      loading="lazy"
-    />
+    <img alt="soliver logo" :src="`./assets/images/SOliver-Logo.svg`" />
   </div>
 </template>
 

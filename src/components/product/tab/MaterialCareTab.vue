@@ -8,7 +8,12 @@
       >
         <p class="font-bold">{{ item.label }}</p>
         <p class="flex items-center">
-          <font-awesome-icon :icon="item.icon" v-if="item.icon" class="mr-2" />
+          <img
+            :alt="item.icon"
+            :src="`./assets/icons/${item.icon}.svg`"
+            v-if="item.icon"
+            class="mr-2 w-6 h-6"
+          />
           {{ item.content }}
         </p>
       </div>

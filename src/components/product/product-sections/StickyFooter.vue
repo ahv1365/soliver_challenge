@@ -9,7 +9,11 @@
     >
       <div class="product-sticky-footer--add-card__text">
         Add to Cart
-        <font-awesome-icon class="m-auto pl-10" icon="shopping-cart" />
+        <img
+          alt="shopping-cart"
+          :src="`./assets/icons/shopping-cart.svg`"
+          class="my-auto py-0 ml-10 w-3 h-3 invert"
+        />
       </div>
     </button>
   </footer>
@@ -17,13 +21,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 export default defineComponent({
   name: "StickyFooter",
-  components: {
-    FontAwesomeIcon,
-  },
   props: {
     articleName: {
       type: String as PropType<string>,
@@ -44,10 +44,10 @@ export default defineComponent({
   @apply sticky bottom-0 right-0 bg-white flex justify-between w-full p-2 shadow-inner;
 }
 .product-sticky-footer__name {
-  @apply font-medium px-5 py-3 overflow-hidden whitespace-nowrap text-ellipsis;
+  @apply text-text px-5 py-3 overflow-hidden whitespace-nowrap text-ellipsis;
 }
 .product-sticky-footer--add-card__button {
-  @apply text-xs w-auto h-full my-auto px-4 py-1 bg-black text-white font-medium hover:bg-gray-800;
+  @apply text-xs w-auto h-full my-auto px-3 py-1 bg-black text-white font-medium hover:bg-gray-800;
 }
 .product-sticky-footer--add-card__text {
   @apply flex font-extrabold space-x-10 whitespace-nowrap;

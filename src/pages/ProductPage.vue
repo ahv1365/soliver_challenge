@@ -1,16 +1,23 @@
 <template>
-  <div class="product-page">
+  <div class="product-page" data-e2e="product-page-test">
     <!-- Product Card -->
     <div
       v-for="product in article?.variants"
       :key="product.id"
       @click="openModal(String(product?.id))"
       class="product-page--card"
+      data-e2e="product-page-card-test"
     >
       <LazyImage
         :src="`/assets/images/${product?.image}`"
         alt="Product"
         class="product-page--card__lazy-image"
+        :minHeight="`450px`"
+        :minWidth="`300px`"
+        :containerClass="{
+          'bg-white': true,
+        }"
+        data-e2e="product-page-card-lazy-image-test"
       />
       <div class="text-left w-full">
         <p class="text-text-secondary-light font-medium">s.Oliver</p>
@@ -120,7 +127,7 @@ export default defineComponent({
   @apply p-4 flex flex-col items-center rounded-lg hover:shadow-md transition-shadow duration-300;
 }
 .product-page--card__lazy-image {
-  @apply cursor-pointer min-w-[300px] min-h-[450px] object-cover mb-4;
+  @apply cursor-pointer mb-4;
 }
 .product-page--card--color-image {
   @apply flex items-center mt-2;

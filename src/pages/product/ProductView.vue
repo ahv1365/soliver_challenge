@@ -1,7 +1,12 @@
 <template>
-  <div v-if="article" :class="{ 'opacity-0': !article }" class="product-view">
+  <div
+    v-if="article"
+    :class="{ 'opacity-0': !article }"
+    class="product-view"
+    data-e2e="product-view-test"
+  >
     <CloseButton @close="closeModal" />
-    <div class="product-view--container">
+    <div class="product-view--container" data-e2e="product-view-container-test">
       <ImageCarousel :article="article" />
       <ProductDetails
         :article="article"
@@ -13,11 +18,13 @@
     <TabsComponent
       v-if="article.tabs"
       class="product-view--tab"
+      data-e2e="product-view-tab-test"
       :tabs="article?.tabs"
     />
     <AccordionComponent
       v-if="article.tabs"
       class="product-view--accordion"
+      data-e2e="product-view-accordion-test"
       :tabs="article?.tabs"
     />
     <StickyFooter :articleName="article?.name" @add-to-cart="handleAddToCart" />

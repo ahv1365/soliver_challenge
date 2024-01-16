@@ -8,9 +8,10 @@
       <div class="flex-grow">
         <div v-if="detail.label" class="flex font-bold">
           <div v-if="detail.icon" class="p-1">
-            <font-awesome-icon
-              class="my-auto p-1 w-5 h-5 border border-black rounded-full"
-              :icon="detail.icon"
+            <img
+              :alt="detail.icon"
+              :src="`./assets/icons/${detail.icon}.svg`"
+              class="my-auto p-0 w-8 h-8 border-2 border-white invert rounded-full"
             />
           </div>
           <div class="my-auto pl-1">
