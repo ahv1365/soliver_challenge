@@ -19,7 +19,7 @@
         alt="Product"
         class="product-page--card__lazy-image"
         :minHeight="`450px`"
-        :minWidth="`300px`"
+        :minWidth="`100px`"
         :height="isFullScreen ? `100vh` : `auto`"
         :width="`100vw`"
         :containerClass="{
@@ -92,6 +92,7 @@ export default defineComponent({
     }));
 
     const startSwipe = (event: MouseEvent | TouchEvent) => {
+      console.log(currentSlide.value);
       if (event instanceof MouseEvent) {
         event.preventDefault();
       }
