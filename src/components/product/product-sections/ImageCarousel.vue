@@ -36,7 +36,7 @@
       />
     </div>
     <div
-      class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-white py-1 px-2 border rounded-full"
+      class="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-white py-1 px-2 border rounded-full"
     >
       <div
         v-for="(image, index) in article?.images"

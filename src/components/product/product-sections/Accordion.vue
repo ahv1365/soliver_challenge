@@ -7,10 +7,16 @@
     >
       <button
         type="button"
-        class="product-info--more__accordion-button text-text-secondary font-bold m-auto"
+        class="product-info--more__accordion-button"
         @click="setActiveAcc(tab)"
       >
         {{ tab.label.toUpperCase() }}
+        <img
+          :alt="`arrrow`"
+          :src="`./assets/icons/arrow.svg`"
+          class="mr-2 w-6 h-6 transition-all"
+          :class="{ 'rotate-180': activeTab === tab?.tab }"
+        />
       </button>
       <div
         v-if="activeTab === tab?.tab && activeTabContent"
@@ -86,6 +92,7 @@ export default defineComponent({
   @apply text-left px-2;
 }
 .product-info--more__accordion-button {
+  @apply flex w-full justify-between text-text-secondary font-bold m-auto;
   border: none;
   border-bottom: 1px solid #ccc; /* Light grey border for bottom */
   cursor: pointer;
@@ -105,7 +112,7 @@ export default defineComponent({
 
 /* Accordion content styles */
 .product-info--more__accordion-content {
-  transition: max-height 0.5s ease-out;
+  transition: max-height 1s ease-out;
   overflow: hidden;
   background-color: white;
 }
