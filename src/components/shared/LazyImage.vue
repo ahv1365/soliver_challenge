@@ -78,11 +78,24 @@ export default defineComponent({
     const imageUrl = ref("");
 
     onMounted(() => {
+      // Preload the image
+      const preloadLink = document.createElement("link");
+      preloadLink.rel = "preload";
+      preloadLink.as = "image";
+      preloadLink.href = props.src;
+      document.head.appendChild(preloadLink);
+
+      // Load the image
       const image = new Image();
       image.src = props.src;
       image.onload = () => {
         loaded.value = true;
         imageUrl.value = props.src;
+
+        // Clean up preload link after it's loaded
+        if (document.head.contains(preloadLink)) {
+          document.head.removeChild(preloadLink);
+        }
       };
     });
 
