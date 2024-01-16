@@ -5,18 +5,19 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { defineComponent, ref } from "vue";
 
-export default class LogoSplash extends Vue {
-  showLogo = true;
-
-  mounted() {
+export default defineComponent({
+  name: "LogoSplash",
+  setup() {
+    const showLogo = ref(true);
     setTimeout(() => {
-      this.showLogo = false;
-      this.$emit("logoHidden");
-    }, 3000); // Adjust time as needed
-  }
-}
+      showLogo.value = false;
+    }, 3000);
+
+    return { showLogo };
+  },
+});
 </script>
 
 <style scoped>
@@ -27,11 +28,11 @@ export default class LogoSplash extends Vue {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
   height: 100vh;
-  width: 100%;
-  position: absolute;
+  width: 100vw;
   overflow: hidden;
-  animation: fadeOut 3s ease-in;
+  animation: fadeOut 3s ease-in forwards;
 }
 
 @keyframes fadeOut {
