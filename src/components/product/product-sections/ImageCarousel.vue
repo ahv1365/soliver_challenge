@@ -14,7 +14,7 @@
       <!-- Loader displayed when isLoading is true -->
       <LazyImage
         v-for="(image, index) in article?.images"
-        :key="`image-${index}`"
+        :key="`image-${image}`"
         :src="`/assets/images/${image}`"
         alt="Product"
         class="product-page--card__lazy-image"
