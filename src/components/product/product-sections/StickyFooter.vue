@@ -7,13 +7,17 @@
       class="product-sticky-footer--add-card__button"
       @click="addToCart(articleName)"
     >
-      <div class="product-sticky-footer--add-card__text">
-        Add to Cart
-        <img
-          alt="shopping-cart"
-          :src="`./assets/icons/shopping-cart.svg`"
-          class="my-auto py-0 ml-10 w-3 h-3 invert"
-        />
+      <div class="product-sticky-footer--add-card--text">
+        <div class="product-sticky-footer--add-card--text__text">
+          Add to Cart
+        </div>
+        <div class="my-auto">
+          <img
+            alt="shopping-cart"
+            :src="`./assets/icons/shopping-cart.svg`"
+            class="product-sticky-footer--add-card--text__icon"
+          />
+        </div>
       </div>
     </button>
   </footer>
@@ -47,9 +51,15 @@ export default defineComponent({
   @apply text-text px-5 py-3 overflow-hidden whitespace-nowrap text-ellipsis;
 }
 .product-sticky-footer--add-card__button {
-  @apply text-xs w-auto h-full my-auto px-3 py-1 bg-black text-white font-medium hover:bg-gray-800;
+  @apply text-xs w-auto h-full my-auto px-2 py-1 min-w-40 bg-black text-white font-medium hover:bg-gray-800;
 }
-.product-sticky-footer--add-card__text {
-  @apply flex font-extrabold space-x-10 whitespace-nowrap;
+.product-sticky-footer--add-card--text {
+  @apply flex justify-between whitespace-nowrap;
+}
+.product-sticky-footer--add-card--text__text {
+  @apply font-extrabold text-text-secondary text-white;
+}
+.product-sticky-footer--add-card--text__icon {
+  @apply w-3 h-3 invert;
 }
 </style>
