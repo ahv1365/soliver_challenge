@@ -39,9 +39,12 @@
           :src="`/assets/images/${variant.image}`"
           :class="{
             border: article?.color === variant.colorLabel,
+            'cursor-default': article?.color === variant.colorLabel,
+            'cursor-pointer': article?.color !== variant.colorLabel,
           }"
-          class="border-black w-11 h-11 rounded-full cursor-pointer"
-          @click="selectColor(String(variant.id))"
+          :disabled="article?.color === variant.colorLabel"
+          class="border-black w-11 h-11 rounded-full"
+          @click.prevent="selectColor(String(variant.id))"
         />
       </div>
     </div>

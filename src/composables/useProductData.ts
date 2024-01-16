@@ -8,21 +8,27 @@ export function useProductData(productId: string) {
   const article = ref<Article | null>(null);
   const selectedVariantIndex = ref<number>(0);
   const selectedImage = ref<string>("");
+  const fetching = ref<boolean>(true);
 
   /**
    * Fetches article data based on the provided product ID.
    * @param pid - Product ID to fetch data for.
    */
   const fetchData = async (pid: string): Promise<void> => {
-    try {
-      const response = await dataService.getArticle(pid);
-      if (response) {
-        article.value = response;
-        selectedImage.value =
-          response.images.length > 0 ? response.images[0] : "";
+    if (fetching.value) {
+      fetching.value = false;
+      try {
+        const response = await dataService.getArticle(pid);
+        if (response) {
+          article.value = response;
+          selectedImage.value =
+            response.images.length > 0 ? response.images[0] : "";
+        }
+        fetching.value = true;
+      } catch (error) {
+        fetching.value = true;
+        console.error("Error fetching data:", error);
       }
-    } catch (error) {
-      console.error("Error fetching data:", error);
     }
   };
 
