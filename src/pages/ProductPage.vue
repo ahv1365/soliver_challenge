@@ -3,9 +3,9 @@
     <!-- Product Card -->
     <div
       v-for="product in productData?.variants"
-      :key="product.image"
+      :key="product?.image"
       class="product-page__card"
-      :data-e2e="'product-card-' + product.id + '-test'"
+      :data-e2e="'product-card-' + product?.id + '-test'"
     >
       <LazyImage
         :src="product?.image"
@@ -13,31 +13,31 @@
         aspectRatio="142%"
         class="product-page__card-image"
         :containerClass="{ 'bg-white': true }"
-        :data-e2e="'product-image-' + product.id + '-test'"
+        :data-e2e="'product-image-' + product?.id + '-test'"
         @click="openModal(String(product?.id))"
       />
       <div
         class="product-page__card-detail"
-        :data-e2e="'product-detail-' + product.id + '-test'"
+        :data-e2e="'product-detail-' + product?.id + '-test'"
       >
         <div class="product-page__logo" data-e2e="product-logo-test">
           s.Oliver
         </div>
         <div
           class="product-page__name"
-          :data-e2e="'product-name-' + product.id + '-test'"
+          :data-e2e="'product-name-' + product?.id + '-test'"
         >
           {{ productData?.name }}
         </div>
         <div
           class="product-page__price"
-          :data-e2e="'product-price-' + product.id + '-test'"
+          :data-e2e="'product-price-' + product?.id + '-test'"
         >
           {{ productData?.price }} {{ productData?.currency?.symbol }}
         </div>
         <div
           class="product-page__color-images"
-          :data-e2e="'product-colors-' + product.id + '-test'"
+          :data-e2e="'product-colors-' + product?.id + '-test'"
         >
           <!-- Color Images -->
           <div
@@ -54,7 +54,6 @@
   </div>
   <!-- ... other parts of your template ... -->
   <SharedModal
-    v-if="isModalOpen"
     :isModalOpen="isModalOpen"
     :closeModal="closeModal"
     data-e2e="shared-modal-test"
@@ -95,8 +94,10 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    const isModalOpen = computed(() => store.state.product.isModalOpen);
-    const selectedProduct = computed(() => store.state.product.selectedProduct);
+    const isModalOpen = computed(() => store?.state?.product.isModalOpen);
+    const selectedProduct = computed(
+      () => store?.state?.product.selectedProduct
+    );
     const {
       productData,
       selectedVariantImage,

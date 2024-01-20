@@ -28,6 +28,7 @@ export default defineComponent({
   },
 });
 </script>
+
 <style lang="scss" scoped>
 .shared-modal {
   @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10;
@@ -38,15 +39,13 @@ export default defineComponent({
 
 .modal {
   &-enter-active {
-    @apply transition-opacity duration-500 transition-transform ease-in-out;
+    @apply transition-opacity duration-1000;
   }
   &-enter-from {
     opacity: 0;
-    transform: scale(0.95);
   }
   &-enter-to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 </style>

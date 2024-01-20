@@ -1,6 +1,6 @@
 import { mount, VueWrapper } from "@vue/test-utils";
 import ProductPage from "@/pages/ProductPage.vue";
-import { createStore } from 'vuex';
+import { createStore } from "vuex";
 
 jest.mock("@/composables/useProductData", () => ({
   useProductData: jest.fn().mockReturnValue({
@@ -38,8 +38,8 @@ describe("ProductPage.vue", () => {
         },
       },
       actions: {
-        'product/openModal': jest.fn(),
-        'product/closeModal': jest.fn(),
+        "product/openModal": jest.fn(),
+        "product/closeModal": jest.fn(),
       },
     });
 
@@ -59,13 +59,12 @@ describe("ProductPage.vue", () => {
 
   it("renders shared modal with correct data-e2e attribute", async () => {
     // Simulate the state where the modal should be open
-    store.dispatch('product/openModal', '1');
+    store.dispatch("product/openModal", "1");
     await wrapper.vm.$nextTick(); // Wait for the next DOM update
 
     const sharedModal = wrapper.find('[data-e2e="shared-modal-test"]');
     expect(sharedModal.exists()).toBe(false);
   });
-
 
   it("renders product cards with correct data-e2e attributes", () => {
     const productCards = wrapper.findAll('[data-e2e^="product-card-"]');

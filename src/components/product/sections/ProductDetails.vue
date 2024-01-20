@@ -53,8 +53,9 @@
         <!-- Color circles -->
         <input
           type="image"
-          v-for="variant in product.variants"
+          v-for="variant in product?.variants"
           :key="variant.colorLabel"
+          :alt="variant.image"
           :src="getImagePath(variant.image)"
           :class="colorOptionClass(variant.colorLabel)"
           @click.prevent="selectColor(String(variant.id))"

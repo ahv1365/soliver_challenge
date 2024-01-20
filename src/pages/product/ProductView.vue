@@ -1,10 +1,5 @@
 <template>
-  <div
-    v-if="productData"
-    :class="{ 'opacity-0': !productData }"
-    class="product-view"
-    data-e2e="product-view-test"
-  >
+  <div class="product-view" data-e2e="product-view-test">
     <CloseButton @close="closeModal" />
     <div class="product-view__container" data-e2e="product-view-container-test">
       <ImageCarousel :product="productData" />
@@ -16,13 +11,13 @@
       />
     </div>
     <TabsComponent
-      v-if="productData.tabs"
+      v-if="productData"
       class="product-view__tab"
       data-e2e="product-view-tab-test"
       :tabs="productData?.tabs"
     />
     <AccordionComponent
-      v-if="productData.tabs"
+      v-if="productData"
       class="product-view__accordion"
       data-e2e="product-view-accordion-test"
       :tabs="productData?.tabs"
@@ -95,7 +90,19 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .product-view {
-  @apply transition-opacity duration-500 absolute inset-2 md:inset-2 lg:inset-10 xl:inset-16 max-h-[1000px] m-auto border lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-bg overflow-auto;
+  @apply absolute inset-2 md:inset-2 lg:inset-10 xl:inset-16 max-h-[1000px] m-auto border lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-bg overflow-auto;
+
+  &-enter-active {
+    @apply transition-opacity duration-1000;
+  }
+
+  &-enter-from {
+    opacity: 0;
+  }
+
+  &-enter-to {
+    opacity: 1;
+  }
 
   &__container {
     @apply container mx-auto my-0 px-5 py-5 flex flex-col md:flex-row;

@@ -1,3 +1,4 @@
+import config from "@/api/config";
 import { Product } from "@/types/product";
 
 // const API_BASE_URL =
@@ -5,7 +6,7 @@ import { Product } from "@/types/product";
 
 // Fetch product data from the API
 async function fetchProductData(productId: string): Promise<Product> {
-  const endpoint = `/api/products/${productId}`;
+  const endpoint = `${config.api.productsEndpoint}${productId}`;
   try {
     const response = await fetch(endpoint);
     if (!response.ok) {
