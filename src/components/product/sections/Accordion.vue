@@ -48,7 +48,7 @@ import {
   Sustainability,
   TabContent,
 } from "@/types/tab";
-import ProductDetailsTab from "@/components/product/tab/ProductDetailsTab.vue";
+import ProductDetailsTab from "@/components/product/tabs/ProductDetailsTab.vue";
 import { getIconPath } from "@/helpers/iconPathUtil";
 
 export default defineComponent({
@@ -62,13 +62,13 @@ export default defineComponent({
   components: {
     ProductDetailsTab,
     SustainabilityTab: defineAsyncComponent(
-      () => import("@/components/product/tab/SustainabilityTab.vue")
+      () => import("@/components/product/tabs/SustainabilityTab.vue")
     ),
     MaterialCareTab: defineAsyncComponent(
-      () => import("@/components/product/tab/MaterialCareTab.vue")
+      () => import("@/components/product/tabs/MaterialCareTab.vue")
     ),
     FitTab: defineAsyncComponent(
-      () => import("@/components/product/tab/FitTab.vue")
+      () => import("@/components/product/tabs/FitTab.vue")
     ),
   },
 

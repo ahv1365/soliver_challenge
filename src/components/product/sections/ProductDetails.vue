@@ -107,7 +107,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { Product } from "@/types/product";
-import SizeDropdown from "./SizeDropdown.vue";
+import SizeDropdown from "@/components/product/containers/SizeDropdown.vue";
 import { getImagePath } from "@/helpers/imagePathUtil";
 
 export default defineComponent({

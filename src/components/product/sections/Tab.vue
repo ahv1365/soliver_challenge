@@ -41,7 +41,7 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType, ref } from "vue";
-import ProductDetailsTab from "@/components/product/tab/ProductDetailsTab.vue";
+import ProductDetailsTab from "@/components/product/tabs/ProductDetailsTab.vue";
 import {
   FitDetails,
   MaterialAndCare,
@@ -61,13 +61,13 @@ export default defineComponent({
   components: {
     ProductDetailsTab,
     SustainabilityTab: defineAsyncComponent(
-      () => import("@/components/product/tab/SustainabilityTab.vue")
+      () => import("@/components/product/tabs/SustainabilityTab.vue")
     ),
     MaterialCareTab: defineAsyncComponent(
-      () => import("@/components/product/tab/MaterialCareTab.vue")
+      () => import("@/components/product/tabs/MaterialCareTab.vue")
     ),
     FitTab: defineAsyncComponent(
-      () => import("@/components/product/tab/FitTab.vue")
+      () => import("@/components/product/tabs/FitTab.vue")
     ),
   },
   setup() {
