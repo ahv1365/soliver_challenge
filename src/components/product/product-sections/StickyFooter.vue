@@ -1,21 +1,21 @@
 <template>
   <footer class="product-sticky-footer">
-    <p class="product-sticky-footer__name">
+    <div class="product-sticky-footer__name">
       {{ articleName }}
-    </p>
+    </div>
     <button
-      class="product-sticky-footer--add-card__button"
+      class="product-sticky-footer__add-cart-button"
       @click="addToCart(articleName)"
     >
-      <div class="product-sticky-footer--add-card--text">
-        <div class="product-sticky-footer--add-card--text__text">
+      <div class="product-sticky-footer__add-cart-text">
+        <div class="product-sticky-footer__add-cart-text-content">
           Add to Cart
         </div>
-        <div class="my-auto">
+        <div class="product-sticky-footer__icon-container">
           <img
             alt="shopping-cart"
-            :src="`./assets/icons/shopping-cart.svg`"
-            class="product-sticky-footer--add-card--text__icon"
+            :src="getIconPath('shopping-cart')"
+            class="product-sticky-footer__cart-icon"
           />
         </div>
       </div>
@@ -25,6 +25,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import { getIconPath } from "@/helpers/iconPathUtil";
 
 export default defineComponent({
   name: "StickyFooter",
@@ -34,32 +35,40 @@ export default defineComponent({
       required: true,
     },
   },
-  methods: {
-    addToCart(articleName: string) {
-      // Logic to handle adding the product to the cart
-      this.$emit("add-to-cart", articleName);
-    },
+  setup(props, { emit }) {
+    const addToCart = (articleName: string) => {
+      emit("add-to-cart", articleName);
+    };
+    return { addToCart, getIconPath };
   },
 });
 </script>
-
-<style scoped>
+<style lang="scss" scoped>
 .product-sticky-footer {
   @apply sticky bottom-0 right-0 bg-white flex justify-between w-full p-2 shadow-inner;
-}
-.product-sticky-footer__name {
-  @apply text-text px-5 py-3 overflow-hidden whitespace-nowrap text-ellipsis;
-}
-.product-sticky-footer--add-card__button {
-  @apply text-xs w-auto h-full my-auto px-2 py-1 min-w-40 bg-black text-white font-medium hover:bg-gray-800;
-}
-.product-sticky-footer--add-card--text {
-  @apply flex justify-between whitespace-nowrap;
-}
-.product-sticky-footer--add-card--text__text {
-  @apply font-extrabold text-text-secondary text-white;
-}
-.product-sticky-footer--add-card--text__icon {
-  @apply w-3 h-3 invert;
+
+  &__name {
+    @apply text-text px-5 py-1 overflow-hidden whitespace-nowrap text-ellipsis;
+  }
+
+  &__add-cart-button {
+    @apply text-xs w-auto h-full my-auto px-2 py-1 min-w-40 bg-black text-white font-medium hover:bg-gray-800;
+  }
+
+  &__add-cart-text {
+    @apply flex justify-between whitespace-nowrap;
+
+    &-content {
+      @apply font-extrabold text-text-secondary text-white;
+    }
+  }
+
+  &__icon-container {
+    @apply my-auto;
+
+    & .product-sticky-footer__cart-icon {
+      @apply w-3 h-3 invert;
+    }
+  }
 }
 </style>

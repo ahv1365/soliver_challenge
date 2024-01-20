@@ -1,19 +1,30 @@
 <template>
-  <div class="product-size-dropdown">
+  <div class="product-size-dropdown" data-e2e="product-size-dropdown-test">
     <!-- Clickable input/button to show sizes -->
-    <button class="product-size-dropdown__button" @click="toggleSizeList">
+    <button
+      class="product-size-dropdown__button"
+      @click="toggleSizeList"
+      data-e2e="dropdown-button-test"
+    >
       {{ selectedSize || "Select Size" }}
     </button>
     <!-- List of sizes -->
-    <ul v-show="showSizes">
+    <ul v-show="showSizes" data-e2e="size-list-test">
       <li
         v-for="size in sizes"
         :key="size"
-        :class="{
-          'font-bold': size === selectedSize,
-          'text-text-secondary-light': !availableSizes.includes(size),
-        }"
+        :class="[
+          'product-size-dropdown__list-item',
+          {
+            'product-size-dropdown__list-item--selected': size === selectedSize,
+          },
+          {
+            'product-size-dropdown__list-item--disabled':
+              !availableSizes.includes(size),
+          },
+        ]"
         @click="selectSize(size)"
+        :data-e2e="'size-option-' + size + '-test'"
       >
         {{ size }}
       </li>
@@ -22,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 
 export default defineComponent({
   name: "SizeDropdown",
@@ -40,50 +51,52 @@ export default defineComponent({
       default: () => [],
     },
   },
-  data() {
-    return {
-      selectedSize: this.selected,
-      showSizes: false,
+  setup(props, { emit }) {
+    const showSizes = ref(false);
+    const selectedSize = ref("");
+    const toggleSizeList = () => {
+      showSizes.value = !showSizes.value;
     };
-  },
-  methods: {
-    toggleSizeList() {
-      this.showSizes = !this.showSizes;
-    },
-    selectSize(size: string) {
-      if (this.availableSizes.includes(size)) {
-        this.selectedSize = size;
-        this.showSizes = false;
-        this.$emit("size-selected", this.selectedSize);
+    const selectSize = (size: string) => {
+      if (props.availableSizes.includes(size)) {
+        showSizes.value = false;
+        selectedSize.value = size;
+        emit("size-selected", size);
       }
-    },
+    };
+    return { showSizes, toggleSizeList, selectSize, selectedSize };
   },
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .product-size-dropdown {
   @apply relative text-left;
-}
-.product-size-dropdown__button {
-  @apply w-full text-text-secondary font-bold text-left pl-3 bg-gray-100 rounded-md p-2 mt-3;
-}
-.product-size-dropdown ul {
-  @apply absolute z-10 bg-white w-full rounded-md mt-1 shadow-lg;
-  position: absolute;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
 
-.product-size-dropdown li {
-  @apply px-3 py-2 text-text-secondary cursor-pointer;
-  box-sizing: border-box;
-}
+  &__button {
+    @apply w-full text-text-secondary font-bold text-left pl-3 bg-gray-100 rounded-md p-2 mt-3;
+  }
 
-.product-size-dropdown li:hover {
-  background-color: #f3f3f3;
+  &__list-item {
+    @apply px-3 py-2 text-text-secondary cursor-pointer;
+
+    &:hover {
+      @apply bg-bg-secondary;
+    }
+
+    &--selected {
+      @apply font-bold text-text-secondary;
+    }
+
+    &--disabled {
+      @apply text-text-secondary-lighter;
+    }
+  }
+
+  ul {
+    @apply absolute z-10 bg-white w-full rounded-md mt-1 shadow-lg m-0 p-0;
+    box-sizing: border-box;
+    list-style-type: none;
+  }
 }
 </style>

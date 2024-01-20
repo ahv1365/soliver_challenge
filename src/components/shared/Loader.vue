@@ -1,5 +1,5 @@
 <template>
-  <div class="loader" v-if="!loaded"></div>
+  <div class="loader" v-if="!loaded" data-e2e="loader-component-test"></div>
 </template>
 
 <script lang="ts">
@@ -16,21 +16,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.loader {
-  position: absolute; /* Position relative to the modal */
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Adjust centering */
-  border: 4px solid rgba(255, 255, 255, 0.179); /* Light gray border */
-  border-radius: 50%; /* Circular shape */
-  border-top: 4px solid #7f7f7f9f; /* Dark gray top border */
-  width: 40px; /* Width of the loader */
-  height: 40px; /* Height of the loader */
-  animation: spin 2s linear infinite; /* Spinning animation */
-  z-index: 10; /* Ensure it's above other content */
-}
-
+<style lang="scss" scoped>
 @keyframes spin {
   0% {
     transform: translate(-50%, -50%) rotate(0deg); /* Rotate from 0 degrees */
@@ -38,5 +24,15 @@ export default defineComponent({
   100% {
     transform: translate(-50%, -50%) rotate(360deg); /* Rotate to 360 degrees */
   }
+}
+
+.loader {
+  @apply absolute top-1/2 left-1/2 z-10;
+  transform: translate(-50%, -50%) rotate(0deg);
+  border: 4px solid rgba(255, 255, 255, 0.179);
+  @apply rounded-full;
+  border-top: 4px solid #7f7f7f9f;
+  @apply w-10 h-10;
+  animation: spin 2s linear infinite;
 }
 </style>

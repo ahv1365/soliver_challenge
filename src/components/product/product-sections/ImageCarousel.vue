@@ -1,7 +1,7 @@
 <template>
   <section
     class="product-gallery"
-    :class="{ 'full-screen': isFullScreen }"
+    :class="{ 'product-gallery--full-screen': isFullScreen }"
     @mousedown="startSwipe"
     @mousemove="onSwipe"
     @mouseup="endSwipe"
@@ -10,42 +10,36 @@
     @touchmove.passive="onSwipe"
     @touchend.passive="endSwipe"
   >
-    <div class="carousel-inner" :style="carouselStyle">
+    <div class="product-gallery__carousel-inner" :style="carouselStyle">
       <!-- Loader displayed when isLoading is true -->
       <LazyImage
         v-for="(image, index) in article?.images"
         :key="`image-${image}`"
-        :src="`/assets/images/${image}`"
-        alt="Product"
-        class="product-page--card__lazy-image"
-        :minHeight="`450px`"
-        :minWidth="`100px`"
+        :src="image"
+        :alt="image"
+        aspectRatio="142%"
+        class="product-gallery__carousel-item"
         :height="isFullScreen ? `100vh` : `auto`"
         :width="`100vw`"
         :containerClass="{
-          'h-screen': isFullScreen,
-          'cursor-zoom-in': !isFullScreen,
+          'product-gallery__carousel-item--full-screen': isFullScreen,
+          'cursor-pointer': !isFullScreen,
           'cursor-zoom-out': isFullScreen,
-          'carousel-item': true,
-          active: currentSlide === index,
-          'bg-black': isFullScreen,
+          'product-gallery__carousel-item--active': currentSlide === index,
         }"
         data-e2e="product-page-card-lazy-image-test"
         @click="toggleFullScreen"
         @load="imageLoaded = true"
       />
     </div>
-    <div
-      class="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-white py-1 px-2 border rounded-full"
-    >
+    <div class="product-gallery__indicators">
       <div
         v-for="(image, index) in article?.images"
         :key="index"
         :class="{
-          'bg-gray-400': currentSlide !== index,
-          'bg-gray-900': currentSlide === index,
+          'product-gallery__indicator': true,
+          'product-gallery__indicator--active': currentSlide === index,
         }"
-        class="w-2 h-2 rounded-full cursor-pointer"
         @click="goToSlide(index)"
       ></div>
     </div>
@@ -92,7 +86,6 @@ export default defineComponent({
     }));
 
     const startSwipe = (event: MouseEvent | TouchEvent) => {
-      console.log(currentSlide.value);
       if (event instanceof MouseEvent) {
         event.preventDefault();
       }
@@ -154,63 +147,45 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .product-gallery {
-  @apply flex-1 w-full md:w-1/3 lg:w-1/3 relative overflow-hidden;
-}
-.carousel {
-  position: relative;
-  max-width: 100%;
-  overflow: hidden;
-}
+  @apply flex-1 w-full relative overflow-hidden;
 
-.carousel-inner {
-  display: flex;
-  transition: transform 0.5s ease;
-  white-space: nowrap;
-}
+  &--full-screen {
+    @apply fixed top-0 left-0;
+    transform: translate(0%, 0%) scale(1);
+    transform-origin: center center;
+    transition: transform 1.5s ease-in-out;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+  }
 
-.carousel-item {
-  flex: 0 0 100%;
-  max-width: 100%;
-  display: inline-block;
-}
+  &__carousel-inner {
+    @apply flex transition-transform duration-500 whitespace-nowrap;
+  }
 
-.carousel-item.active {
-  display: block;
-}
+  &__carousel-item {
+    @apply inline-block flex-none w-full max-w-full;
+    flex: 0 0 100%;
+    &--full-screen {
+      @apply h-screen bg-black;
+    }
+    &--active {
+      display: block;
+    }
+  }
 
-.carousel-control-prev,
-.carousel-control-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 24px;
-  color: #333;
-  text-decoration: none;
-  cursor: pointer;
-}
+  &__indicators {
+    @apply absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-white py-1 px-2 border rounded-full;
+  }
 
-.carousel-control-prev {
-  left: 100px;
-}
-
-.carousel-control-next {
-  right: 100px;
-}
-
-.full-screen {
-  position: fixed;
-  top: 0px;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1000;
-  transform: translate(0%, 0%) scale(1);
-  transform-origin: center center;
-  transition: transform 1.5s ease-in-out;
-  /* padding: 10px; */
-  box-sizing: border-box;
-  /* overflow: auto; */
+  &__indicator {
+    @apply w-2 h-2 rounded-full cursor-pointer bg-gray-400;
+    &--active {
+      @apply bg-gray-900;
+    }
+  }
 }
 </style>

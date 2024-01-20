@@ -1,11 +1,12 @@
 <template>
   <div v-if="showLogo" class="logo-container">
-    <img alt="soliver logo" :src="`./assets/images/SOliver-Logo.svg`" />
+    <img alt="soliver logo" :src="getImagePath(`SOliver-Logo.svg`)" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { getImagePath } from "@/helpers/imagePathUtil";
 
 export default defineComponent({
   name: "LogoSplash",
@@ -15,7 +16,7 @@ export default defineComponent({
       showLogo.value = false;
     }, 3000);
 
-    return { showLogo };
+    return { showLogo, getImagePath };
   },
 });
 </script>

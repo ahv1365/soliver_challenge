@@ -6,7 +6,7 @@
     data-e2e="product-view-test"
   >
     <CloseButton @close="closeModal" />
-    <div class="product-view--container" data-e2e="product-view-container-test">
+    <div class="product-view__container" data-e2e="product-view-container-test">
       <ImageCarousel :article="article" />
       <ProductDetails
         :article="article"
@@ -17,13 +17,13 @@
     </div>
     <TabsComponent
       v-if="article.tabs"
-      class="product-view--tab"
+      class="product-view__tab"
       data-e2e="product-view-tab-test"
       :tabs="article?.tabs"
     />
     <AccordionComponent
       v-if="article.tabs"
-      class="product-view--accordion"
+      class="product-view__accordion"
       data-e2e="product-view-accordion-test"
       :tabs="article?.tabs"
     />
@@ -32,14 +32,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineAsyncComponent, defineComponent, PropType } from "vue";
 import { useProductData } from "@/composables/useProductData";
-import CloseButton from "@/components/shared/CloseButton.vue";
-import StickyFooter from "@/components/product/product-sections/StickyFooter.vue";
-import ProductDetails from "@/components/product/product-sections/ProductDetails.vue";
-import AccordionComponent from "@/components/product/product-sections/Accordion.vue";
-import TabsComponent from "@/components/product/product-sections/Tab.vue";
-import ImageCarousel from "@/components/product/product-sections/ImageCarousel.vue";
 
 export default defineComponent({
   name: "ProductView",
@@ -50,12 +44,24 @@ export default defineComponent({
     },
   },
   components: {
-    CloseButton,
-    StickyFooter,
-    ProductDetails,
-    AccordionComponent,
-    TabsComponent,
-    ImageCarousel,
+    CloseButton: defineAsyncComponent(
+      () => import("@/components/shared/CloseButton.vue")
+    ),
+    StickyFooter: defineAsyncComponent(
+      () => import("@/components/product/product-sections/StickyFooter.vue")
+    ),
+    ProductDetails: defineAsyncComponent(
+      () => import("@/components/product/product-sections/ProductDetails.vue")
+    ),
+    AccordionComponent: defineAsyncComponent(
+      () => import("@/components/product/product-sections/Accordion.vue")
+    ),
+    TabsComponent: defineAsyncComponent(
+      () => import("@/components/product/product-sections/Tab.vue")
+    ),
+    ImageCarousel: defineAsyncComponent(
+      () => import("@/components/product/product-sections/ImageCarousel.vue")
+    ),
   },
   methods: {
     handleAddToCart(articleName: string) {
@@ -82,17 +88,21 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
+
+<style lang="scss" scoped>
 .product-view {
   @apply transition-opacity duration-500 absolute inset-2 md:inset-2 lg:inset-10 xl:inset-16 max-h-[1000px] m-auto border lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-bg overflow-auto;
-}
-.product-view--tab {
-  @apply hidden md:block;
-}
-.product-view--accordion {
-  @apply block md:hidden;
-}
-.product-view--container {
-  @apply container mx-auto my-0 px-5 py-5 flex flex-col md:flex-row;
+
+  &__container {
+    @apply container mx-auto my-0 px-5 py-5 flex flex-col md:flex-row;
+  }
+
+  &__tab {
+    @apply hidden md:block;
+  }
+
+  &__accordion {
+    @apply block md:hidden;
+  }
 }
 </style>

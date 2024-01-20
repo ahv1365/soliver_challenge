@@ -1,21 +1,20 @@
 <template>
-  <div class="font-sans p-4 text-text-secondary text-left">
-    <p class="font-bold mb-2">Fit</p>
-    <p>{{ tabContent?.fitType?.content }}</p>
-    <p>{{ tabContent?.backLength?.content }}</p>
-    <!-- <div class="flex flex-col space-y-4 float-right">
-      <img
-        :src="`/assets/images/placeholder.jpg`"
-        :alt="`Fit image 1`"
-        class="object-cover w-32 h-32"
-      />
-
-      <img
-        :src="`/assets/images/placeholder.jpg`"
-        :alt="`Fit image 2`"
-        class="object-cover w-32 h-32"
-      />
-    </div> -->
+  <div class="fit-tab" data-e2e="fit-tab-container-test">
+    <div class="fit-tab__title" data-e2e="fit-tab-title-test">Fit</div>
+    <div
+      v-if="tabContent?.fitType"
+      class="fit-tab__content"
+      data-e2e="fit-tab-fitType-content-test"
+    >
+      {{ tabContent.fitType.content }}
+    </div>
+    <div
+      v-if="tabContent?.backLength"
+      class="fit-tab__content"
+      data-e2e="fit-tab-backLength-content-test"
+    >
+      {{ tabContent.backLength.content }}
+    </div>
   </div>
 </template>
 
@@ -33,3 +32,16 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.fit-tab {
+  @apply font-sans p-4 text-text-secondary text-left;
+
+  &__title {
+    @apply font-bold mb-2;
+  }
+
+  &__content {
+  }
+}
+</style>

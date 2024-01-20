@@ -1,63 +1,82 @@
 <template>
-  <section class="product-detail">
-    <div class="flex">
+  <section class="product-detail" data-e2e="product-detail-test">
+    <div class="product-detail__badges" data-e2e="product-detail-badges-test">
       <div
-        class="product-detail--sustainable"
+        class="product-detail__badge product-detail__badge--sustainable"
         data-e2e="SUSTAINABLE-badge-test"
       >
         Sustainable
       </div>
-      <div class="product-detail--new" data-e2e="NEW-badge-test">NEW</div>
+      <div
+        class="product-detail__badge product-detail__badge--new"
+        data-e2e="NEW-badge-test"
+      >
+        NEW
+      </div>
     </div>
 
-    <p class="text-text mb-3 w-full text-left">
+    <div class="product-detail__name" data-e2e="product-detail-name-test">
       {{ article?.name }}
-    </p>
-    <div class="flex mb-2 w-full m-auto">
-      <p class="my-auto text-text-secondary font-extrabold w-full text-left">
+    </div>
+    <div
+      class="product-detail__price-logo"
+      data-e2e="product-detail-price-logo-test"
+    >
+      <div class="product-detail__price" data-e2e="product-detail-price-test">
         {{ article?.price }} {{ article?.currency?.label }}
-      </p>
+      </div>
       <img
-        class="w-20 items-center"
+        class="product-detail__logo"
         alt="soliver logo"
-        :src="`./assets/images/SOliver-Logo.svg`"
+        :src="getImagePath(`SOliver-Logo.svg`)"
+        data-e2e="soliver-logo-test"
       />
     </div>
-    <div class="my-5 py-2 border-y-2">
-      <p class="text-text-secondary normal-case w-full text-left">
+    <div
+      class="product-detail__color-selection"
+      data-e2e="product-detail-color-selection-test"
+    >
+      <div
+        class="product-detail__color-label"
+        data-e2e="product-detail-color-label-test"
+      >
         Color:
-        <span class="text-text-secondary w-full text-left font-extrabold">
-          {{ article?.color }}</span
-        >
-      </p>
-      <div class="flex items-center space-x-2 mt-2 w-full text-left">
+        <span class="product-detail__color-value">
+          {{ article?.color }}
+        </span>
+      </div>
+      <div
+        class="product-detail__color-options"
+        data-e2e="product-detail-color-options-test"
+      >
         <!-- Color circles -->
         <input
           type="image"
           v-for="variant in article.variants"
           :key="variant.colorLabel"
-          :src="`/assets/images/${variant.image}`"
-          :class="{
-            border: article?.color === variant.colorLabel,
-            'cursor-default': article?.color === variant.colorLabel,
-            'cursor-pointer': article?.color !== variant.colorLabel,
-          }"
-          :disabled="article?.color === variant.colorLabel"
-          class="border-black w-11 h-11 rounded-full"
+          :src="getImagePath(variant.image)"
+          :class="colorOptionClass(variant.colorLabel)"
           @click.prevent="selectColor(String(variant.id))"
         />
       </div>
     </div>
-    <div class="mb-6 hidden md:block">
-      <p class="text-text-secondary w-full text-left">
+    <div
+      class="product-detail__size-selection hidden md:block"
+      data-e2e="product-detail-size-selection-test"
+    >
+      <div
+        class="product-detail__size-label"
+        data-e2e="product-detail-size-label-test"
+      >
         Size:
-        <span
-          class="text-text-button-secondary w-full text-left font-extrabold"
-        >
-          {{ article?.size }}</span
-        >
-      </p>
-      <div class="flex space-x-2 mt-2 w-full text-left">
+        <span class="product-detail__size-value">
+          {{ article?.size }}
+        </span>
+      </div>
+      <div
+        class="product-detail__size-options"
+        data-e2e="product-detail-size-options-test"
+      >
         <!-- Size buttons -->
         <button
           v-for="size in article?.sizes"
@@ -66,6 +85,7 @@
           @click="selectSize(size)"
           class="w-11 my-auto bg-gray-100 rounded-2xl"
           :disabled="!article?.availableSizes.includes(size)"
+          data-e2e="product-detail-size-options-button-test"
         >
           {{ size }}
         </button>
@@ -86,6 +106,7 @@
 import { defineComponent, PropType } from "vue";
 import { Article } from "@/types/article";
 import SizeDropdown from "./SizeDropdown.vue";
+import { getImagePath } from "@/helpers/imagePathUtil";
 
 export default defineComponent({
   name: "ProductDetails",
@@ -110,20 +131,76 @@ export default defineComponent({
   components: {
     SizeDropdown,
   },
+  setup(props) {
+    const colorOptionClass = (colorLabel: string) => {
+      return props.article?.color === colorLabel
+        ? "w-11 h-11 rounded-full p-1 cursor-default border border-black"
+        : "w-11 h-11 rounded-full p-1 cursor-pointer border border-border-secondary";
+    };
+
+    return {
+      colorOptionClass,
+      getImagePath,
+    };
+  },
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .product-detail {
   @apply flex-1 mt-8 md:mt-0 md:ml-8;
-}
-.product-detail--sustainable {
-  @apply text-text-secondary font-extrabold mb-2 w-fit px-1;
-  background-color: rgb(2 136 82);
-  color: rgb(255 255 255);
-}
 
-.product-detail--new {
-  @apply text-text-secondary font-extrabold mb-2 w-fit px-1 text-left bg-bg-secondary mx-2;
+  &__badges {
+    @apply flex;
+  }
+
+  &__badge {
+    @apply font-extrabold mb-2 w-fit px-1 text-text-secondary;
+
+    &--sustainable {
+      background-color: rgb(2 136 82);
+      color: rgb(255 255 255);
+    }
+
+    &--new {
+      @apply bg-bg-secondary mx-2;
+    }
+  }
+
+  &__name {
+    @apply mb-3 w-full text-left text-text;
+  }
+  &__price {
+    @apply my-auto text-text-secondary font-extrabold w-full text-left;
+  }
+  &__color-label,
+  &__size-label {
+    @apply mb-2 w-full text-left text-text-secondary;
+  }
+
+  &__price-logo {
+    @apply flex mb-2 w-full m-auto;
+  }
+  &_price {
+    @apply my-auto font-extrabold w-full text-text-secondary;
+  }
+
+  &__logo {
+    @apply h-7 items-center;
+  }
+
+  &__color-selection {
+    @apply my-5 py-2 border-y-2;
+  }
+  &__size-selection {
+  }
+  &__color-value,
+  &__size-value {
+    @apply font-extrabold text-text-secondary;
+  }
+  &__color-options,
+  &__size-options {
+    @apply flex items-start space-x-2 w-full text-left;
+  }
 }
 </style>

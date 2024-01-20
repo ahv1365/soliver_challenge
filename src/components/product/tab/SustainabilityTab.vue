@@ -1,24 +1,40 @@
 <template>
-  <div class="font-sans text-text-secondary text-left">
+  <div class="sustainability-tab" data-e2e="sustainability-tab-container-test">
     <div
       v-for="detail in tabContent"
       :key="detail.label"
-      class="flex items-center space-x-2 border-b p-4"
+      class="sustainability-tab__detail"
+      :data-e2e="`sustainability-detail-${detail.label}-test`"
     >
-      <div class="flex-grow">
-        <div v-if="detail.label" class="flex font-bold">
-          <div v-if="detail.icon" class="p-1">
-            <img
-              :alt="detail.icon"
-              :src="`./assets/icons/${detail.icon}.svg`"
-              class="my-auto p-0 w-8 h-8 border-2 border-white invert rounded-full"
-            />
-          </div>
-          <div class="my-auto pl-1">
-            {{ detail.label.toUpperCase() }}
-          </div>
+      <div
+        v-if="detail.label"
+        class="sustainability-tab__label"
+        :data-e2e="`sustainability-label-${detail.label}-test`"
+      >
+        <div
+          v-if="detail.icon"
+          class="sustainability-tab__icon-container"
+          :data-e2e="`sustainability-icon-container-${detail.label}-test`"
+        >
+          <img
+            :alt="`${detail.label} icon`"
+            :src="getIconPath(detail?.icon)"
+            class="sustainability-tab__icon"
+            :data-e2e="`sustainability-icon-${detail.label}-test`"
+          />
         </div>
-        <div>{{ detail.content }}</div>
+        <div
+          class="sustainability-tab__text"
+          :data-e2e="`sustainability-text-${detail.label}-test`"
+        >
+          {{ detail.label.toUpperCase() }}
+        </div>
+      </div>
+      <div
+        class="sustainability-tab__detail-content"
+        :data-e2e="`sustainability-detail-content-${detail.label}-test`"
+      >
+        {{ detail.content }}
       </div>
     </div>
   </div>
@@ -27,6 +43,7 @@
 <script lang="ts">
 import { Sustainability } from "@/types/tab";
 import { defineComponent, PropType } from "vue";
+import { getIconPath } from "@/helpers/iconPathUtil";
 
 export default defineComponent({
   name: "SustainabilityTab",
@@ -36,5 +53,35 @@ export default defineComponent({
       required: true,
     },
   },
+  setup() {
+    return { getIconPath };
+  },
 });
 </script>
+
+<style lang="scss" scoped>
+.sustainability-tab {
+  @apply font-sans text-text-secondary text-left;
+
+  &__detail {
+    @apply border-b p-4;
+  }
+  &__label {
+    @apply flex font-bold;
+  }
+
+  &__icon-container {
+    @apply p-1;
+  }
+  &__icon {
+    @apply my-auto w-8 h-8 border-2 border-white invert rounded-full;
+  }
+  &__text {
+    @apply my-auto pl-1;
+  }
+
+  &__detail-content {
+    @apply flex-grow;
+  }
+}
+</style>

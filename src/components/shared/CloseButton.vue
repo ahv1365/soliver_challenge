@@ -1,6 +1,12 @@
 <template>
-  <div class="flex justify-end items-center">
-    <button @click="emitClose" class="close-button">&times;</button>
+  <div class="close-button-container" data-e2e="close-button-container-test">
+    <button
+      @click="emitClose"
+      class="close-button-container__button"
+      data-e2e="close-button-test"
+    >
+      &times;
+    </button>
   </div>
 </template>
 
@@ -19,32 +25,16 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.close-button {
-  text-align: center;
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  font-weight: bold;
-  line-height: 1;
-  color: var(--color-button-primary);
-  opacity: 0.3;
-  padding: 1rem;
-  padding-bottom: 0;
-  transition: opacity 0.3s ease;
+<style lang="scss" scoped>
+.close-button-container {
+  @apply flex justify-end items-center;
 
-  &:hover {
-    opacity: 1;
+  &__button {
+    @apply text-center cursor-pointer bg-transparent border-0 text-xl font-bold leading-none text-[var(--color-button-primary)] opacity-30 p-4 pb-0 transition-opacity duration-300 ease-in-out;
+
+    &:hover {
+      @apply opacity-100;
+    }
   }
-}
-.close-modal {
-  font-size: 1.5rem;
-  font-weight: bold;
-  line-height: 1;
-  color: var(--color-button-primary);
-  opacity: 0.3;
-  cursor: pointer;
-  padding: 1rem;
 }
 </style>

@@ -1,33 +1,37 @@
 <template>
-  <section class="product-info--more">
+  <section class="product-info" data-e2e="product-info-section-test">
     <div
-      class="product-info--more__accordion-item"
+      class="product-info__accordion-item"
       v-for="(tab, index) in tabs"
       :key="index"
+      :data-e2e="`accordion-item-${index}-test`"
     >
       <button
         type="button"
-        class="product-info--more__accordion-button"
+        class="product-info__accordion-button"
         @click="setActiveAcc(tab)"
+        :data-e2e="`accordion-button-${index}-test`"
       >
         {{ tab.label.toUpperCase() }}
         <img
-          :alt="`arrrow`"
-          :src="`./assets/icons/arrow.svg`"
-          class="mr-2 w-6 h-6 transition-all"
-          :class="{ 'rotate-180': activeTab === tab?.tab }"
+          :alt="'arrow'"
+          :src="getIconPath('arrow')"
+          class="product-info__icon"
+          :class="{ 'product-info__icon--rotated': activeTab === tab?.tab }"
+          :data-e2e="`accordion-icon-${index}-test`"
         />
       </button>
       <div
         v-if="activeTab === tab?.tab && activeTabContent"
-        class="product-info--more__accordion-content"
+        class="product-info__accordion-content"
+        :data-e2e="`accordion-content-${tab?.tab}-test`"
       >
-        <!-- Include the tab content component here -->
         <component
           :key="activeTab"
           :is="activeTab"
           v-if="activeTabContent"
           :tabContent="activeTabContent"
+          :data-e2e="`accordion-tab-component-${tab?.tab}-test`"
         />
       </div>
     </div>
@@ -47,6 +51,7 @@ import FitTab from "@/components/product/tab/FitTab.vue";
 import ProductDetailsTab from "@/components/product/tab/ProductDetailsTab.vue";
 import SustainabilityTab from "@/components/product/tab/SustainabilityTab.vue";
 import MaterialCareTab from "@/components/product/tab/MaterialCareTab.vue";
+import { getIconPath } from "@/helpers/iconPathUtil";
 
 export default defineComponent({
   name: "AccordionComponent",
@@ -79,6 +84,7 @@ export default defineComponent({
     };
 
     return {
+      getIconPath,
       activeTab,
       activeTabContent,
       setActiveAcc,
@@ -86,34 +92,31 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-.product-info--more {
+<style lang="scss" scoped>
+.product-info {
   @apply text-left px-2;
-}
-.product-info--more__accordion-button {
-  @apply flex w-full justify-between text-text-secondary font-bold m-auto;
-  border: none;
-  border-bottom: 1px solid #ccc; /* Light grey border for bottom */
-  cursor: pointer;
-  margin: 18px;
-  width: calc(100% - 36px); /* Adjusted for padding */
-  text-align: left;
-  background-color: #fff; /* White background */
-  outline: none;
-  transition: background-color 0.3s ease;
-}
 
-/* Active accordion button styles */
-.product-info--more__accordion-button.active {
-  background-color: #f1f1f1; /* Light grey background for active tab */
-  border-bottom: 1px solid #000; /* Black border for bottom when active */
-}
+  &__accordion-button {
+    @apply flex justify-between text-text-secondary font-bold border-0 border-b border-solid border-gray-300 cursor-pointer m-4 w-[calc(100%-36px)] text-left bg-white outline-none transition-colors duration-300 ease-in-out;
+    &.active {
+      @apply bg-bg-secondary;
+      border-bottom: 1px solid #000; // Black border for bottom when active
+    }
+  }
 
-/* Accordion content styles */
-.product-info--more__accordion-content {
-  transition: max-height 1s ease-out;
-  overflow: hidden;
-  background-color: white;
+  &__icon {
+    transition: transform 0.3s ease;
+    @apply mr-2 w-6 h-6 transition-all;
+
+    &--rotated {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__accordion-content {
+    transition: max-height 1s ease-out;
+    overflow: hidden;
+    background-color: white;
+  }
 }
 </style>

@@ -1,29 +1,39 @@
 <template>
-  <section class="product-info--more" v-if="tabs">
-    <ul>
+  <section
+    class="product-info"
+    v-if="tabs"
+    data-e2e="product-info-section-test"
+  >
+    <ul class="product-info__tab-list" data-e2e="tab-list-test">
       <li
         v-for="(tab, index) in tabs"
         :key="index"
-        :class="{
-          active: activeTabContent
-            ? activeTab === tab?.tab
-            : tabs[0]?.tab === tab?.tab,
-        }"
+        :class="[
+          'product-info__tab-item',
+          {
+            'product-info__tab-item--active': activeTabContent
+              ? activeTab === tab?.tab
+              : tabs[0]?.tab === tab?.tab,
+          },
+        ]"
         @click="setActiveTab(tab)"
+        :data-e2e="'tab-item-' + tab?.tab + '-test'"
       >
         {{ tab?.label.toUpperCase() }}
       </li>
     </ul>
-    <div class="product-info--more__tab-content">
+    <div class="product-info__tab-content" data-e2e="tab-content-test">
       <component
         :is="activeTab"
         v-if="activeTabContent"
         :tabContent="activeTabContent"
+        data-e2e="active-tab-component-test"
       />
       <component
         :is="tabs[0]?.tab"
         v-if="!activeTabContent"
         :tabContent="tabs[0]?.content"
+        data-e2e="default-tab-component-test"
       />
     </div>
   </section>
@@ -76,23 +86,27 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.product-info--more {
+<style lang="scss" scoped>
+.product-info {
   @apply px-2 bg-bg-secondary min-h-[50%];
-}
-.product-info--more ul {
-  @apply flex py-5;
-  list-style-type: none;
-}
-.product-info--more li {
-  @apply cursor-pointer text-text-secondary font-bold;
-  padding: 10px;
-}
-.product-info--more li.active {
-  border-bottom: 3px solid #343434;
-}
-.product-info--more__tab-content {
-  @apply min-h-min;
-  padding: 10px;
+
+  &__tab-list {
+    @apply flex py-5;
+    list-style-type: none;
+  }
+
+  &__tab-item {
+    @apply cursor-pointer text-text-secondary font-bold p-2;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.3s ease;
+
+    &--active {
+      border-bottom: 3px solid #343434;
+    }
+  }
+
+  &__tab-content {
+    @apply min-h-min p-2;
+  }
 }
 </style>

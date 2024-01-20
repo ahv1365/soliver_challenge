@@ -1,11 +1,9 @@
 <template>
   <div
-    class="image-container"
-    :style="{
-      minHeight: `${minHeight}`,
-      minWidth: `${minWidth}`,
-    }"
+    class="lazy-image"
     :class="containerClass"
+    :style="{ paddingBottom: aspectRatio }"
+    data-e2e="lazy-image-container-test"
   >
     <img
       v-if="loaded"
@@ -16,19 +14,10 @@
         width: `${width}`,
         'object-fit': 'contain',
       }"
-      :class="{
-        'image-transition': loaded,
-        'image-loaded': !loaded,
-      }"
+      class="lazy-image__img lazy-image__img--transition"
+      data-e2e="lazy-image-test"
     />
-    <div
-      v-else
-      class="loader-placeholder"
-      :style="{
-        minHeight: `${minHeight}`,
-        minWidth: `${minWidth}`,
-      }"
-    >
+    <div v-else class="lazy-image__loader" data-e2e="lazy-image-loader-test">
       <LoaderComponent />
     </div>
   </div>
@@ -37,6 +26,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import LoaderComponent from "@/components/shared/Loader.vue";
+import { getImagePath } from "@/helpers/imagePathUtil";
 
 export default defineComponent({
   name: "LazyImage",
@@ -44,10 +34,6 @@ export default defineComponent({
     src: {
       type: String,
       required: true,
-    },
-    alt: {
-      type: String,
-      default: "",
     },
     width: {
       type: String,
@@ -57,13 +43,13 @@ export default defineComponent({
       type: String,
       default: "auto",
     },
-    minWidth: {
+    alt: {
       type: String,
-      default: "10px",
+      default: "",
     },
-    minHeight: {
+    aspectRatio: {
       type: String,
-      default: "10px",
+      default: "100%", // Default to 16:9 aspect ratio
     },
     containerClass: {
       type: [Object, String, Array],
@@ -76,50 +62,44 @@ export default defineComponent({
   setup(props) {
     const loaded = ref(false);
     const imageUrl = ref("");
+    const srcPath = getImagePath(props.src);
 
     onMounted(() => {
-      // Preload the image
       const preloadLink = document.createElement("link");
       preloadLink.rel = "preload";
       preloadLink.as = "image";
-      preloadLink.href = props.src;
+      preloadLink.href = srcPath;
       document.head.appendChild(preloadLink);
 
-      // Load the image
       const image = new Image();
-      image.src = props.src;
+      image.src = srcPath;
       image.onload = () => {
         loaded.value = true;
-        imageUrl.value = props.src;
+        imageUrl.value = srcPath;
 
-        // Clean up preload link after it's loaded
         if (document.head.contains(preloadLink)) {
           document.head.removeChild(preloadLink);
         }
       };
     });
 
-    return {
-      loaded,
-      imageUrl,
-      altText: props.alt,
-    };
+    return { loaded, imageUrl, altText: props.alt };
   },
 });
 </script>
+<style lang="scss" scoped>
+.lazy-image {
+  @apply h-0 relative block w-full overflow-hidden;
+  &__img {
+    @apply absolute top-0 left-0 w-full h-full opacity-0 transition-opacity duration-500 ease-in-out;
 
-<style scoped>
-.image-transition {
-  opacity: 1; /* Low initial opacity */
-  transition: opacity 2.5s ease-in-out; /* Smooth transition for opacity */
-}
-.image-loaded {
-  opacity: 0; /* Full opacity once loaded */
-}
-.image-container {
-  position: relative;
-}
-.loader-placeholder {
-  background-color: white;
+    &--transition {
+      @apply opacity-100;
+    }
+  }
+
+  &__loader {
+    @apply absolute top-0 left-0 w-full h-full bg-white;
+  }
 }
 </style>

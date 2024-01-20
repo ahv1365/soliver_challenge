@@ -21,6 +21,7 @@ module.exports = {
         "text-light": "var(--color-text-light)",
         "text-secondary": "var(--color-text-secondary)",
         "text-secondary-light": "var(--color-text-secondary-light)",
+        "text-secondary-lighter": "var(--color-text-secondary-lighter)",
         border: "var(--color-border)",
         "border-secondary": "var(--color-border-secondary)",
         button: "var(--color-button)",

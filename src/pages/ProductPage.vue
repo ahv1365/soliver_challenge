@@ -1,56 +1,63 @@
 <template>
-  <div class="product-page" data-e2e="product-page-test">
+  <div class="product-page" data-e2e="product-page">
     <!-- Product Card -->
     <div
       v-for="product in article?.variants"
       :key="product.id"
       @click="openModal(String(product?.id))"
-      class="product-page--card"
-      data-e2e="product-page-card-test"
+      class="product-page__card"
+      :data-e2e="'product-card-' + product.id"
     >
       <LazyImage
-        :src="`/assets/images/${product?.image}`"
-        alt="Product"
-        class="product-page--card__lazy-image"
-        :minHeight="`450px`"
-        :minWidth="`300px`"
-        :containerClass="{
-          'bg-white': true,
-        }"
-        data-e2e="product-page-card-lazy-image-test"
+        :src="product?.image"
+        :alt="product?.image"
+        aspectRatio="142%"
+        class="product-page__card-image"
+        :containerClass="{ 'bg-white': true }"
+        :data-e2e="'product-image-' + product.id"
       />
-      <div class="text-left w-full">
-        <p class="text-text-secondary-light font-medium">s.Oliver</p>
-        <p class="text-text-primary">
+      <div
+        class="product-page__card-detail"
+        :data-e2e="'product-detail-' + product.id"
+      >
+        <div class="product-page__logo" data-e2e="product-logo">s.Oliver</div>
+        <div
+          class="product-page__name"
+          :data-e2e="'product-name-' + product.id"
+        >
           {{ article?.name }}
-        </p>
-        <p class="text-text-primary font-bold">
+        </div>
+        <div
+          class="product-page__price"
+          :data-e2e="'product-price-' + product.id"
+        >
           {{ article?.price }} {{ article?.currency?.symbol }}
-        </p>
-        <div class="product-page--card--color-image">
+        </div>
+        <div
+          class="product-page__color-images"
+          :data-e2e="'product-colors-' + product.id"
+        >
           <!-- Color Images -->
-          <span
+          <div
             v-for="variant in article?.variants"
             :key="variant?.colorLabel"
             :style="{ backgroundColor: variant?.colorHEX }"
-            class="product-page--card--color-image__box"
-          ></span>
+            class="product-page__color-box"
+            :data-e2e="'color-box-' + variant.colorLabel"
+          ></div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Modal Backdrop -->
-  <transition name="modal">
-    <div v-if="isModalOpen" class="product-page--modal" @click="closeModal">
-      <div class="product-page--modal__content" @click.stop>
-        <ProductView
-          :key="`productView_${selectedProduct}`"
-          :productId="selectedProduct"
-          @close="closeModal"
-        />
-      </div>
-    </div>
-  </transition>
+  <!-- ... other parts of your template ... -->
+  <SharedModal :isModalOpen="isModalOpen" :closeModal="closeModal">
+    <ProductView
+      :key="`productView_${selectedProduct}`"
+      :productId="selectedProduct"
+      @close="closeModal"
+      data-e2e="product-view"
+    />
+  </SharedModal>
 </template>
 
 <script lang="ts">
@@ -62,36 +69,38 @@ import {
   watchEffect,
 } from "vue";
 import { useProductData } from "@/composables/useProductData";
-import LazyImage from "@/components/shared/LazyImage.vue";
 
 export default defineComponent({
   name: "ProductPage",
   components: {
     ProductView: defineAsyncComponent(
-      () => import("./product/ProductView.vue")
+      () => import("@/pages/product/ProductView.vue")
     ),
-    LazyImage,
+    SharedModal: defineAsyncComponent(
+      () => import("@/components/shared/SharedModal.vue")
+    ),
+    LazyImage: defineAsyncComponent(
+      () => import("@/components/shared/LazyImage.vue")
+    ),
   },
   setup() {
     const isModalOpen = ref(false);
     const selectedProduct = ref("1");
+
     watchEffect(() => {
-      if (isModalOpen.value) {
-        document.body.classList.add("no-scroll");
-      } else {
-        document.body.classList.remove("no-scroll");
-      }
+      document.body.classList.toggle("no-scroll", isModalOpen.value);
     });
+
     onUnmounted(() => {
       document.body.classList.remove("no-scroll");
     });
-    const closeModal = () => {
-      isModalOpen.value = false;
-    };
-    const openModal = (product: string) => {
+
+    const closeModal = () => (isModalOpen.value = false);
+    const openModal = (productId: string) => {
       isModalOpen.value = true;
-      selectedProduct.value = String(product);
+      selectedProduct.value = productId;
     };
+
     const {
       article,
       selectedVariantImage,
@@ -99,15 +108,16 @@ export default defineComponent({
       sizeClass,
       selectImage,
     } = useProductData(selectedProduct.value);
+
     return {
       isModalOpen,
       closeModal,
+      openModal,
       article,
       selectedVariantImage,
       selectSize,
       sizeClass,
       selectImage,
-      openModal,
       selectedProduct,
     };
   },
@@ -119,53 +129,36 @@ export default defineComponent({
   overflow: hidden;
 }
 </style>
-<style scoped>
+<style lang="scss" scoped>
 .product-page {
   @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-20 py-8 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
-}
-.product-page--card {
-  @apply p-4 flex flex-col items-center rounded-lg hover:shadow-md transition-shadow duration-300;
-}
-.product-page--card__lazy-image {
-  @apply cursor-pointer mb-4;
-}
-.product-page--card--color-image {
-  @apply flex items-center mt-2;
-}
-.product-page--card--color-image__box {
-  @apply cursor-pointer w-4 h-4 mx-3 rounded-full inline-block ring-1 ring-gray-200 ring-offset-4;
-}
-.product-page--modal {
-  @apply fixed inset-0 bg-black bg-opacity-50 z-10 flex items-center justify-center;
-}
-.product-page--modal__content {
-  background-color: transparent;
-  border-radius: 8px;
-  max-height: 90vh;
-  max-width: 90vw;
-  overflow-y: auto;
-}
-.modal-enter-active {
-  transition: opacity 0.5s, transform 0.3s;
-}
-.modal-enter-from {
-  opacity: 0;
-  transform: opacity(0 0.3s);
-}
-.modal-enter-to {
-  opacity: 1;
-  transform: opacity(1 0.3s);
-}
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+  &__card {
+    @apply p-4 flex flex-col items-center rounded-lg hover:shadow-md transition-shadow duration-300;
+
+    &-detail {
+      @apply text-left w-full;
+    }
+
+    &-image {
+      @apply cursor-pointer mb-4;
+    }
+  }
+  &__color-images {
+    @apply flex items-center mt-2;
+  }
+  &__color-box {
+    @apply cursor-pointer w-4 h-4 mx-2 rounded-full inline-block ring-1 ring-gray-200 ring-offset-4;
+  }
+  &__logo {
+    @apply text-text-secondary-light font-medium;
+  }
+  &__name {
+    @apply text-text;
+  }
+
+  &__price {
+    @apply font-bold text-text;
+  }
 }
 </style>
