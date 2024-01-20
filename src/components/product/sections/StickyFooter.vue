@@ -1,11 +1,11 @@
 <template>
   <footer class="product-sticky-footer">
     <div class="product-sticky-footer__name">
-      {{ articleName }}
+      {{ productName }}
     </div>
     <button
       class="product-sticky-footer__add-cart-button"
-      @click="addToCart(articleName)"
+      @click="addToCart(productName)"
     >
       <div class="product-sticky-footer__add-cart-text">
         <div class="product-sticky-footer__add-cart-text-content">
@@ -16,6 +16,7 @@
             alt="shopping-cart"
             :src="getIconPath('shopping-cart')"
             class="product-sticky-footer__cart-icon"
+            loading="lazy"
           />
         </div>
       </div>
@@ -30,19 +31,20 @@ import { getIconPath } from "@/helpers/iconPathUtil";
 export default defineComponent({
   name: "StickyFooter",
   props: {
-    articleName: {
+    productName: {
       type: String as PropType<string>,
       required: true,
     },
   },
   setup(props, { emit }) {
-    const addToCart = (articleName: string) => {
-      emit("add-to-cart", articleName);
+    const addToCart = (productName: string) => {
+      emit("add-to-cart", productName);
     };
     return { addToCart, getIconPath };
   },
 });
 </script>
+
 <style lang="scss" scoped>
 .product-sticky-footer {
   @apply sticky bottom-0 right-0 bg-white flex justify-between w-full p-2 shadow-inner;

@@ -1,33 +1,36 @@
 <template>
   <div
-    v-if="article"
-    :class="{ 'opacity-0': !article }"
+    v-if="productData"
+    :class="{ 'opacity-0': !productData }"
     class="product-view"
     data-e2e="product-view-test"
   >
     <CloseButton @close="closeModal" />
     <div class="product-view__container" data-e2e="product-view-container-test">
-      <ImageCarousel :article="article" />
+      <ImageCarousel :product="productData" />
       <ProductDetails
-        :article="article"
+        :product="productData"
         :selectColor="selectColor"
         :sizeClass="sizeClass"
         :selectSize="selectSize"
       />
     </div>
     <TabsComponent
-      v-if="article.tabs"
+      v-if="productData.tabs"
       class="product-view__tab"
       data-e2e="product-view-tab-test"
-      :tabs="article?.tabs"
+      :tabs="productData?.tabs"
     />
     <AccordionComponent
-      v-if="article.tabs"
+      v-if="productData.tabs"
       class="product-view__accordion"
       data-e2e="product-view-accordion-test"
-      :tabs="article?.tabs"
+      :tabs="productData?.tabs"
     />
-    <StickyFooter :articleName="article?.name" @add-to-cart="handleAddToCart" />
+    <StickyFooter
+      :productName="productData?.name"
+      @add-to-cart="handleAddToCart"
+    />
   </div>
 </template>
 
@@ -48,38 +51,39 @@ export default defineComponent({
       () => import("@/components/shared/CloseButton.vue")
     ),
     StickyFooter: defineAsyncComponent(
-      () => import("@/components/product/product-sections/StickyFooter.vue")
+      () => import("@/components/product/sections/StickyFooter.vue")
     ),
     ProductDetails: defineAsyncComponent(
-      () => import("@/components/product/product-sections/ProductDetails.vue")
+      () => import("@/components/product/sections/ProductDetails.vue")
     ),
     AccordionComponent: defineAsyncComponent(
-      () => import("@/components/product/product-sections/Accordion.vue")
+      () => import("@/components/product/sections/Accordion.vue")
     ),
     TabsComponent: defineAsyncComponent(
-      () => import("@/components/product/product-sections/Tab.vue")
+      () => import("@/components/product/sections/Tab.vue")
     ),
     ImageCarousel: defineAsyncComponent(
-      () => import("@/components/product/product-sections/ImageCarousel.vue")
+      () => import("@/components/product/sections/ImageCarousel.vue")
     ),
   },
-  methods: {
-    handleAddToCart(articleName: string) {
-      console.log("Article to add to cart:", articleName);
-      // Further logic to handle adding the article to the cart
-    },
-  },
+
   setup(props, { emit }) {
-    const { article, selectSize, sizeClass, selectColor } = useProductData(
+    const { productData, selectSize, sizeClass, selectColor } = useProductData(
       props.productId
     );
+
+    const handleAddToCart = (productName: string) => {
+      console.log("Product to add to cart:", productName);
+      // Further logic to handle adding the product to the cart
+    };
 
     const closeModal = () => {
       emit("close");
     };
 
     return {
-      article,
+      handleAddToCart,
+      productData,
       selectSize,
       selectColor,
       sizeClass,

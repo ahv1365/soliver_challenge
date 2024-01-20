@@ -16,20 +16,21 @@
     </div>
 
     <div class="product-detail__name" data-e2e="product-detail-name-test">
-      {{ article?.name }}
+      {{ product?.name }}
     </div>
     <div
       class="product-detail__price-logo"
       data-e2e="product-detail-price-logo-test"
     >
       <div class="product-detail__price" data-e2e="product-detail-price-test">
-        {{ article?.price }} {{ article?.currency?.label }}
+        {{ product?.price }} {{ product?.currency?.label }}
       </div>
       <img
         class="product-detail__logo"
         alt="soliver logo"
         :src="getImagePath(`SOliver-Logo.svg`)"
         data-e2e="soliver-logo-test"
+        loading="lazy"
       />
     </div>
     <div
@@ -42,7 +43,7 @@
       >
         Color:
         <span class="product-detail__color-value">
-          {{ article?.color }}
+          {{ product?.color }}
         </span>
       </div>
       <div
@@ -52,7 +53,7 @@
         <!-- Color circles -->
         <input
           type="image"
-          v-for="variant in article.variants"
+          v-for="variant in product.variants"
           :key="variant.colorLabel"
           :src="getImagePath(variant.image)"
           :class="colorOptionClass(variant.colorLabel)"
@@ -70,7 +71,7 @@
       >
         Size:
         <span class="product-detail__size-value">
-          {{ article?.size }}
+          {{ product?.size }}
         </span>
       </div>
       <div
@@ -79,12 +80,12 @@
       >
         <!-- Size buttons -->
         <button
-          v-for="size in article?.sizes"
+          v-for="size in product?.sizes"
           :key="size"
           :class="sizeClass(size)"
           @click="selectSize(size)"
           class="w-11 my-auto bg-gray-100 rounded-2xl"
-          :disabled="!article?.availableSizes.includes(size)"
+          :disabled="!product?.availableSizes.includes(size)"
           data-e2e="product-detail-size-options-button-test"
         >
           {{ size }}
@@ -94,9 +95,9 @@
     <!-- SizeDropdown for mobile -->
     <SizeDropdown
       class="block md:hidden"
-      :sizes="article?.sizes"
-      :selected="article?.size"
-      :availableSizes="article?.availableSizes"
+      :sizes="product?.sizes"
+      :selected="product?.size"
+      :availableSizes="product?.availableSizes"
       @size-selected="(size: string) => selectSize(size)"
     />
   </section>
@@ -104,15 +105,15 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { Article } from "@/types/article";
+import { Product } from "@/types/product";
 import SizeDropdown from "./SizeDropdown.vue";
 import { getImagePath } from "@/helpers/imagePathUtil";
 
 export default defineComponent({
   name: "ProductDetails",
   props: {
-    article: {
-      type: Object as PropType<Article>,
+    product: {
+      type: Object as PropType<Product>,
       required: true,
     },
     selectColor: {
@@ -133,7 +134,7 @@ export default defineComponent({
   },
   setup(props) {
     const colorOptionClass = (colorLabel: string) => {
-      return props.article?.color === colorLabel
+      return props.product?.color === colorLabel
         ? "w-11 h-11 rounded-full p-1 cursor-default border border-black"
         : "w-11 h-11 rounded-full p-1 cursor-pointer border border-border-secondary";
     };
@@ -200,7 +201,7 @@ export default defineComponent({
   }
   &__color-options,
   &__size-options {
-    @apply flex items-start space-x-2 w-full text-left;
+    @apply overflow-auto flex items-start space-x-2 w-full text-left;
   }
 }
 </style>

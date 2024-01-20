@@ -40,6 +40,7 @@
             :src="getIconPath(tabContent.itemNumber.icon)"
             class="product-details-tab__icon"
             data-e2e="product-details-icon-test"
+            loading="lazy"
           />
         </div>
         {{ tabContent.itemNumber.content }}

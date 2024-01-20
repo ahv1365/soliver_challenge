@@ -23,6 +23,7 @@
             :src="getIconPath(item.icon)"
             class="material-care-tab__icon"
             :data-e2e="`material-care-icon-${index}-test`"
+            loading="lazy"
           />
           {{ item.content }}
         </div>

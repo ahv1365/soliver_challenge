@@ -21,6 +21,7 @@
             :src="getIconPath(detail?.icon)"
             class="sustainability-tab__icon"
             :data-e2e="`sustainability-icon-${detail.label}-test`"
+            loading="lazy"
           />
         </div>
         <div

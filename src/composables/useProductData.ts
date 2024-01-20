@@ -1,32 +1,32 @@
 import { ref, computed, onMounted } from "vue";
-import { Article } from "@/types/article";
+import { Product } from "@/types/product";
 import GetData from "@/services/getData";
 
 const dataService = new GetData();
 
 export function useProductData(productId: string) {
-  const article = ref<Article | null>(null);
+  const productData = ref<Product | null>(null);
   const selectedVariantIndex = ref<number>(0);
   const selectedImage = ref<string>("");
-  const fetching = ref<boolean>(true);
+  const selectedProductId = ref<string>();
 
   /**
-   * Fetches article data based on the provided product ID.
+   * Fetches product data based on the provided product ID.
    * @param pid - Product ID to fetch data for.
    */
   const fetchData = async (pid: string): Promise<void> => {
-    if (fetching.value) {
-      fetching.value = false;
+    if (selectedProductId.value !== pid) {
+      selectedProductId.value = pid;
       try {
-        const response = await dataService.getArticle(pid);
+        const response = await dataService.getProduct(pid);
         if (response) {
-          article.value = response;
+          productData.value = response;
           selectedImage.value =
             response.images.length > 0 ? response.images[0] : "";
         }
-        fetching.value = true;
+        selectedProductId.value = pid;
       } catch (error) {
-        fetching.value = true;
+        selectedProductId.value = pid;
         console.error("Error fetching data:", error);
       }
     }
@@ -38,11 +38,11 @@ export function useProductData(productId: string) {
    */
   const selectVariant = (index: number): void => {
     selectedVariantIndex.value = index;
-    selectedImage.value = article.value?.variants[index]?.image || "";
+    selectedImage.value = productData.value?.variants[index]?.image || "";
   };
 
   /**
-   * Fetches article data based on the provided product ID.
+   * Fetches product data based on the provided product ID.
    * @param pid - Product ID to fetch data for.
    */
   const selectColor = (id: string): void => {
@@ -54,8 +54,8 @@ export function useProductData(productId: string) {
    * @param index - Index of the selected size.
    */
   const selectSize = (selectedSize: string): void => {
-    if (article.value) {
-      article.value.size = selectedSize;
+    if (productData.value) {
+      productData.value.size = selectedSize;
     }
   };
 
@@ -74,9 +74,9 @@ export function useProductData(productId: string) {
    */
   const sizeClass = (size: string): string[] => {
     const classes = ["border", "rounded", "text-button-secondary"];
-    if (article.value?.size === size) {
+    if (productData.value?.size === size) {
       classes.push("border-border", "font-bold");
-    } else if (!article.value?.availableSizes?.includes(size)) {
+    } else if (!productData.value?.availableSizes?.includes(size)) {
       classes.push(
         "border-2",
         "border-border-secondary",
@@ -91,7 +91,7 @@ export function useProductData(productId: string) {
   onMounted(() => fetchData(productId));
 
   return {
-    article,
+    productData,
     selectedVariantIndex,
     selectedImage,
     fetchData,
@@ -104,14 +104,14 @@ export function useProductData(productId: string) {
       return window.innerWidth < 768;
     }),
     selectedVariant: computed(
-      () => article.value?.variants[selectedVariantIndex.value]
+      () => productData.value?.variants[selectedVariantIndex.value]
     ),
     selectedVariantImage: computed(
       () =>
         selectedImage.value ||
-        article.value?.variants[selectedVariantIndex.value]?.image ||
+        productData.value?.variants[selectedVariantIndex.value]?.image ||
         ""
     ),
-    selectedSize: computed(() => article?.value?.size),
+    selectedSize: computed(() => productData?.value?.size),
   };
 }

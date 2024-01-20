@@ -16,6 +16,7 @@
       }"
       class="lazy-image__img lazy-image__img--transition"
       data-e2e="lazy-image-test"
+      loading="lazy"
     />
     <div v-else class="lazy-image__loader" data-e2e="lazy-image-loader-test">
       <LoaderComponent />

@@ -13,7 +13,7 @@
     <div class="product-gallery__carousel-inner" :style="carouselStyle">
       <!-- Loader displayed when isLoading is true -->
       <LazyImage
-        v-for="(image, index) in article?.images"
+        v-for="(image, index) in product?.images"
         :key="`image-${image}`"
         :src="image"
         :alt="image"
@@ -23,7 +23,7 @@
         :width="`100vw`"
         :containerClass="{
           'product-gallery__carousel-item--full-screen': isFullScreen,
-          'cursor-pointer': !isFullScreen,
+          'cursor-zoom-in': !isFullScreen,
           'cursor-zoom-out': isFullScreen,
           'product-gallery__carousel-item--active': currentSlide === index,
         }"
@@ -34,7 +34,7 @@
     </div>
     <div class="product-gallery__indicators">
       <div
-        v-for="(image, index) in article?.images"
+        v-for="(image, index) in product?.images"
         :key="index"
         :class="{
           'product-gallery__indicator': true,
@@ -54,13 +54,13 @@ import {
   computed,
   defineAsyncComponent,
 } from "vue";
-import { Article } from "@/types/article";
+import { Product } from "@/types/product";
 
 export default defineComponent({
   name: "ImageCarousel",
   props: {
-    article: {
-      type: Object as PropType<Article>,
+    product: {
+      type: Object as PropType<Product>,
       required: true,
     },
   },

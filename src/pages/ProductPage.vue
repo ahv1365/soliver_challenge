@@ -2,7 +2,7 @@
   <div class="product-page" data-e2e="product-page-test">
     <!-- Product Card -->
     <div
-      v-for="product in article?.variants"
+      v-for="product in productData?.variants"
       :key="product.image"
       class="product-page__card"
       :data-e2e="'product-card-' + product.id + '-test'"
@@ -27,13 +27,13 @@
           class="product-page__name"
           :data-e2e="'product-name-' + product.id + '-test'"
         >
-          {{ article?.name }}
+          {{ productData?.name }}
         </div>
         <div
           class="product-page__price"
           :data-e2e="'product-price-' + product.id + '-test'"
         >
-          {{ article?.price }} {{ article?.currency?.symbol }}
+          {{ productData?.price }} {{ productData?.currency?.symbol }}
         </div>
         <div
           class="product-page__color-images"
@@ -41,7 +41,7 @@
         >
           <!-- Color Images -->
           <div
-            v-for="variant in article?.variants"
+            v-for="variant in productData?.variants"
             :key="variant?.colorLabel"
             :style="{ backgroundColor: variant?.colorHEX }"
             class="product-page__color-box"
@@ -70,6 +70,7 @@
 
 <script lang="ts">
 import {
+  computed,
   defineAsyncComponent,
   defineComponent,
   onUnmounted,
@@ -77,6 +78,7 @@ import {
   watchEffect,
 } from "vue";
 import { useProductData } from "@/composables/useProductData";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "ProductPage",
@@ -92,36 +94,34 @@ export default defineComponent({
     ),
   },
   setup() {
-    const isModalOpen = ref(false);
-    const selectedProduct = ref("1");
-
-    watchEffect(() => {
-      document.body.classList.toggle("no-scroll", isModalOpen.value);
-    });
-
-    onUnmounted(() => {
-      document.body.classList.remove("no-scroll");
-    });
-
-    const closeModal = () => (isModalOpen.value = false);
-    const openModal = (productId: string) => {
-      isModalOpen.value = true;
-      selectedProduct.value = productId;
-    };
-
+    const store = useStore();
+    const isModalOpen = computed(() => store.state.product.isModalOpen);
+    const selectedProduct = computed(() => store.state.product.selectedProduct);
     const {
-      article,
+      productData,
       selectedVariantImage,
       selectSize,
       sizeClass,
       selectImage,
     } = useProductData(selectedProduct.value);
+    const openModal = (productId: string) => {
+      store.dispatch("product/openModal", productId);
+    };
+    const closeModal = () => {
+      store.dispatch("product/closeModal");
+    };
+    watchEffect(() => {
+      document.body.classList.toggle("no-scroll", isModalOpen.value);
+    });
+    onUnmounted(() => {
+      document.body.classList.remove("no-scroll");
+    });
 
     return {
       isModalOpen,
       closeModal,
       openModal,
-      article,
+      productData,
       selectedVariantImage,
       selectSize,
       sizeClass,

@@ -19,6 +19,7 @@
           class="product-info__icon"
           :class="{ 'product-info__icon--rotated': activeTab === tab?.tab }"
           :data-e2e="`accordion-icon-${index}-test`"
+          loading="lazy"
         />
       </button>
       <div

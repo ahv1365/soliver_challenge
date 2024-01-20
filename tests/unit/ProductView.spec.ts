@@ -5,8 +5,8 @@ import { productDetails } from "@/mocks/data";
 
 jest.mock("@/composables/useProductData", () => ({
   useProductData: () => ({
-    article: ref({
-      // Mock the expected structure of the article
+    product: ref({
+      // Mock the expected structure of the product
       name: "Mock Product",
       tabs: productDetails, // Mock the structure of the tabs if necessary
     }),

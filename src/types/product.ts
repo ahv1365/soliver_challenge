@@ -1,6 +1,6 @@
 import { TabContent } from "./tab";
 
-export interface Article {
+export interface Product {
   id: number;
   name: string;
   description?: string;
