@@ -24,8 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
-import LoaderComponent from "@/components/shared/Loader.vue";
+import { defineAsyncComponent, defineComponent, onMounted, ref } from "vue";
 import { getImagePath } from "@/helpers/imagePathUtil";
 
 export default defineComponent({
@@ -57,7 +56,9 @@ export default defineComponent({
     },
   },
   components: {
-    LoaderComponent,
+    LoaderComponent: defineAsyncComponent(
+      () => import("@/components/shared/Loader.vue")
+    ),
   },
   setup(props) {
     const loaded = ref(false);
@@ -65,25 +66,19 @@ export default defineComponent({
     const srcPath = getImagePath(props.src);
 
     onMounted(() => {
-      const preloadLink = document.createElement("link");
-      preloadLink.rel = "preload";
-      preloadLink.as = "image";
-      preloadLink.href = srcPath;
-      document.head.appendChild(preloadLink);
-
       const image = new Image();
       image.src = srcPath;
       image.onload = () => {
         loaded.value = true;
         imageUrl.value = srcPath;
-
-        if (document.head.contains(preloadLink)) {
-          document.head.removeChild(preloadLink);
-        }
       };
     });
 
-    return { loaded, imageUrl, altText: props.alt };
+    return {
+      loaded,
+      imageUrl,
+      altText: props.alt,
+    };
   },
 });
 </script>

@@ -53,36 +53,37 @@ describe("ProductPage.vue", () => {
     // ... other default data assertions
   });
 
-  // it('renders product variants', () => {
-  //   const productCards = wrapper.findAll('.p-4');
-  //   expect(productCards.length).toBeGreaterThan(0);
-  // });
+  describe("ProductPage.vue", () => {
+    it("renders product cards with correct data-e2e attributes", () => {
+      const wrapper = mount(ProductPage);
 
-  // it('opens modal on product click', async () => {
-  //   const productCard = wrapper.find('.p-4');
-  //   await productCard.trigger('click');
-  //   await nextTick();
-  //   expect(wrapper.vm.isModalOpen).toBe(true);
-  //   expect(wrapper.vm.selectedProduct).toBe('1');
-  // });
+      const productCards = wrapper.findAll('[data-e2e^="product-card-"]');
+      expect(productCards.length).toBeGreaterThan(0);
 
-  // it('closes modal on backdrop click', async () => {
-  //   wrapper.vm.openModal('1');
-  //   await nextTick();
-  //   await wrapper.find('.fixed').trigger('click');
-  //   expect(wrapper.vm.isModalOpen).toBe(false);
-  // });
+      productCards.forEach((card, index) => {
+        expect(card.attributes("data-e2e")).toBe(
+          `product-card-${index + 1}-test`
+        );
+      });
+    });
 
-  // it('adds no-scroll class on modal open', async () => {
-  //   wrapper.vm.openModal('1');
-  //   await nextTick();
-  //   expect(document.body.classList.contains('no-scroll')).toBe(true);
-  // });
+    it("renders product details with correct data-e2e attributes", () => {
+      const wrapper = mount(ProductPage);
 
-  // it('removes no-scroll class on unmount', () => {
-  //   wrapper.unmount();
-  //   expect(document.body.classList.contains('no-scroll')).toBe(false);
-  // });
+      const productDetails = wrapper.findAll('[data-e2e^="product-detail-"]');
+      expect(productDetails.length).toBeGreaterThan(0);
 
-  // Add more tests as needed for computed properties, methods, etc.
+      productDetails.forEach((detail, index) => {
+        expect(detail.attributes("data-e2e")).toBe(
+          `product-detail-${index + 1}-test`
+        );
+      });
+    });
+    it("renders shared modal with correct data-e2e attribute", () => {
+      const wrapper = mount(ProductPage);
+
+      const sharedModal = wrapper.find('[data-e2e="shared-modal-test"]');
+      expect(sharedModal.exists()).toBe(true);
+    });
+  });
 });

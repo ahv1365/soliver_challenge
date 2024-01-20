@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineAsyncComponent, defineComponent, PropType, ref } from "vue";
 import {
   FitDetails,
   MaterialAndCare,
@@ -47,10 +47,7 @@ import {
   Sustainability,
   TabContent,
 } from "@/types/tab";
-import FitTab from "@/components/product/tab/FitTab.vue";
 import ProductDetailsTab from "@/components/product/tab/ProductDetailsTab.vue";
-import SustainabilityTab from "@/components/product/tab/SustainabilityTab.vue";
-import MaterialCareTab from "@/components/product/tab/MaterialCareTab.vue";
 import { getIconPath } from "@/helpers/iconPathUtil";
 
 export default defineComponent({
@@ -62,10 +59,16 @@ export default defineComponent({
     },
   },
   components: {
-    SustainabilityTab,
-    MaterialCareTab,
-    FitTab,
     ProductDetailsTab,
+    SustainabilityTab: defineAsyncComponent(
+      () => import("@/components/product/tab/SustainabilityTab.vue")
+    ),
+    MaterialCareTab: defineAsyncComponent(
+      () => import("@/components/product/tab/MaterialCareTab.vue")
+    ),
+    FitTab: defineAsyncComponent(
+      () => import("@/components/product/tab/FitTab.vue")
+    ),
   },
 
   setup() {

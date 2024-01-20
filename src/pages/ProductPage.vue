@@ -1,12 +1,11 @@
 <template>
-  <div class="product-page" data-e2e="product-page">
+  <div class="product-page" data-e2e="product-page-test">
     <!-- Product Card -->
     <div
       v-for="product in article?.variants"
-      :key="product.id"
-      @click="openModal(String(product?.id))"
+      :key="product.image"
       class="product-page__card"
-      :data-e2e="'product-card-' + product.id"
+      :data-e2e="'product-card-' + product.id + '-test'"
     >
       <LazyImage
         :src="product?.image"
@@ -14,28 +13,31 @@
         aspectRatio="142%"
         class="product-page__card-image"
         :containerClass="{ 'bg-white': true }"
-        :data-e2e="'product-image-' + product.id"
+        :data-e2e="'product-image-' + product.id + '-test'"
+        @click="openModal(String(product?.id))"
       />
       <div
         class="product-page__card-detail"
-        :data-e2e="'product-detail-' + product.id"
+        :data-e2e="'product-detail-' + product.id + '-test'"
       >
-        <div class="product-page__logo" data-e2e="product-logo">s.Oliver</div>
+        <div class="product-page__logo" data-e2e="product-logo-test">
+          s.Oliver
+        </div>
         <div
           class="product-page__name"
-          :data-e2e="'product-name-' + product.id"
+          :data-e2e="'product-name-' + product.id + '-test'"
         >
           {{ article?.name }}
         </div>
         <div
           class="product-page__price"
-          :data-e2e="'product-price-' + product.id"
+          :data-e2e="'product-price-' + product.id + '-test'"
         >
           {{ article?.price }} {{ article?.currency?.symbol }}
         </div>
         <div
           class="product-page__color-images"
-          :data-e2e="'product-colors-' + product.id"
+          :data-e2e="'product-colors-' + product.id + '-test'"
         >
           <!-- Color Images -->
           <div
@@ -43,19 +45,25 @@
             :key="variant?.colorLabel"
             :style="{ backgroundColor: variant?.colorHEX }"
             class="product-page__color-box"
-            :data-e2e="'color-box-' + variant.colorLabel"
+            :data-e2e="'color-box-' + variant.colorLabel + '-test'"
+            @click="openModal(String(product?.id))"
           ></div>
         </div>
       </div>
     </div>
   </div>
   <!-- ... other parts of your template ... -->
-  <SharedModal :isModalOpen="isModalOpen" :closeModal="closeModal">
+  <SharedModal
+    v-if="isModalOpen"
+    :isModalOpen="isModalOpen"
+    :closeModal="closeModal"
+    data-e2e="shared-modal-test"
+  >
     <ProductView
       :key="`productView_${selectedProduct}`"
       :productId="selectedProduct"
       @close="closeModal"
-      data-e2e="product-view"
+      data-e2e="product-view-test"
     />
   </SharedModal>
 </template>

@@ -47,9 +47,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed } from "vue";
+import {
+  defineComponent,
+  PropType,
+  ref,
+  computed,
+  defineAsyncComponent,
+} from "vue";
 import { Article } from "@/types/article";
-import LazyImage from "@/components/shared/LazyImage.vue";
 
 export default defineComponent({
   name: "ImageCarousel",
@@ -60,7 +65,9 @@ export default defineComponent({
     },
   },
   components: {
-    LazyImage,
+    LazyImage: defineAsyncComponent(
+      () => import("@/components/shared/LazyImage.vue")
+    ),
   },
   setup(props, { emit }) {
     const currentSlide = ref(0);
