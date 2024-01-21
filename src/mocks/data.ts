@@ -90,6 +90,12 @@ export const productDetails: TabContent[] = [
         content: "",
         icon: "",
       },
+      // this is just for demo purposes
+      empty1: {
+        label: "",
+        content: "",
+        icon: "",
+      },
       fabric: {
         label: "",
         content: "Fabric: chambray",
@@ -117,7 +123,7 @@ export const productDetails: TabContent[] = [
         icon: "",
       },
       // this is just for demo purposes
-      empty1: {
+      empty2: {
         label: "",
         content: "",
         icon: "",

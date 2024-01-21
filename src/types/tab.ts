@@ -18,6 +18,7 @@ export interface MaterialAndCare {
   // jsut for demo purposes
   empty: Detail;
   empty1: Detail;
+  empty2: Detail;
 }
 
 export interface FitDetails {
