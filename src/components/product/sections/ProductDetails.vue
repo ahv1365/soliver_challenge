@@ -46,21 +46,23 @@
           {{ product?.color }}
         </span>
       </div>
-      <div
-        class="product-detail__color-options"
-        data-e2e="product-detail-color-options-test"
-      >
-        <!-- Color circles -->
-        <input
-          type="image"
-          v-for="variant in product?.variants"
-          :key="variant.colorLabel"
-          :alt="variant.image"
-          :src="getImagePath(variant.image)"
-          :class="colorOptionClass(variant.colorLabel)"
-          @click.prevent="selectColor(String(variant.id))"
-        />
-      </div>
+      <Transition name="fade">
+        <div
+          class="product-detail__color-options min-h-11"
+          data-e2e="product-detail-color-options-test"
+        >
+          <!-- Color circles -->
+          <input
+            type="image"
+            v-for="variant in product?.variants"
+            :key="variant.colorLabel"
+            :alt="variant.image"
+            :src="getImagePath(variant.image)"
+            :class="colorOptionClass(variant.colorLabel)"
+            @click.prevent="selectColor(String(variant.id))"
+          />
+        </div>
+      </Transition>
     </div>
     <div
       class="product-detail__size-selection hidden md:block"
@@ -85,7 +87,7 @@
           :key="size"
           :class="sizeClass(size)"
           @click="selectSize(size)"
-          class="w-11 my-auto bg-gray-100 rounded-2xl"
+          class="product-detail__size-options-button"
           :disabled="!product?.availableSizes.includes(size)"
           data-e2e="product-detail-size-options-button-test"
         >
@@ -99,7 +101,7 @@
       :sizes="product?.sizes"
       :selected="product?.size"
       :availableSizes="product?.availableSizes"
-      @size-selected="(size: string) => selectSize(size)"
+      :selectSize="selectSize"
     />
   </section>
 </template>
@@ -107,7 +109,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { Product } from "@/types/product";
-import SizeDropdown from "@/components/product/containers/SizeDropdown.vue";
+import SizeDropdown from "@/components/product/uiElements/SizeDropdown.vue";
 import { getImagePath } from "@/helpers/imagePathUtil";
 
 export default defineComponent({
@@ -150,7 +152,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .product-detail {
-  @apply flex-1 mt-8 md:mt-0 md:ml-8;
+  @apply flex-1 mt-8 md:mt-0 md:ml-8 md:pt-3;
 
   &__badges {
     @apply flex;
@@ -172,9 +174,11 @@ export default defineComponent({
   &__name {
     @apply mb-3 w-full text-left text-text;
   }
+
   &__price {
     @apply my-auto text-text-secondary font-extrabold w-full text-left;
   }
+
   &__color-label,
   &__size-label {
     @apply mb-2 w-full text-left text-text-secondary;
@@ -183,6 +187,7 @@ export default defineComponent({
   &__price-logo {
     @apply flex mb-2 w-full m-auto;
   }
+
   &_price {
     @apply my-auto font-extrabold w-full text-text-secondary;
   }
@@ -194,15 +199,22 @@ export default defineComponent({
   &__color-selection {
     @apply my-5 py-2 border-y-2;
   }
+
   &__size-selection {
+    // If you have styles to add to &__size-selection, you can add them here.
   }
+
   &__color-value,
   &__size-value {
     @apply font-extrabold text-text-secondary;
   }
+
   &__color-options,
   &__size-options {
     @apply overflow-auto flex items-start space-x-2 w-full text-left;
+    &-button {
+      @apply w-11 my-auto bg-gray-100 rounded-2xl;
+    }
   }
 }
 </style>

@@ -41,6 +41,7 @@ export default defineComponent({
     @apply font-bold mb-2;
   }
 
+  // If you have styles to add to &__content, you can add them here.
   &__content {
   }
 }

@@ -6,7 +6,7 @@ module.exports = {
     extend: {
       screens: {
         "lx-h": {
-          raw: "(min-height: 1000px) and (min-width: 768px) and (max-width: 1700px)",
+          raw: "(min-height: 1000px) and (max-height: 1700px)",
         },
       },
       colors: {

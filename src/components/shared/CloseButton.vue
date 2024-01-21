@@ -30,7 +30,7 @@ export default defineComponent({
   @apply flex justify-end items-center;
 
   &__button {
-    @apply text-center cursor-pointer bg-transparent border-0 text-xl font-bold leading-none text-[var(--color-button-primary)] opacity-30 p-4 pb-0 transition-opacity duration-300 ease-in-out;
+    @apply text-center cursor-pointer bg-transparent border-0 text-xl font-bold leading-none text-button opacity-70 p-4 pb-0 transition-opacity duration-300 ease-in-out;
 
     &:hover {
       @apply opacity-100;

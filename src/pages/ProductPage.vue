@@ -73,7 +73,6 @@ import {
   defineAsyncComponent,
   defineComponent,
   onUnmounted,
-  ref,
   watchEffect,
 } from "vue";
 import { useProductData } from "@/composables/useProductData";
@@ -137,7 +136,21 @@ export default defineComponent({
 .no-scroll {
   overflow: hidden;
 }
+/* Fade transition styles */
+.fade-enter-active {
+  transition: opacity 0.5s;
+}
+.fade-leave-active {
+  transition: opacity 0s;
+}
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-leave-to {
+  opacity: 1;
+}
 </style>
+
 <style lang="scss" scoped>
 .product-page {
   @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-20 py-8 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
@@ -153,15 +166,19 @@ export default defineComponent({
       @apply cursor-pointer mb-4;
     }
   }
+
   &__color-images {
     @apply flex items-center mt-2;
   }
+
   &__color-box {
     @apply cursor-pointer w-4 h-4 mx-2 rounded-full inline-block ring-1 ring-gray-200 ring-offset-4;
   }
+
   &__logo {
     @apply text-text-secondary-light font-medium;
   }
+
   &__name {
     @apply text-text;
   }

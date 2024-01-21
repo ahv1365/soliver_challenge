@@ -67,6 +67,7 @@ export default defineComponent({
   &__detail {
     @apply border-b p-4;
   }
+
   &__label {
     @apply flex font-bold;
   }
@@ -74,9 +75,11 @@ export default defineComponent({
   &__icon-container {
     @apply p-1;
   }
+
   &__icon {
     @apply my-auto w-8 h-8 border-2 border-white invert rounded-full;
   }
+
   &__text {
     @apply my-auto pl-1;
   }

@@ -68,7 +68,7 @@ export default defineComponent({
   &__icon-container {
     @apply my-auto;
 
-    & .product-sticky-footer__cart-icon {
+    .product-sticky-footer__cart-icon {
       @apply w-3 h-3 invert;
     }
   }

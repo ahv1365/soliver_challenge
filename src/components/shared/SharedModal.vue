@@ -32,6 +32,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .shared-modal {
   @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10;
+
   &__content {
     @apply bg-transparent rounded-lg overflow-auto p-4;
   }

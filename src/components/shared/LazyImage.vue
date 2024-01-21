@@ -83,9 +83,11 @@ export default defineComponent({
   },
 });
 </script>
+
 <style lang="scss" scoped>
 .lazy-image {
   @apply h-0 relative block w-full overflow-hidden;
+
   &__img {
     @apply absolute top-0 left-0 w-full h-full opacity-0 transition-opacity duration-500 ease-in-out;
 

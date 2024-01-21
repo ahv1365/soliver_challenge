@@ -83,9 +83,11 @@ export default defineComponent({
   &__item-number {
     @apply flex items-center mt-3 whitespace-pre-line;
   }
+
   &__icon-container {
     @apply bg-white mr-3 p-2 rounded-full;
   }
+
   &__icon {
     @apply w-5 h-5;
   }

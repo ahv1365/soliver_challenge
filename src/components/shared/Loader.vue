@@ -27,12 +27,11 @@ export default defineComponent({
 }
 
 .loader {
-  @apply absolute top-1/2 left-1/2 z-10;
+  @apply absolute top-1/2 left-1/2 z-10 rounded-full w-10 h-10;
+
   transform: translate(-50%, -50%) rotate(0deg);
   border: 4px solid rgba(255, 255, 255, 0.179);
-  @apply rounded-full;
   border-top: 4px solid #7f7f7f9f;
-  @apply w-10 h-10;
   animation: spin 2s linear infinite;
 }
 </style>

@@ -2,8 +2,9 @@
   <div class="product-view" data-e2e="product-view-test">
     <CloseButton @close="closeModal" />
     <div class="product-view__container" data-e2e="product-view-container-test">
-      <ImageCarousel :product="productData" />
+      <ImageCarousel v-if="productData" :product="productData" />
       <ProductDetails
+        v-if="productData"
         :product="productData"
         :selectColor="selectColor"
         :sizeClass="sizeClass"
@@ -23,6 +24,7 @@
       :tabs="productData?.tabs"
     />
     <StickyFooter
+      v-if="productData"
       :productName="productData?.name"
       @add-to-cart="handleAddToCart"
     />

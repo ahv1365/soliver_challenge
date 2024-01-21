@@ -3,8 +3,10 @@
     class="flex justify-center items-center py-5 w-full absolute overflow-hidden"
   >
     <img
-      class="h-10 items-center"
+      class="items-center"
       alt="soliver logo"
+      height="70px"
+      width="150px"
       :src="`./assets/images/SOliver-Logo.svg`"
       loading="lazy"
     />

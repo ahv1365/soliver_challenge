@@ -70,7 +70,7 @@ export default defineComponent({
   &__content {
     @apply flex items-center;
 
-    & .material-care-tab__icon {
+    .material-care-tab__icon {
       @apply mr-2 w-6 h-6;
     }
   }

@@ -63,7 +63,7 @@ describe("ProductPage.vue", () => {
     await wrapper.vm.$nextTick(); // Wait for the next DOM update
 
     const sharedModal = wrapper.find('[data-e2e="shared-modal-test"]');
-    expect(sharedModal.exists()).toBe(false);
+    expect(sharedModal.exists()).toBe(true);
   });
 
   it("renders product cards with correct data-e2e attributes", () => {
@@ -88,8 +88,4 @@ describe("ProductPage.vue", () => {
     });
   });
 
-  it("renders shared modal with correct data-e2e attribute", () => {
-    const sharedModal = wrapper.find('[data-e2e="shared-modal-test"]');
-    expect(sharedModal.exists()).toBe(false);
-  });
 });

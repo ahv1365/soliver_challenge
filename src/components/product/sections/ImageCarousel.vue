@@ -29,7 +29,6 @@
         }"
         data-e2e="product-page-card-lazy-image-test"
         @click="toggleFullScreen"
-        @load="imageLoaded = true"
       />
     </div>
     <div class="product-gallery__indicators">
@@ -75,7 +74,6 @@ export default defineComponent({
     const deltaX = ref(0);
     const isSwiping = ref(false);
     const isFullScreen = ref(false);
-    const imageLoaded = ref(false);
     const swipeThreshold = 5; // Pixels
 
     const toggleFullScreen = (event: MouseEvent | TouchEvent) => {
@@ -148,7 +146,6 @@ export default defineComponent({
       closeModal,
       isFullScreen,
       toggleFullScreen,
-      imageLoaded,
     };
   },
 });
@@ -160,6 +157,7 @@ export default defineComponent({
 
   &--full-screen {
     @apply fixed top-0 left-0;
+
     transform: translate(0%, 0%) scale(1);
     transform-origin: center center;
     transition: transform 1.5s ease-in-out;
@@ -175,10 +173,13 @@ export default defineComponent({
 
   &__carousel-item {
     @apply inline-block flex-none w-full max-w-full;
+
     flex: 0 0 100%;
+
     &--full-screen {
       @apply h-screen bg-black;
     }
+
     &--active {
       display: block;
     }
@@ -190,6 +191,7 @@ export default defineComponent({
 
   &__indicator {
     @apply w-2 h-2 rounded-full cursor-pointer bg-gray-400;
+
     &--active {
       @apply bg-gray-900;
     }

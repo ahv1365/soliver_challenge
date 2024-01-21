@@ -23,18 +23,22 @@
       </li>
     </ul>
     <div class="product-info__tab-content" data-e2e="tab-content-test">
-      <component
-        :is="activeTab"
-        v-if="activeTabContent"
-        :tabContent="activeTabContent"
-        data-e2e="active-tab-component-test"
-      />
-      <component
-        :is="tabs[0]?.tab"
-        v-if="!activeTabContent"
-        :tabContent="tabs[0]?.content"
-        data-e2e="default-tab-component-test"
-      />
+      <transition name="fade">
+        <component
+          :is="activeTab"
+          v-if="activeTabContent"
+          :tabContent="activeTabContent"
+          data-e2e="active-tab-component-test"
+        />
+      </transition>
+      <transition name="fade">
+        <component
+          :is="tabs[0]?.tab"
+          v-if="!activeTabContent"
+          :tabContent="tabs[0]?.content"
+          data-e2e="default-tab-component-test"
+        />
+      </transition>
     </div>
   </section>
 </template>
@@ -94,7 +98,7 @@ export default defineComponent({
   @apply px-2 bg-bg-secondary min-h-[50%];
 
   &__tab-list {
-    @apply flex py-5;
+    @apply flex py-3;
     list-style-type: none;
   }
 
@@ -109,7 +113,7 @@ export default defineComponent({
   }
 
   &__tab-content {
-    @apply min-h-min p-2;
+    @apply min-h-min;
   }
 }
 </style>

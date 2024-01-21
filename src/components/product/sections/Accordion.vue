@@ -22,19 +22,16 @@
           loading="lazy"
         />
       </button>
-      <div
-        v-if="activeTab === tab?.tab && activeTabContent"
-        class="product-info__accordion-content"
-        :data-e2e="`accordion-content-${tab?.tab}-test`"
-      >
+      <Transition name="fade">
         <component
           :key="activeTab"
           :is="activeTab"
-          v-if="activeTabContent"
+          v-if="activeTab === tab?.tab && activeTabContent"
           :tabContent="activeTabContent"
           :data-e2e="`accordion-tab-component-${tab?.tab}-test`"
+          class="product-info__accordion-content"
         />
-      </div>
+      </Transition>
     </div>
   </section>
 </template>
@@ -96,12 +93,14 @@ export default defineComponent({
   },
 });
 </script>
+
 <style lang="scss" scoped>
 .product-info {
   @apply text-left px-2;
 
   &__accordion-button {
     @apply flex justify-between text-text-secondary font-bold border-0 border-b border-solid border-gray-300 cursor-pointer m-4 w-[calc(100%-36px)] text-left bg-white outline-none transition-colors duration-300 ease-in-out;
+
     &.active {
       @apply bg-bg-secondary;
       border-bottom: 1px solid #000; // Black border for bottom when active
@@ -109,8 +108,8 @@ export default defineComponent({
   }
 
   &__icon {
-    transition: transform 0.3s ease;
     @apply mr-2 w-6 h-6 transition-all;
+    transition: transform 0.3s ease;
 
     &--rotated {
       transform: rotate(180deg);
@@ -118,9 +117,6 @@ export default defineComponent({
   }
 
   &__accordion-content {
-    transition: max-height 1s ease-out;
-    overflow: hidden;
-    background-color: white;
   }
 }
 </style>

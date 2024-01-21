@@ -10,7 +10,7 @@ const state: ProductPageState = {
   selectedProduct: "1",
 };
 
-const productModule: Module<ProductPageState, any> = {
+const productModule: Module<ProductPageState, unknown> = {
   namespaced: true,
   state,
   mutations: {

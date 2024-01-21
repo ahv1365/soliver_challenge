@@ -6,7 +6,19 @@
       @click="toggleSizeList"
       data-e2e="dropdown-button-test"
     >
-      {{ selectedSize || "Select Size" }}
+      <div class="product-size-dropdown__button-label">
+        {{ selected || "Select Size" }}
+      </div>
+      <img
+        :alt="'arrow'"
+        :src="getIconPath('arrow')"
+        class="product-size-dropdown__button-icon"
+        :class="{
+          'product-size-dropdown__button-icon--rotated': showSizes,
+        }"
+        :data-e2e="`product-size-dropdown-button-icon-test`"
+        loading="lazy"
+      />
     </button>
     <!-- List of sizes -->
     <ul v-show="showSizes" data-e2e="size-list-test">
@@ -16,14 +28,14 @@
         :class="[
           'product-size-dropdown__list-item',
           {
-            'product-size-dropdown__list-item--selected': size === selectedSize,
+            'product-size-dropdown__list-item--selected': size === selected,
           },
           {
             'product-size-dropdown__list-item--disabled':
               !availableSizes.includes(size),
           },
         ]"
-        @click="selectSize(size)"
+        @click="selectSizeVoid(size)"
         :data-e2e="'size-option-' + size + '-test'"
       >
         {{ size }}
@@ -34,6 +46,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
+import { getIconPath } from "@/helpers/iconPathUtil";
 
 export default defineComponent({
   name: "SizeDropdown",
@@ -50,21 +63,28 @@ export default defineComponent({
       type: Array as PropType<string[]>,
       default: () => [],
     },
+    selectSize: {
+      type: Function as PropType<(size: string) => void>,
+      required: true,
+    },
   },
-  setup(props, { emit }) {
+  setup(props) {
     const showSizes = ref(false);
-    const selectedSize = ref("");
     const toggleSizeList = () => {
       showSizes.value = !showSizes.value;
     };
-    const selectSize = (size: string) => {
+    const selectSizeVoid = (size: string) => {
       if (props.availableSizes.includes(size)) {
         showSizes.value = false;
-        selectedSize.value = size;
-        emit("size-selected", size);
+        props.selectSize(size);
       }
     };
-    return { showSizes, toggleSizeList, selectSize, selectedSize };
+    return {
+      getIconPath,
+      showSizes,
+      toggleSizeList,
+      selectSizeVoid,
+    };
   },
 });
 </script>
@@ -74,7 +94,19 @@ export default defineComponent({
   @apply relative text-left;
 
   &__button {
-    @apply w-full text-text-secondary font-bold text-left pl-3 bg-gray-100 rounded-md p-2 mt-3;
+    @apply w-full flex justify-between text-text-secondary font-bold text-left bg-gray-100 rounded-md py-2 px-3 my-auto;
+
+    &-label {
+      @apply my-auto;
+    }
+    &-icon {
+      @apply mr-2 w-6 h-6 transition-all;
+      transition: transform 0.3s ease;
+
+      &--rotated {
+        transform: rotate(180deg);
+      }
+    }
   }
 
   &__list-item {
