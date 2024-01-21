@@ -99,7 +99,7 @@ export default defineComponent({
   @apply text-left px-2;
 
   &__accordion-button {
-    @apply w-full flex justify-between text-text-secondary font-bold cursor-pointer p-2 text-left bg-white outline-none transition-colors duration-300 ease-in-out;
+    @apply w-full flex justify-between text-text-secondary font-bold cursor-pointer p-3 text-left bg-white outline-none transition-colors duration-300 ease-in-out;
 
     &.active {
       @apply bg-bg-secondary;
