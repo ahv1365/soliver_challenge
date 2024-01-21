@@ -53,7 +53,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .material-care-tab {
-  @apply font-sans p-4 text-left text-text-secondary;
+  @apply font-sans p-2 text-left text-text-secondary;
 
   &__grid {
     @apply grid grid-cols-1 md:grid-cols-2 gap-4 mb-4;

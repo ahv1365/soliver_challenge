@@ -85,11 +85,6 @@ export const productDetails: TabContent[] = [
     label: "Material & Care Instructions",
     tab: "MaterialCareTab",
     content: {
-      material: {
-        label: "Material",
-        content: "",
-        icon: "",
-      },
       materialComposition: {
         label: "Material Composition",
         content: "",

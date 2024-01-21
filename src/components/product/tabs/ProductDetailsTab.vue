@@ -3,12 +3,12 @@
     class="product-details-tab"
     data-e2e="product-details-tab-container-test"
   >
-    <div
+    <!-- <div
       class="product-details-tab__title"
       data-e2e="product-details-title-test"
     >
       Product Details
-    </div>
+    </div> -->
     <div
       class="product-details-tab__content"
       data-e2e="product-details-content-test"
@@ -70,7 +70,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .product-details-tab {
-  @apply font-sans text-text-secondary p-4 text-left;
+  @apply font-sans text-text-secondary p-2 text-left;
 
   &__title {
     @apply font-bold mb-2;

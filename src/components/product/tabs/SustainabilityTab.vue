@@ -65,7 +65,7 @@ export default defineComponent({
   @apply font-sans text-text-secondary text-left;
 
   &__detail {
-    @apply border-b p-4;
+    @apply border-b p-2;
   }
 
   &__label {

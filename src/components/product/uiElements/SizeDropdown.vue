@@ -100,7 +100,7 @@ export default defineComponent({
       @apply my-auto;
     }
     &-icon {
-      @apply mr-2 w-6 h-6 transition-all;
+      @apply w-4 h-4 transition-all;
       transition: transform 0.3s ease;
 
       &--rotated {

@@ -99,24 +99,25 @@ export default defineComponent({
   @apply text-left px-2;
 
   &__accordion-button {
-    @apply flex justify-between text-text-secondary font-bold border-0 border-b border-solid border-gray-300 cursor-pointer m-4 w-[calc(100%-36px)] text-left bg-white outline-none transition-colors duration-300 ease-in-out;
+    @apply w-full flex justify-between text-text-secondary font-bold cursor-pointer p-2 text-left bg-white outline-none transition-colors duration-300 ease-in-out;
 
     &.active {
       @apply bg-bg-secondary;
-      border-bottom: 1px solid #000; // Black border for bottom when active
     }
   }
 
   &__icon {
-    @apply mr-2 w-6 h-6 transition-all;
+    @apply mr-2 w-4 h-4 transition-all;
     transition: transform 0.3s ease;
 
     &--rotated {
       transform: rotate(180deg);
+      filter: blur(0.5px);
     }
   }
 
-  &__accordion-content {
+  &__accordion-item {
+    @apply w-full border-0 border-b border-solid border-gray-300;
   }
 }
 </style>

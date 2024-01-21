@@ -1,6 +1,6 @@
 <template>
   <div class="fit-tab" data-e2e="fit-tab-container-test">
-    <div class="fit-tab__title" data-e2e="fit-tab-title-test">Fit</div>
+    <!-- <div class="fit-tab__title" data-e2e="fit-tab-title-test">Fit</div> -->
     <div
       v-if="tabContent?.fitType"
       class="fit-tab__content"
@@ -35,7 +35,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .fit-tab {
-  @apply font-sans p-4 text-text-secondary text-left;
+  @apply font-sans p-2 text-text-secondary text-left;
 
   &__title {
     @apply font-bold mb-2;

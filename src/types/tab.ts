@@ -5,7 +5,6 @@ export interface Detail {
 }
 
 export interface MaterialAndCare {
-  material: Detail;
   materialComposition: Detail;
   instruction: Detail;
   fabric: Detail;
