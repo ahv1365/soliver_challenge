@@ -23,14 +23,15 @@
         />
       </button>
       <Transition name="vertical">
-        <component
-          :key="activeTab"
-          :is="activeTab"
-          v-if="activeTab === tab?.tab && activeTabContent"
-          :tabContent="activeTabContent"
-          :data-e2e="`accordion-tab-component-${tab?.tab}-test`"
-          class="product-info__accordion-content"
-        />
+        <div v-if="activeTab === tab?.tab && activeTabContent">
+          <component
+            :key="activeTab"
+            :is="activeTab"
+            :tabContent="activeTabContent"
+            :data-e2e="`accordion-tab-component-${tab?.tab}-test`"
+            class="product-info__accordion-content"
+          />
+        </div>
       </Transition>
     </div>
   </section>
@@ -120,7 +121,7 @@ export default defineComponent({
     @apply w-full border-0 border-b border-solid border-gray-300;
   }
   &__accordion-content {
-    @apply px-3 leading-6;
+    @apply p-3 leading-6;
   }
 }
 .vertical-enter-active,
