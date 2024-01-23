@@ -120,12 +120,12 @@ export default defineComponent({
     @apply w-full border-0 border-b border-solid border-gray-300;
   }
   &__accordion-content {
-    @apply p-3 leading-6;
+    @apply px-3 leading-6;
   }
 }
 .vertical-enter-active,
 .vertical-leave-active {
-  transition: max-height 0.5s ease-in-out, opacity 0.3s ease;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease;
   overflow: hidden;
 }
 
