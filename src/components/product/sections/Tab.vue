@@ -113,7 +113,7 @@ export default defineComponent({
   }
 
   &__tab-content {
-    @apply min-h-min;
+    @apply min-h-min p-2 leading-6;
   }
 }
 </style>

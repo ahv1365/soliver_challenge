@@ -22,7 +22,7 @@
           loading="lazy"
         />
       </button>
-      <Transition name="fade">
+      <Transition name="vertical">
         <component
           :key="activeTab"
           :is="activeTab"
@@ -96,10 +96,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .product-info {
-  @apply text-left px-2;
+  @apply text-left px-2 pb-5;
 
   &__accordion-button {
-    @apply w-full flex justify-between text-text-secondary font-bold cursor-pointer p-3 text-left bg-white outline-none transition-colors duration-300 ease-in-out;
+    @apply w-full p-3 flex justify-between text-text-secondary font-bold cursor-pointer text-left bg-white outline-none transition-colors duration-300 ease-in-out;
 
     &.active {
       @apply bg-bg-secondary;
@@ -119,5 +119,28 @@ export default defineComponent({
   &__accordion-item {
     @apply w-full border-0 border-b border-solid border-gray-300;
   }
+  &__accordion-content {
+    @apply p-3 leading-6;
+  }
+}
+.vertical-enter-active,
+.vertical-leave-active {
+  transition: max-height 0.5s ease-in-out, opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.vertical-enter-from {
+  max-height: 0;
+  opacity: 0;
+}
+
+.vertical-leave-to {
+  max-height: 0; /* or 'none', but a specific value is better for performance */
+  opacity: 1;
+}
+.vertical-enter-to,
+.vertical-leave-from {
+  max-height: 1000px;
+  opacity: 1;
 }
 </style>

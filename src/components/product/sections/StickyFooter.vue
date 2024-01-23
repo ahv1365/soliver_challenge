@@ -47,14 +47,14 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .product-sticky-footer {
-  @apply sticky bottom-0 right-0 bg-white flex justify-between w-full p-2 shadow-inner;
+  @apply sticky bottom-0 right-0 bg-white sm:flex sm:justify-between w-full p-2 shadow-inner;
 
   &__name {
-    @apply text-text px-5 py-1 overflow-hidden whitespace-nowrap text-ellipsis;
+    @apply w-full text-text px-1 sm:px-5 py-2 sm:py-1 overflow-hidden whitespace-nowrap text-ellipsis text-left;
   }
 
   &__add-cart-button {
-    @apply text-xs w-auto h-full my-auto px-2 py-1 min-w-40 bg-black text-white font-medium hover:bg-gray-800;
+    @apply text-xs w-full h-full my-auto p-3 sm:px-2 sm:py-1 sm:w-auto  min-w-40 bg-black text-white font-medium hover:bg-gray-800;
   }
 
   &__add-cart-text {

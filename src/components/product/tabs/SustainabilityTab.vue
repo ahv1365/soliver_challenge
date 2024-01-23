@@ -65,7 +65,7 @@ export default defineComponent({
   @apply font-sans text-text-secondary text-left;
 
   &__detail {
-    @apply border-b p-2;
+    @apply border-b py-1;
   }
 
   &__label {
@@ -73,7 +73,7 @@ export default defineComponent({
   }
 
   &__icon-container {
-    @apply p-1;
+    @apply p-2;
   }
 
   &__icon {

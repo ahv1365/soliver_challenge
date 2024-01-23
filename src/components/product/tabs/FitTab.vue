@@ -35,14 +35,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .fit-tab {
-  @apply font-sans p-2 text-text-secondary text-left;
+  @apply font-sans text-text-secondary text-left;
 
   &__title {
     @apply font-bold mb-2;
-  }
-
-  // If you have styles to add to &__content, you can add them here.
-  &__content {
   }
 }
 </style>

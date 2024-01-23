@@ -70,7 +70,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .product-details-tab {
-  @apply font-sans text-text-secondary p-2 text-left;
+  @apply font-sans text-text-secondary text-left;
 
   &__title {
     @apply font-bold mb-2;
