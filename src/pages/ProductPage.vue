@@ -7,15 +7,16 @@
       class="product-page__card"
       :data-e2e="'product-card-' + product?.id + '-test'"
     >
-      <LazyImage
-        :src="product?.image"
-        :alt="product?.image"
-        aspectRatio="142%"
-        class="product-page__card-image"
-        :containerClass="{ 'bg-white': true }"
-        :data-e2e="'product-image-' + product?.id + '-test'"
-        @click="openModal(String(product?.id))"
-      />
+      <div class="product-page__card-image">
+        <LazyImage
+          :src="product?.image"
+          :alt="product?.image"
+          aspectRatio="142%"
+          :containerClass="{ 'bg-white': true }"
+          :data-e2e="'product-image-' + product?.id + '-test'"
+          @click="openModal(String(product?.id))"
+        />
+      </div>
       <div
         class="product-page__card-detail"
         :data-e2e="'product-detail-' + product?.id + '-test'"
@@ -77,6 +78,7 @@ import {
 } from "vue";
 import { useProductData } from "@/composables/useProductData";
 import { useStore } from "vuex";
+import LazyImage from "@/components/shared/LazyImage.vue";
 
 export default defineComponent({
   name: "ProductPage",
@@ -87,9 +89,7 @@ export default defineComponent({
     SharedModal: defineAsyncComponent(
       () => import("@/components/shared/SharedModal.vue")
     ),
-    LazyImage: defineAsyncComponent(
-      () => import("@/components/shared/LazyImage.vue")
-    ),
+    LazyImage,
   },
   setup() {
     const store = useStore();
@@ -154,7 +154,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .product-page {
   @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-20 py-8 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
-
   &__card {
     @apply p-4 flex flex-col items-center rounded-lg hover:shadow-md transition-shadow duration-300;
 
@@ -163,7 +162,7 @@ export default defineComponent({
     }
 
     &-image {
-      @apply cursor-pointer mb-4;
+      @apply cursor-pointer mb-4 w-full;
     }
   }
 

@@ -16,7 +16,7 @@
       }"
       class="lazy-image__img lazy-image__img--transition"
       data-e2e="lazy-image-test"
-      loading="lazy"
+      :loading="loading"
     />
     <div v-else class="lazy-image__loader" data-e2e="lazy-image-loader-test">
       <LoaderComponent />
@@ -34,6 +34,10 @@ export default defineComponent({
     src: {
       type: String,
       required: true,
+    },
+    loading: {
+      type: String as () => "lazy" | "eager" | undefined,
+      default: undefined,
     },
     width: {
       type: String,

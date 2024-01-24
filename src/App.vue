@@ -10,16 +10,17 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { defineAsyncComponent } from "vue";
-import LogoSplash from "@/components/branding/LogoSplash.vue";
 import "./index.css";
 
 @Options({
   components: {
+    LogoSplash: defineAsyncComponent(
+      () => import("@/components/branding/LogoSplash.vue")
+    ),
     ProductPage: defineAsyncComponent(() => import("@/pages/ProductPage.vue")),
     SoliverLogo: defineAsyncComponent(
       () => import("@/components/branding/SoliverLogo.vue")
     ),
-    LogoSplash,
   },
 })
 export default class App extends Vue {}

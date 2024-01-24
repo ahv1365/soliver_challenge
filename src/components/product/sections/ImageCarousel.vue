@@ -21,6 +21,7 @@
         class="product-gallery__carousel-item"
         :height="isFullScreen ? `100vh` : `auto`"
         :width="`100vw`"
+        :loading="`lazy`"
         :containerClass="{
           'product-gallery__carousel-item--full-screen': isFullScreen,
           'cursor-zoom-in': !isFullScreen,
