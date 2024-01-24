@@ -159,7 +159,7 @@ export default defineComponent({
     @apply p-4 flex flex-col items-center rounded-lg hover:shadow-md transition-shadow duration-300;
 
     &-detail {
-      @apply text-left w-full;
+      @apply text-left w-full min-h-20;
     }
 
     &-image {
@@ -168,7 +168,7 @@ export default defineComponent({
   }
 
   &__color-images {
-    @apply flex items-center mt-2;
+    @apply flex items-center mt-2 min-h-5;
   }
 
   &__color-box {
@@ -176,15 +176,15 @@ export default defineComponent({
   }
 
   &__logo {
-    @apply text-text-secondary-light font-medium;
+    @apply text-text-secondary-light font-medium min-h-5;
   }
 
   &__name {
-    @apply text-text;
+    @apply text-text min-h-5;
   }
 
   &__price {
-    @apply font-bold text-text;
+    @apply font-bold text-text min-h-5;
   }
 }
 </style>

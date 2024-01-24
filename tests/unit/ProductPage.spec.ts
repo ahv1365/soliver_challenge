@@ -87,5 +87,4 @@ describe("ProductPage.vue", () => {
       );
     });
   });
-
 });
