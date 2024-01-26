@@ -1,18 +1,10 @@
 import { Module } from "vuex";
+import { ProductPageState, RootState } from "../storeInterface";
+import { productState } from "../storeInitialState";
 
-interface ProductPageState {
-  isModalOpen: boolean;
-  selectedProduct: string | null;
-}
-
-const state: ProductPageState = {
-  isModalOpen: false,
-  selectedProduct: "1",
-};
-
-const productModule: Module<ProductPageState, unknown> = {
+const productModule: Module<ProductPageState, RootState> = {
   namespaced: true,
-  state,
+  state: productState,
   mutations: {
     setModalState(state, isOpen: boolean) {
       state.isModalOpen = isOpen;
