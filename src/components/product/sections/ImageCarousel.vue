@@ -120,11 +120,24 @@ export default defineComponent({
       if (Math.abs(deltaX.value) <= swipeThreshold) {
         isSwiping.value = false;
       }
-      if (deltaX.value > 5 && currentSlide.value < 1) {
-        currentSlide.value++;
-      } else if (deltaX.value < -5 && currentSlide.value > 0) {
-        currentSlide.value--;
+
+      const numberOfImages = props.product.images.length;
+      if (deltaX.value > 5) {
+        // Swipe left to right
+        if (currentSlide.value >= numberOfImages - 1) {
+          currentSlide.value = 0; // Go to the first image
+        } else {
+          currentSlide.value++;
+        }
+      } else if (deltaX.value < -5) {
+        // Swipe right to left
+        if (currentSlide.value <= 0) {
+          currentSlide.value = numberOfImages - 1; // Go to the last image
+        } else {
+          currentSlide.value--;
+        }
       }
+
       startX.value = 0;
       deltaX.value = 0;
     };
@@ -173,7 +186,7 @@ export default defineComponent({
   }
 
   &__carousel-item {
-    @apply inline-block flex-none w-full max-w-full;
+    @apply flex-none w-full max-w-full;
 
     flex: 0 0 100%;
 

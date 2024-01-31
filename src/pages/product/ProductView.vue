@@ -1,6 +1,8 @@
 <template>
   <div class="product-view" data-e2e="product-view-test">
-    <CloseButton @close="closeModal" />
+    <div class="product-view__close-button">
+      <CloseButton @close="closeModal" />
+    </div>
     <div class="product-view__container" data-e2e="product-view-container-test">
       <ImageCarousel v-if="productData" :product="productData" />
       <ProductDetails
@@ -93,6 +95,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .product-view {
   @apply absolute inset-2 md:inset-2 lg:inset-10 xl:inset-16 max-h-[1000px] m-auto border lg:w-2/3 xl:w-1/2 shadow-lg rounded-md bg-bg overflow-auto;
+  &__close-button {
+    @apply sticky top-0 right-0 z-10;
+  }
 
   &-enter-active {
     @apply transition-opacity duration-1000;
