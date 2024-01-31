@@ -4,7 +4,7 @@
       v-if="isModalOpen"
       @click="handleBackdropClick"
       @mousedown="startInteraction"
-      @touchstart="startInteraction"
+      @touchstart.passive="startInteraction"
       class="shared-modal"
       data-test="modal-backdrop-test"
     >
@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, PropType, Ref, ref } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 
 export default defineComponent({
   name: "SharedModal",

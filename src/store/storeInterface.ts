@@ -1,5 +1,5 @@
 export interface RootState {
-  product: ProductPageState;
+  productState: ProductPageState;
 }
 export interface ProductPageState {
   isModalOpen: boolean;

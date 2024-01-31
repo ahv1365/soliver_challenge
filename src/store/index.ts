@@ -1,12 +1,12 @@
 import { createStore } from "vuex";
-import productPage from "./modules/productPage";
+import productPageModule from "./modules/productPageModule";
 import { RootState } from "./storeInterface";
 import { productState } from "./storeInitialState";
 
 export default createStore<RootState>({
-  state: { product: productState },
+  state: { productState },
   getters: {},
   mutations: {},
   actions: {},
-  modules: { product: productPage },
+  modules: { product: productPageModule },
 });

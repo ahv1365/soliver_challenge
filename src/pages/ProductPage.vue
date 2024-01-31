@@ -105,17 +105,13 @@ export default defineComponent({
       selectImage,
     } = useProductData(selectedProduct.value);
     const openModal = (productId: string) => {
+      document.body.classList.add("no-scroll");
       store.dispatch("product/openModal", productId);
     };
     const closeModal = () => {
       store.dispatch("product/closeModal");
-    };
-    watchEffect(() => {
-      document.body.classList.toggle("no-scroll", isModalOpen.value);
-    });
-    onUnmounted(() => {
       document.body.classList.remove("no-scroll");
-    });
+    };
 
     return {
       isModalOpen,

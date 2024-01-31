@@ -2,7 +2,7 @@ import { Module } from "vuex";
 import { ProductPageState, RootState } from "../storeInterface";
 import { productState } from "../storeInitialState";
 
-const productModule: Module<ProductPageState, RootState> = {
+const productPageModule: Module<ProductPageState, RootState> = {
   namespaced: true,
   state: productState,
   mutations: {
@@ -25,4 +25,4 @@ const productModule: Module<ProductPageState, RootState> = {
   },
 };
 
-export default productModule;
+export default productPageModule;
