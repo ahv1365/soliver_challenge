@@ -3,8 +3,7 @@
     <div
       v-if="isModalOpen"
       @click="handleBackdropClick"
-      @mousedown="startInteraction"
-      @touchstart.passive="startInteraction"
+      @pointerdown.passive="startInteraction"
       class="shared-modal"
       data-test="modal-backdrop-test"
     >
@@ -33,26 +32,21 @@ export default defineComponent({
     const startY = ref<number>(0);
     const threshold = 5; // Swipe threshold in pixels
 
-    const startInteraction = (event: MouseEvent | TouchEvent) => {
-      if ("touches" in event) {
-        startX.value = event.touches[0].clientX;
-        startY.value = event.touches[0].clientY;
-      } else {
-        startX.value = event.clientX;
-        startY.value = event.clientY;
-      }
+    const startInteraction = (event: PointerEvent) => {
+      startX.value = event.clientX;
+      startY.value = event.clientY;
     };
 
     const handleBackdropClick = (event: MouseEvent | TouchEvent) => {
       let endX: number;
       let endY: number;
 
-      if ("changedTouches" in event) {
-        endX = event.changedTouches[0].clientX;
-        endY = event.changedTouches[0].clientY;
-      } else {
+      // PointerEvent is a superset of MouseEvent and TouchEvent
+      if (event instanceof PointerEvent) {
         endX = event.clientX;
         endY = event.clientY;
+      } else {
+        return; // Exit if not a pointer event
       }
 
       if (
